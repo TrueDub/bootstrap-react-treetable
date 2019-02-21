@@ -30,7 +30,7 @@ class TreeTable extends React.Component {
     componentWillReceiveProps(nextProps) {
         let newTableData = this.filterNonVisibleRows(nextProps.tableData);
         let newStartAndEnd = this.calculateNewStartAndEndRows(this.state.currentPage,
-            this.props.control.initialRowsPerPage, this.state.tableData.length);
+            this.props.control.initialRowsPerPage, newTableData.length);
         this.setState({
             tableData: newTableData,
             filtered: nextProps.filtered,
