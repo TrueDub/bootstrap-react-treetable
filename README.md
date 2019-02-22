@@ -108,6 +108,7 @@ Obviously, the tableData prop is required. There is one other required prop:
 | sortOrder      | String | Indicates that the table should be sorted by this field in this order - values are 'asc' or 'desc' | asc | No |
 | sortType       | String | Indicates the data type this field should be sorted as - options are string, date or number | string | No |
 | sortDateFormat | String | The format of the date to be sorted (assuming sortType is date). This uses Moment, so the formats are specified [here](https://momentjs.com/docs/#/parsing) | string | No |  
+| filterable     | Boolean | Should this column be included when filtering the data? | true | No |  
 
 Further control of how the table is displayed can be provided using the **control** prop.
 
@@ -159,4 +160,4 @@ To use this component as a simple datatable (i.e. no expandable capabilities), s
 
 | Release | Description | Release date |
 | ------- | ----------- | ------------ |
-|  0.2.0  | Pre-release effort | TBD |
+|  1.0.0-rc.1  | First release candidate of 1.0.0 | 22-Feb-2019 |

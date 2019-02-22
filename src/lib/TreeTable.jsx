@@ -1,6 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faAngleRight, faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
+import {faAngleRight, faAngleDown, faAngleUp, faSearch} from '@fortawesome/free-solid-svg-icons';
 
 import Paginator from './Paginator';
 import './BootstrapTreeTable.css';
@@ -254,34 +254,55 @@ class TreeTable extends React.Component {
         let headingRows = this.generateHeaderRow();
         let tableBody = this.generateTableBody(this.state.tableData, this.state.startRow, this.state.endRow);
         return (
-            <div>
-                <div>
-                    <input type="text" value={this.props.filterValue} onChange={this.props.applyFilter.bind(null)}
-                           placeholder={this.props.control.filterInputPlaceholderText}
-                           className={this.props.control.allowFiltering ? 'button button-default float-left col-xs-2' : 'hidden'}/>
-
-                    <button onClick={this.props.expandOrCollapseAll.bind(null)}
-                            className={this.props.control.showExpandCollapseButton ? 'button button-default' : 'hidden'}>
-                        {this.props.expanded ? 'Collapse All' : 'Expand All'}
-                    </button>
-                    <button onClick={this.props.resetSorting.bind(null)}
-                            className={this.props.showResetSortingButton ? 'button button-default float-right' : 'hidden'}>
-                        Reset Sorting
-                    </button>
+            <div className="container-fluid">
+                <div className="row col-12 justify-content-between">
+                    <div className='col-2'>
+                        <button onClick={this.props.expandOrCollapseAll.bind(null)}
+                                className={this.props.control.showExpandCollapseButton ? 'btn btn-outline-secondary' : 'hidden'}>
+                            {this.props.expanded ? 'Collapse All' : 'Expand All'}
+                        </button>
+                    </div>
+                    <div className='col-2'>
+                        <div className={this.props.showResetSortingButton ? 'shown' : 'hidden'}>
+                            <button onClick={this.props.resetSorting.bind(null)}
+                                    className='btn btn-outline-secondary'>
+                                Reset Sorting
+                            </button>
+                        </div>
+                    </div>
+                    <div className='col-2'>
+                        <div className={this.props.control.allowFiltering ? 'shown' : 'hidden'}>
+                            <div className="input-group mb-3">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><FontAwesomeIcon icon={faSearch} fixedWidth/>
+                                    </div>
+                                </div>
+                                <input type="text" value={this.props.filterValue} id="filterInput"
+                                       onChange={this.props.applyFilter.bind(null)}
+                                       placeholder={this.props.control.filterInputPlaceholderText}
+                                       className='form-control'/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <table className='table table-bordered'>
-                    <thead>
-                    <tr>
-                        {headingRows}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {tableBody}
-                    </tbody>
-                </table>
-                {this.generatePaginatorRow()}
+                <div className='row col-12'>
+                    <table className='table table-bordered'>
+                        <thead>
+                        <tr>
+                            {headingRows}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {tableBody}
+                        </tbody>
+                    </table>
+                </div>
+                <div className='row col-12 justify-content-center'>
+                    {this.generatePaginatorRow()}
+                </div>
             </div>
-        );
+        )
+            ;
     }
 }
 

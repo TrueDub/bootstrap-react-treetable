@@ -326,12 +326,9 @@ const App = () => (
                 </table>
             </div>
             <div>
-                <h3>DataTable with Pagination</h3>
+                <h3>DataTable</h3>
                 Notes:
                 <ol>
-                    <li>This column is styled using the default style i.e. by setting
-                        the <code>columns.bootstrapStyling</code> attribute to <code>true</code>.
-                    </li>
                     <li>Clicking any column heading will sort that column in ascending order - a second click will
                         reverse the sort order. The "Reset Sorting" button will appear when a sort is applied.
                     </li>
@@ -341,7 +338,8 @@ const App = () => (
                         as dates, with the supplied format being used in the conversion to Date objects by <a
                             href="http://momentjs.com">Moment.js</a>.
                     </li>
-                    <li>Filtering is allowed on the Description column only. The paginator adjusts to provide correct
+                    <li>Filtering is allowed on the Description column only - this is specified in
+                        the <code>columns</code> prop. The paginator adjusts to provide correct
                         navigation and information when the table is filtered.
                     </li>
                 </ol>

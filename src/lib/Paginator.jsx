@@ -126,7 +126,6 @@ class Paginator extends React.Component {
     }
 
     defineExtraItemClasses(currentPage, totalNumberOfPages, type) {
-        console.log(currentPage + ' ' + totalNumberOfPages + ' ' + type);
         let classes = 'page-item'; //default class.
         if (type === 'first' || type === 'previous') {
             if (currentPage === 1) {
@@ -155,7 +154,7 @@ class Paginator extends React.Component {
     render() {
         return (
             <nav>
-                <ul className='pagination justify-content-center'>
+                <ul className='pagination'>
                     <li className={this.state.firstClasses}>
                         <a href="#!" className='page-link'
                            onClick={this.props.rowMover.bind(null, this.state.firstValue)}> First </a>

@@ -177,7 +177,6 @@ function (_React$Component) {
   }, {
     key: "defineExtraItemClasses",
     value: function defineExtraItemClasses(currentPage, totalNumberOfPages, type) {
-      console.log(currentPage + ' ' + totalNumberOfPages + ' ' + type);
       var classes = 'page-item'; //default class.
 
       if (type === 'first' || type === 'previous') {
@@ -211,7 +210,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       return _react.default.createElement("nav", null, _react.default.createElement("ul", {
-        className: "pagination justify-content-center"
+        className: "pagination"
       }, _react.default.createElement("li", {
         className: this.state.firstClasses
       }, _react.default.createElement("a", {

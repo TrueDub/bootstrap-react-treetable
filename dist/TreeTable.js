@@ -396,21 +396,49 @@ function (_React$Component) {
     value: function render() {
       var headingRows = this.generateHeaderRow();
       var tableBody = this.generateTableBody(this.state.tableData, this.state.startRow, this.state.endRow);
-      return _react.default.createElement("div", null, _react.default.createElement("div", null, _react.default.createElement("input", {
+      return _react.default.createElement("div", {
+        className: "container-fluid"
+      }, _react.default.createElement("div", {
+        className: "row col-12 justify-content-between"
+      }, _react.default.createElement("div", {
+        className: "col-2"
+      }, _react.default.createElement("button", {
+        onClick: this.props.expandOrCollapseAll.bind(null),
+        className: this.props.control.showExpandCollapseButton ? 'btn btn-outline-secondary' : 'hidden'
+      }, this.props.expanded ? 'Collapse All' : 'Expand All')), _react.default.createElement("div", {
+        className: "col-2"
+      }, _react.default.createElement("div", {
+        className: this.props.showResetSortingButton ? 'shown' : 'hidden'
+      }, _react.default.createElement("button", {
+        onClick: this.props.resetSorting.bind(null),
+        className: "btn btn-outline-secondary"
+      }, "Reset Sorting"))), _react.default.createElement("div", {
+        className: "col-2"
+      }, _react.default.createElement("div", {
+        className: this.props.control.allowFiltering ? 'shown' : 'hidden'
+      }, _react.default.createElement("div", {
+        className: "input-group mb-3"
+      }, _react.default.createElement("div", {
+        className: "input-group-prepend"
+      }, _react.default.createElement("div", {
+        className: "input-group-text"
+      }, _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: _freeSolidSvgIcons.faSearch,
+        fixedWidth: true
+      }))), _react.default.createElement("input", {
         type: "text",
         value: this.props.filterValue,
+        id: "filterInput",
         onChange: this.props.applyFilter.bind(null),
         placeholder: this.props.control.filterInputPlaceholderText,
-        className: this.props.control.allowFiltering ? 'button button-default float-left col-xs-2' : 'hidden'
-      }), _react.default.createElement("button", {
-        onClick: this.props.expandOrCollapseAll.bind(null),
-        className: this.props.control.showExpandCollapseButton ? 'button button-default' : 'hidden'
-      }, this.props.expanded ? 'Collapse All' : 'Expand All'), _react.default.createElement("button", {
-        onClick: this.props.resetSorting.bind(null),
-        className: this.props.showResetSortingButton ? 'button button-default float-right' : 'hidden'
-      }, "Reset Sorting")), _react.default.createElement("table", {
+        className: "form-control"
+      }))))), _react.default.createElement("div", {
+        className: "row col-12"
+      }, _react.default.createElement("table", {
         className: "table table-bordered"
-      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, headingRows)), _react.default.createElement("tbody", null, tableBody)), this.generatePaginatorRow());
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, headingRows)), _react.default.createElement("tbody", null, tableBody))), _react.default.createElement("div", {
+        className: "row col-12 justify-content-center"
+      }, this.generatePaginatorRow()));
     }
   }]);
 
