@@ -74,7 +74,6 @@ let columns = [
     {dataField: "example", heading: "fred3", fixedWidth: true, percentageWidth: 25},
     {dataField: "description", heading: "fred4", fixedWidth: true, percentageWidth: 40}
 ];
-let fred=[];
 
 test('component renders as expected', () => {
     const component = renderer.create(
