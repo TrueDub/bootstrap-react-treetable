@@ -5,7 +5,6 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({adapter: new Adapter()});
 
-let headings = ["fred1", "fred2", "fred3", "fred4"];
 let tableData = [
     {
         data: {
@@ -97,9 +96,7 @@ let dataTableData = [
         }
     }
 ];
-let control = {
-
-};
+let control = {};
 let columns = [
     {dataField: "name", heading: "fred1", fixedWidth: true, percentageWidth: 25},
     {dataField: "dataType", heading: "fred2", fixedWidth: true, percentageWidth: 10},

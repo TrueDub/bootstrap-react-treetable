@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-react-treetable",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "files": [
@@ -17,10 +17,17 @@
     "clean": "rimraf dist",
     "start": "react-scripts start",
     "build": "npm run clean && babel src/lib --out-dir dist && copyfiles -f src/lib/*.css dist",
-    "test": "react-scripts test --env=jsdom",
+    "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "clean:demo": "rimraf build",
-    "build:demo": "npm run clean:demo && webpack --config webpack.config.demo.js -p --bail"
+    "build:demo": "npm run clean:demo && webpack --config webpack.config.demo.js -p --bail",
+    "lint": "eslint src"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm test",
+      "pre-push": "npm run lint && npm test"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,10 +47,12 @@
     "@babel/preset-react": "^7.0.0",
     "bootstrap": "^4.1.3",
     "copyfiles": "^2.1.0",
+    "cross-env": "^5.2.0",
     "del": "^3.0.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "highlight.js": "^9.13.1",
+    "husky": "^1.3.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-highlight": "^0.12.0",

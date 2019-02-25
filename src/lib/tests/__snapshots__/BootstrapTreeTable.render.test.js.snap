@@ -1,365 +1,427 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component renders as expected 1`] = `
-<div>
-  <div>
-    <input
-      className="hidden"
-      onChange={[Function]}
-      type="text"
-      value=""
-    />
-    <button
-      className="hidden"
-      onClick={[Function]}
-    >
-      Expand All
-    </button>
-    <button
-      className="hidden"
-      onClick={[Function]}
-    >
-      Reset Sorting
-    </button>
-  </div>
-  <table
-    className="table table-bordered"
+<div
+  className="container-fluid"
+>
+  <div
+    className="row col-12 justify-content-between"
   >
-    <thead>
-      <tr>
-        <th>
-          fred1
-        </th>
-        <th>
-          fred2
-        </th>
-        <th>
-          fred3
-        </th>
-        <th>
-          fred4
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        className="shown"
+    <div
+      className="col-2"
+    >
+      <button
+        className="hidden"
+        onClick={[Function]}
       >
-        <td
-          className=""
-          width="25%"
+        Expand All
+      </button>
+    </div>
+    <div
+      className="col-2"
+    >
+      <div
+        className="hidden"
+      >
+        <button
+          className="btn btn-outline-secondary"
+          onClick={[Function]}
         >
-          <span
-            style={
-              Object {
-                "marginLeft": "1em",
-              }
-            }
+          Reset Sorting
+        </button>
+      </div>
+    </div>
+    <div
+      className="col-2"
+    >
+      <div
+        className="hidden"
+      >
+        <div
+          className="input-group mb-3"
+        >
+          <div
+            className="input-group-prepend"
           >
-            <svg
-              aria-hidden="true"
-              className="svg-inline--fa fa-angle-right fa-w-8 fa-fw "
-              data-icon="angle-right"
-              data-prefix="fas"
-              focusable="false"
-              onClick={[Function]}
-              role="img"
-              style={Object {}}
-              viewBox="0 0 256 512"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              className="input-group-text"
             >
-              <path
-                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                fill="currentColor"
+              <svg
+                aria-hidden="true"
+                className="svg-inline--fa fa-search fa-w-16 fa-fw "
+                data-icon="search"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
                 style={Object {}}
-              />
-            </svg>
-            <span
-              className="iconPadding"
-            >
-              name0
-            </span>
-          </span>
-        </td>
-        <td
-          className=""
-          width="10%"
+                viewBox="0 0 512 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                  fill="currentColor"
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
+          <input
+            className="form-control"
+            id="filterInput"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row col-12"
+  >
+    <table
+      className="table table-bordered"
+    >
+      <thead>
+        <tr>
+          <th>
+            fred1
+          </th>
+          <th>
+            fred2
+          </th>
+          <th>
+            fred3
+          </th>
+          <th>
+            fred4
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          className="shown"
         >
-          string0
-        </td>
-        <td
-          className=""
-          width="25%"
-        >
-          ex0
-        </td>
-        <td
-          className=""
-          width="40%"
-        >
-          desc0
-        </td>
-      </tr>
-      <tr
-        className="hidden"
-      >
-        <td
-          className=""
-          width="25%"
-        >
-          <span
-            style={
-              Object {
-                "marginLeft": "3.25em",
-              }
-            }
+          <td
+            className=""
+            width="25%"
           >
             <span
-              className="iconPadding"
-            >
-              name0-0
-            </span>
-          </span>
-        </td>
-        <td
-          className=""
-          width="10%"
-        >
-          string0-0
-        </td>
-        <td
-          className=""
-          width="25%"
-        >
-          ex0-0
-        </td>
-        <td
-          className=""
-          width="40%"
-        >
-          desc0-0
-        </td>
-      </tr>
-      <tr
-        className="hidden"
-      >
-        <td
-          className=""
-          width="25%"
-        >
-          <span
-            style={
-              Object {
-                "marginLeft": "3.25em",
+              style={
+                Object {
+                  "marginLeft": "1em",
+                }
               }
-            }
-          >
-            <span
-              className="iconPadding"
             >
-              name0-1
-            </span>
-          </span>
-        </td>
-        <td
-          className=""
-          width="10%"
-        >
-          string0-1
-        </td>
-        <td
-          className=""
-          width="25%"
-        >
-          ex0-1
-        </td>
-        <td
-          className=""
-          width="40%"
-        >
-          desc0-1
-        </td>
-      </tr>
-      <tr
-        className="hidden"
-      >
-        <td
-          className=""
-          width="25%"
-        >
-          <span
-            style={
-              Object {
-                "marginLeft": "2em",
-              }
-            }
-          >
-            <svg
-              aria-hidden="true"
-              className="svg-inline--fa fa-angle-right fa-w-8 fa-fw "
-              data-icon="angle-right"
-              data-prefix="fas"
-              focusable="false"
-              onClick={[Function]}
-              role="img"
-              style={Object {}}
-              viewBox="0 0 256 512"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                fill="currentColor"
+              <svg
+                aria-hidden="true"
+                className="svg-inline--fa fa-angle-right fa-w-8 fa-fw "
+                data-icon="angle-right"
+                data-prefix="fas"
+                focusable="false"
+                onClick={[Function]}
+                role="img"
                 style={Object {}}
-              />
-            </svg>
-            <span
-              className="iconPadding"
-            >
-              name0-2
+                viewBox="0 0 256 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                  fill="currentColor"
+                  style={Object {}}
+                />
+              </svg>
+              <span
+                className="iconPadding"
+              >
+                name0
+              </span>
             </span>
-          </span>
-        </td>
-        <td
-          className=""
-          width="10%"
+          </td>
+          <td
+            className=""
+            width="10%"
+          >
+            string0
+          </td>
+          <td
+            className=""
+            width="25%"
+          >
+            ex0
+          </td>
+          <td
+            className=""
+            width="40%"
+          >
+            desc0
+          </td>
+        </tr>
+        <tr
+          className="hidden"
         >
-          string0-2
-        </td>
-        <td
-          className=""
-          width="25%"
-        >
-          ex0-2
-        </td>
-        <td
-          className=""
-          width="40%"
-        >
-          desc0-2
-        </td>
-      </tr>
-      <tr
-        className="hidden"
-      >
-        <td
-          className=""
-          width="25%"
-        >
-          <span
-            style={
-              Object {
-                "marginLeft": "4.25em",
-              }
-            }
+          <td
+            className=""
+            width="25%"
           >
             <span
-              className="iconPadding"
-            >
-              name0-2-1
-            </span>
-          </span>
-        </td>
-        <td
-          className=""
-          width="10%"
-        >
-          string0-2-1
-        </td>
-        <td
-          className=""
-          width="25%"
-        >
-          ex0-2-1
-        </td>
-        <td
-          className=""
-          width="40%"
-        >
-          desc0-2-1
-        </td>
-      </tr>
-      <tr
-        className="shown"
-      >
-        <td
-          className=""
-          width="25%"
-        >
-          <span
-            style={
-              Object {
-                "marginLeft": "2.25em",
+              style={
+                Object {
+                  "marginLeft": "3.25em",
+                }
               }
-            }
+            >
+              <span
+                className="iconPadding"
+              >
+                name0-0
+              </span>
+            </span>
+          </td>
+          <td
+            className=""
+            width="10%"
+          >
+            string0-0
+          </td>
+          <td
+            className=""
+            width="25%"
+          >
+            ex0-0
+          </td>
+          <td
+            className=""
+            width="40%"
+          >
+            desc0-0
+          </td>
+        </tr>
+        <tr
+          className="hidden"
+        >
+          <td
+            className=""
+            width="25%"
           >
             <span
-              className="iconPadding"
-            >
-              name1
-            </span>
-          </span>
-        </td>
-        <td
-          className=""
-          width="10%"
-        >
-          string1
-        </td>
-        <td
-          className=""
-          width="25%"
-        >
-          ex1
-        </td>
-        <td
-          className=""
-          width="40%"
-        >
-          desc1
-        </td>
-      </tr>
-      <tr
-        className="shown"
-      >
-        <td
-          className=""
-          width="25%"
-        >
-          <span
-            style={
-              Object {
-                "marginLeft": "2.25em",
+              style={
+                Object {
+                  "marginLeft": "3.25em",
+                }
               }
-            }
+            >
+              <span
+                className="iconPadding"
+              >
+                name0-1
+              </span>
+            </span>
+          </td>
+          <td
+            className=""
+            width="10%"
+          >
+            string0-1
+          </td>
+          <td
+            className=""
+            width="25%"
+          >
+            ex0-1
+          </td>
+          <td
+            className=""
+            width="40%"
+          >
+            desc0-1
+          </td>
+        </tr>
+        <tr
+          className="hidden"
+        >
+          <td
+            className=""
+            width="25%"
           >
             <span
-              className="iconPadding"
+              style={
+                Object {
+                  "marginLeft": "2em",
+                }
+              }
             >
-              name2
+              <svg
+                aria-hidden="true"
+                className="svg-inline--fa fa-angle-right fa-w-8 fa-fw "
+                data-icon="angle-right"
+                data-prefix="fas"
+                focusable="false"
+                onClick={[Function]}
+                role="img"
+                style={Object {}}
+                viewBox="0 0 256 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                  fill="currentColor"
+                  style={Object {}}
+                />
+              </svg>
+              <span
+                className="iconPadding"
+              >
+                name0-2
+              </span>
             </span>
-          </span>
-        </td>
-        <td
-          className=""
-          width="10%"
+          </td>
+          <td
+            className=""
+            width="10%"
+          >
+            string0-2
+          </td>
+          <td
+            className=""
+            width="25%"
+          >
+            ex0-2
+          </td>
+          <td
+            className=""
+            width="40%"
+          >
+            desc0-2
+          </td>
+        </tr>
+        <tr
+          className="hidden"
         >
-          string2
-        </td>
-        <td
-          className=""
-          width="25%"
+          <td
+            className=""
+            width="25%"
+          >
+            <span
+              style={
+                Object {
+                  "marginLeft": "4.25em",
+                }
+              }
+            >
+              <span
+                className="iconPadding"
+              >
+                name0-2-1
+              </span>
+            </span>
+          </td>
+          <td
+            className=""
+            width="10%"
+          >
+            string0-2-1
+          </td>
+          <td
+            className=""
+            width="25%"
+          >
+            ex0-2-1
+          </td>
+          <td
+            className=""
+            width="40%"
+          >
+            desc0-2-1
+          </td>
+        </tr>
+        <tr
+          className="shown"
         >
-          ex2
-        </td>
-        <td
-          className=""
-          width="40%"
+          <td
+            className=""
+            width="25%"
+          >
+            <span
+              style={
+                Object {
+                  "marginLeft": "2.25em",
+                }
+              }
+            >
+              <span
+                className="iconPadding"
+              >
+                name1
+              </span>
+            </span>
+          </td>
+          <td
+            className=""
+            width="10%"
+          >
+            string1
+          </td>
+          <td
+            className=""
+            width="25%"
+          >
+            ex1
+          </td>
+          <td
+            className=""
+            width="40%"
+          >
+            desc1
+          </td>
+        </tr>
+        <tr
+          className="shown"
         >
-          desc2
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div />
+          <td
+            className=""
+            width="25%"
+          >
+            <span
+              style={
+                Object {
+                  "marginLeft": "2.25em",
+                }
+              }
+            >
+              <span
+                className="iconPadding"
+              >
+                name2
+              </span>
+            </span>
+          </td>
+          <td
+            className=""
+            width="10%"
+          >
+            string2
+          </td>
+          <td
+            className=""
+            width="25%"
+          >
+            ex2
+          </td>
+          <td
+            className=""
+            width="40%"
+          >
+            desc2
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div
+    className="row col-12 justify-content-center"
+  >
+    <div />
+  </div>
 </div>
 `;

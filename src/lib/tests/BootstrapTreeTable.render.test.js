@@ -67,34 +67,7 @@ let tableData = [
         children: []
     }
 ];
-let dataTableData = [
-    {
-        data: {
-            name: "name0",
-            dataType: "string0",
-            example: "ex0",
-            description: "desc0"
-        }
-    },
-    {
-        data: {
-            name: "name1",
-            dataType: "string1",
-            example: "ex1",
-            description: "desc1"
-        }
-    },
-    {
-        data: {
-            name: "name2",
-            dataType: "string2",
-            example: "ex2",
-            description: "desc2"
-        }
-    }
-];
-let controlWithButton = {
-};
+let controlWithButton = {};
 let columns = [
     {dataField: "name", heading: "fred1", fixedWidth: true, percentageWidth: 25},
     {dataField: "dataType", heading: "fred2", fixedWidth: true, percentageWidth: 10},
