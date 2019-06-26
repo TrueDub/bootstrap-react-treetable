@@ -56,7 +56,7 @@
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-highlight": "^0.12.0",
-    "react-scripts": "^2.1.5",
+    "react-scripts": "3.0.1",
     "react-test-renderer": "^16.6.3",
     "rimraf": "^2.6.2",
     "webpack-cli": "^3.1.2"

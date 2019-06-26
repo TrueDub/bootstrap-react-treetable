@@ -93,7 +93,7 @@ function (_React$Component) {
         nextValue: data.nextValue,
         lastValue: data.lastValue,
         totalNumberOfPages: data.totalNumberOfPages,
-        currentPage: data.currentPage,
+        //currentPage: data.currentPage,
         firstClasses: data.firstClasses,
         previousClasses: data.previousClasses,
         pos1Classes: data.pos1Classes,
