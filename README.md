@@ -160,5 +160,7 @@ To use this component as a simple datatable (i.e. no expandable capabilities), s
 
 | Release | Description | Release date |
 | ------- | ----------- | ------------ |
+|  1.0.2  | Audit fixes | 01-Oct-2019 |
+|  1.0.1  |  | 26-Jun-2019 |
 |  1.0.0  | First release | 22-Feb-2019 |
 |  1.0.0-rc.1  | First release candidate of 1.0.0 | 22-Feb-2019 |
