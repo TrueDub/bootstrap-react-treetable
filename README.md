@@ -1,5 +1,5 @@
 # bootstrap-react-treetable
-A React component that presents a simple TreeTable, allowing the user to supply styling and rendering options. A default styling (using Bootstrap 4) is also available.
+A React component that presents a simple TreeTable, allowing the user to supply styling and rendering options. A default styling (using Bootstrap 4) is also available. XXX
 
 ## Installation
 Run the following command:
@@ -115,7 +115,7 @@ Further control of how the table is displayed can be provided using the **contro
 | Attribute Name | Type | Description | Example | Required |
 | -------------- | ---- | ----------- | ------- | -------- |
 | visibleRows    | Number | Number of levels to display automatically - default is 1 | 2 | No |
-| showExpandCollapseButton     | Boolean | Should the Expand All/Collapse All button be displayed? | false | No | 
+| showExpandCollapseButton     | Boolean | Should the Expand All/Collapse All button be displayed? | false | No |
 | allowSorting   | boolean | Enable or disable sorting on this table - default is false | false | No |
 | allowFiltering | boolean | Enable or disable filtering on this table - default is false | false | No |
 | filterInputPlaceholderText | string | Text to display as the placeholder in the filter input box | Filter... | No |
