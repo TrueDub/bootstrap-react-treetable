@@ -34,7 +34,7 @@ class Paginator extends React.Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         let data = this.performCalcs(nextProps.currentPage, nextProps.tableLength);
         this.setState({
             firstValue: data.firstValue,
