@@ -1,9 +1,13 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faAngleRight, faAngleDown, faAngleUp, faSearch} from '@fortawesome/free-solid-svg-icons';
-
+//import {faAngleRight, faAngleDown, faAngleUp, faSearch} from '@fortawesome/free-solid-svg-icons';
 import Paginator from './Paginator';
 import './BootstrapTreeTable.css';
+import {faSort} from "@fortawesome/free-solid-svg-icons/faSort";
+import {faSortUp} from "@fortawesome/free-solid-svg-icons/faSortUp";
+import {faSortDown} from "@fortawesome/free-solid-svg-icons/faSortDown";
+import {faAngleRight} from "@fortawesome/free-solid-svg-icons/faAngleRight";
+import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
 
 class TreeTable extends React.Component {
 
@@ -147,7 +151,7 @@ class TreeTable extends React.Component {
             let iconCell = <FontAwesomeIcon icon={faAngleRight} fixedWidth
                                             onClick={this.props.rowExpandOrCollapse.bind(null, dataRow.rowID)}/>;
             if (dataRow.expanded) {
-                iconCell = <FontAwesomeIcon icon={faAngleDown} fixedWidth
+                iconCell = <FontAwesomeIcon icon={faSortDown} fixedWidth
                                             onClick={this.props.rowExpandOrCollapse.bind(null, dataRow.rowID)}/>;
             }
             if (this.props.enhancedColumns[0].fixedWidth) {
@@ -213,11 +217,11 @@ class TreeTable extends React.Component {
                     let fieldTitle = column.heading ? column.heading : column.dataField;
                     let sortIcon = null;
                     if (column.sortOrder === 'asc') {
-                        sortIcon = <FontAwesomeIcon icon={faAngleUp} fixedWidth pull="right"/>;
+                        sortIcon = <FontAwesomeIcon icon={faSortUp} fixedWidth pull="right"/>;
                     } else if (column.sortOrder === 'desc') {
-                        sortIcon = <FontAwesomeIcon icon={faAngleDown} fixedWidth pull="right"/>;
+                        sortIcon = <FontAwesomeIcon icon={faSortDown} fixedWidth pull="right"/>;
                     } else {
-                        sortIcon = null;
+                        sortIcon = <FontAwesomeIcon icon={faSort} fixedWidth pull="right"/>;
                     }
                     if (this.props.control.allowSorting && column.sortable) {
                         return <th key={fieldTitle}
@@ -256,32 +260,28 @@ class TreeTable extends React.Component {
         return (
             <div className="container-fluid">
                 <div className="row col-12 justify-content-between">
-                    <div className='col-2'>
+                    <div>
                         <button onClick={this.props.expandOrCollapseAll.bind(null)}
                                 className={this.props.control.showExpandCollapseButton ? 'btn btn-outline-secondary' : 'hidden'}>
                             {this.props.expanded ? 'Collapse All' : 'Expand All'}
                         </button>
                     </div>
-                    <div className='col-2'>
-                        <div className={this.props.showResetSortingButton ? 'shown' : 'hidden'}>
-                            <button onClick={this.props.resetSorting.bind(null)}
-                                    className='btn btn-outline-secondary'>
-                                Reset Sorting
-                            </button>
-                        </div>
+                    <div className={this.props.showResetSortingButton ? 'shown' : 'hidden'}>
+                        <button onClick={this.props.resetSorting.bind(null)}
+                                className='btn btn-outline-secondary'>
+                            Reset Sorting
+                        </button>
                     </div>
-                    <div className='col-2'>
-                        <div className={this.props.control.allowFiltering ? 'shown' : 'hidden'}>
-                            <div className="input-group mb-3">
-                                <div className="input-group-prepend">
-                                    <div className="input-group-text"><FontAwesomeIcon icon={faSearch} fixedWidth/>
-                                    </div>
+                    <div className={`${this.props.control.allowFiltering ? 'shown' : 'hidden'}`}>
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text"><FontAwesomeIcon icon={faSearch} fixedWidth/>
                                 </div>
-                                <input type="text" value={this.props.filterValue} id="filterInput"
-                                       onChange={this.props.applyFilter.bind(null)}
-                                       placeholder={this.props.control.filterInputPlaceholderText}
-                                       className='form-control'/>
                             </div>
+                            <input type="text" value={this.props.filterValue} id="filterInput"
+                                   onChange={this.props.applyFilter.bind(null)}
+                                   placeholder={this.props.control.filterInputPlaceholderText}
+                                   className='form-control'/>
                         </div>
                     </div>
                 </div>
