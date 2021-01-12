@@ -234,7 +234,7 @@ class TreeTable extends React.Component {
     generatePaginatorRow() {
         if (this.props.control.showPagination && this.state.tableData.length > this.props.control.initialRowsPerPage) {
             let displayStartRow = this.state.startRow + 1;
-            let displayEndRow = this.state.endRow > this.state.tableData.length ? this.state.tableData.length : this.state.endRow + 1;
+            let displayEndRow = this.state.endRow >= this.state.tableData.length ? this.state.tableData.length : this.state.endRow + 1;
             return (
                 <Paginator currentPage={this.state.currentPage}
                            tableLength={this.state.tableData.length}

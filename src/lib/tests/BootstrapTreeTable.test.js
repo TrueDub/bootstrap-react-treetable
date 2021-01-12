@@ -1,6 +1,7 @@
 import React from 'react';
 import BootstrapTreeTable from '../BootstrapTreeTable';
-import {shallow, configure} from 'enzyme';
+import Paginator from "../Paginator";
+import {configure, mount, shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 configure({adapter: new Adapter()});
@@ -359,5 +360,187 @@ describe('testing the DataTable enhancedTableData setup', () => {
         expect(enhancedTableData[2].rowID).toBe(3);
         expect(enhancedTableData[2].expanded).toBe(false);
         expect(enhancedTableData[2].visible).toBe(true);
+    });
+});
+
+//Pagination tests
+
+let fixedColumns = [
+    {
+        dataField: "name",
+        heading: "Name",
+        fixedWidth: true,
+        percentageWidth: 20
+    },
+    {
+        dataField: "dataType",
+        heading: "Data Type",
+        fixedWidth: true,
+        percentageWidth: 20
+    },
+    {
+        dataField: "example",
+        heading: "Example",
+        fixedWidth: true,
+        percentageWidth: 20
+    },
+    {
+        dataField: "description",
+        heading: "Description",
+        fixedWidth: true,
+        percentageWidth: 25
+    },
+    {
+        dataField: "order",
+        heading: "Order",
+        fixedWidth: true,
+        percentageWidth: 15,
+        sortOrder: 'desc'
+    }
+];
+let extraTableData = [
+    {
+        data: {
+            name: "name0g",
+            dataType: "string",
+            example: "ex0gb",
+            description: "desc0g7",
+            order: 17.7
+        },
+        children: [
+            {
+                data: {
+                    name: "name0-z",
+                    dataType: "string",
+                    example: "ex0-0",
+                    description: "desc0-0",
+                    order: 373
+                },
+                children: []
+            }, {
+                data: {
+                    name: "name0-q",
+                    dataType: "string",
+                    example: "ex0-1",
+                    description: "desc0-1",
+                    order: 2
+                },
+                children: []
+            }, {
+                data: {
+                    name: "name0-b",
+                    dataType: "string",
+                    example: "ex0-2",
+                    description: "desc0-2",
+                    order: 111
+                },
+                children: [
+                    {
+                        data: {
+                            name: "name0-2-1",
+                            dataType: "string",
+                            example: "ex0-2-1",
+                            description: "desc0-2-1",
+                            order: 23
+                        },
+                        children: []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        data: {
+            name: "name0x",
+            dataType: "string",
+            example: "ex1",
+            description: "desc1 &euro; &euro;",
+            order: 6.8
+        },
+        children: []
+    },
+    {
+        data: {
+            name: "name0a",
+            dataType: "string",
+            example: "ex2",
+            description: "desc2 &euro; &euro; &euro; &euro;",
+            order: 9.7
+        },
+        children: []
+    },
+    {
+        data: {
+            name: "name0m",
+            dataType: "Number",
+            example: "1",
+            description: "number blah",
+            order: 3.04
+        },
+        children: []
+    },
+    {
+        data: {
+            name: "name0m",
+            dataType: "Number",
+            example: "1",
+            description: "number blah",
+            order: 3.04
+        },
+        children: []
+    },
+    {
+        data: {
+            name: "name0m",
+            dataType: "Number",
+            example: "1",
+            description: "number blah",
+            order: 3.04
+        },
+        children: []
+    },
+    {
+        data: {
+            name: "name0m",
+            dataType: "Number",
+            example: "1",
+            description: "number blah",
+            order: 3.04
+        },
+        children: []
+    }
+];
+let controlWithButton = {
+    visibleRows: 1,
+    allowSorting: true,
+    showExpandCollapseButton: true,
+    showPagination: true,
+    initialRowsPerPage: 4
+};
+
+
+describe('testing the pagination', () => {
+    it('should set the first and last rows correctly', () => {
+        const wrapper = mount(<BootstrapTreeTable columns={fixedColumns} tableData={extraTableData}
+                                                  control={controlWithButton}/>);
+        let enhancedTableData = wrapper.state('enhancedTableData');
+        expect(enhancedTableData.length).toBe(7);
+        expect(enhancedTableData[0].rowID).toBe(1);
+        let paginator = wrapper.find(Paginator).instance();
+        expect(paginator.state.displayStartRow).toBe(1);
+        expect(paginator.state.displayEndRow).toBe(4);
+        expect(paginator.state.displayTotal).toBe(7);
+        //click the Next button on the paginator
+        let nodes = wrapper.find(Paginator).find('.page-link');
+        let nextButton = nodes.at(nodes.length - 2);
+        expect(nextButton.length).toBe(1); //assert it exists
+        nextButton.simulate('click');
+        wrapper.update();
+        //need to re-read from the root to ensure we pick up updated component
+        let paginator2 = wrapper.find(Paginator).instance();
+        expect(paginator2.state.displayStartRow).toBe(5);
+        expect(paginator2.state.displayEndRow).toBe(7);
+        expect(paginator2.state.displayTotal).toBe(7);
+        wrapper.unmount();
     });
 });
