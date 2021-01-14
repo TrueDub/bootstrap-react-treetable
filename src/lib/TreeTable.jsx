@@ -266,22 +266,24 @@ class TreeTable extends React.Component {
                             {this.props.expanded ? 'Collapse All' : 'Expand All'}
                         </button>
                     </div>
-                    <div className={this.props.showResetSortingButton ? 'shown' : 'hidden'}>
-                        <button onClick={this.props.resetSorting.bind(null)}
-                                className='btn btn-outline-secondary'>
-                            Reset Sorting
-                        </button>
-                    </div>
-                    <div className={`${this.props.control.allowFiltering ? 'shown' : 'hidden'}`}>
-                        <div className="input-group">
-                            <div className="input-group-prepend">
-                                <div className="input-group-text"><FontAwesomeIcon icon={faSearch} fixedWidth/>
+                    <div>
+                        <div className={this.props.showResetSortingButton ? 'shown' : 'hidden'}>
+                            <button onClick={this.props.resetSorting.bind(null)}
+                                    className='btn btn-outline-secondary'>
+                                Reset Sorting
+                            </button>
+                        </div>
+                        <div className={`${this.props.control.allowFiltering ? 'shown' : 'hidden'}`}>
+                            <div className="input-group">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><FontAwesomeIcon icon={faSearch} fixedWidth/>
+                                    </div>
                                 </div>
+                                <input type="text" value={this.props.filterValue} id="filterInput"
+                                       onChange={this.props.applyFilter.bind(null)}
+                                       placeholder={this.props.control.filterInputPlaceholderText}
+                                       className='form-control'/>
                             </div>
-                            <input type="text" value={this.props.filterValue} id="filterInput"
-                                   onChange={this.props.applyFilter.bind(null)}
-                                   placeholder={this.props.control.filterInputPlaceholderText}
-                                   className='form-control'/>
                         </div>
                     </div>
                 </div>
