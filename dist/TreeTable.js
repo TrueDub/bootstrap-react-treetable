@@ -1,37 +1,61 @@
 "use strict";
 
+require("core-js/modules/es.symbol");
+
+require("core-js/modules/es.symbol.description");
+
+require("core-js/modules/es.symbol.iterator");
+
+require("core-js/modules/es.array.filter");
+
+require("core-js/modules/es.array.for-each");
+
+require("core-js/modules/es.array.from");
+
+require("core-js/modules/es.array.iterator");
+
+require("core-js/modules/es.array.map");
+
+require("core-js/modules/es.object.get-prototype-of");
+
+require("core-js/modules/es.object.set-prototype-of");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/es.regexp.to-string");
+
+require("core-js/modules/es.string.iterator");
+
+require("core-js/modules/web.dom-collections.for-each");
+
+require("core-js/modules/web.dom-collections.iterator");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-require("core-js/modules/es6.string.iterator");
-
-require("core-js/modules/es6.array.from");
-
-require("core-js/modules/es6.regexp.to-string");
-
-require("core-js/modules/es7.symbol.async-iterator");
-
-require("core-js/modules/es6.symbol");
-
-require("core-js/modules/es6.object.set-prototype-of");
-
-require("core-js/modules/web.dom.iterable");
-
 var _react = _interopRequireDefault(require("react"));
 
 var _reactFontawesome = require("@fortawesome/react-fontawesome");
-
-var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
 
 var _Paginator = _interopRequireDefault(require("./Paginator"));
 
 require("./BootstrapTreeTable.css");
 
+var _faSort = require("@fortawesome/free-solid-svg-icons/faSort");
+
+var _faSortUp = require("@fortawesome/free-solid-svg-icons/faSortUp");
+
+var _faSortDown = require("@fortawesome/free-solid-svg-icons/faSortDown");
+
+var _faAngleRight = require("@fortawesome/free-solid-svg-icons/faAngleRight");
+
+var _faSearch = require("@fortawesome/free-solid-svg-icons/faSearch");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -90,8 +114,8 @@ function (_React$Component) {
   }
 
   _createClass(TreeTable, [{
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps) {
+    key: "UNSAFE_componentWillReceiveProps",
+    value: function UNSAFE_componentWillReceiveProps(nextProps) {
       var newTableData = this.filterNonVisibleRows(nextProps.tableData);
       var newStartAndEnd = this.calculateNewStartAndEndRows(this.state.currentPage, this.props.control.initialRowsPerPage, newTableData.length);
       this.setState({
@@ -230,14 +254,14 @@ function (_React$Component) {
 
       if (dataRow.children && dataRow.children.length > 0) {
         var iconCell = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-          icon: _freeSolidSvgIcons.faAngleRight,
+          icon: _faAngleRight.faAngleRight,
           fixedWidth: true,
           onClick: this.props.rowExpandOrCollapse.bind(null, dataRow.rowID)
         });
 
         if (dataRow.expanded) {
           iconCell = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-            icon: _freeSolidSvgIcons.faAngleDown,
+            icon: _faSortDown.faSortDown,
             fixedWidth: true,
             onClick: this.props.rowExpandOrCollapse.bind(null, dataRow.rowID)
           });
@@ -341,18 +365,22 @@ function (_React$Component) {
 
           if (column.sortOrder === 'asc') {
             sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-              icon: _freeSolidSvgIcons.faAngleUp,
+              icon: _faSortUp.faSortUp,
               fixedWidth: true,
               pull: "right"
             });
           } else if (column.sortOrder === 'desc') {
             sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-              icon: _freeSolidSvgIcons.faAngleDown,
+              icon: _faSortDown.faSortDown,
               fixedWidth: true,
               pull: "right"
             });
           } else {
-            sortIcon = null;
+            sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+              icon: _faSort.faSort,
+              fixedWidth: true,
+              pull: "right"
+            });
           }
 
           if (_this4.props.control.allowSorting && column.sortable) {
@@ -375,7 +403,7 @@ function (_React$Component) {
     value: function generatePaginatorRow() {
       if (this.props.control.showPagination && this.state.tableData.length > this.props.control.initialRowsPerPage) {
         var displayStartRow = this.state.startRow + 1;
-        var displayEndRow = this.state.endRow > this.state.tableData.length ? this.state.tableData.length : this.state.endRow + 1;
+        var displayEndRow = this.state.endRow >= this.state.tableData.length ? this.state.tableData.length : this.state.endRow + 1;
         return _react.default.createElement(_Paginator.default, {
           currentPage: this.state.currentPage,
           tableLength: this.state.tableData.length,
@@ -400,30 +428,24 @@ function (_React$Component) {
         className: "container-fluid"
       }, _react.default.createElement("div", {
         className: "row col-12 justify-content-between"
-      }, _react.default.createElement("div", {
-        className: "col-2"
-      }, _react.default.createElement("button", {
+      }, _react.default.createElement("div", null, _react.default.createElement("button", {
         onClick: this.props.expandOrCollapseAll.bind(null),
         className: this.props.control.showExpandCollapseButton ? 'btn btn-outline-secondary' : 'hidden'
-      }, this.props.expanded ? 'Collapse All' : 'Expand All')), _react.default.createElement("div", {
-        className: "col-2"
-      }, _react.default.createElement("div", {
+      }, this.props.expanded ? 'Collapse All' : 'Expand All')), _react.default.createElement("div", null, _react.default.createElement("div", {
         className: this.props.showResetSortingButton ? 'shown' : 'hidden'
       }, _react.default.createElement("button", {
         onClick: this.props.resetSorting.bind(null),
         className: "btn btn-outline-secondary"
-      }, "Reset Sorting"))), _react.default.createElement("div", {
-        className: "col-2"
+      }, "Reset Sorting")), _react.default.createElement("div", {
+        className: "".concat(this.props.control.allowFiltering ? 'shown' : 'hidden')
       }, _react.default.createElement("div", {
-        className: this.props.control.allowFiltering ? 'shown' : 'hidden'
-      }, _react.default.createElement("div", {
-        className: "input-group mb-3"
+        className: "input-group"
       }, _react.default.createElement("div", {
         className: "input-group-prepend"
       }, _react.default.createElement("div", {
         className: "input-group-text"
       }, _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: _freeSolidSvgIcons.faSearch,
+        icon: _faSearch.faSearch,
         fixedWidth: true
       }))), _react.default.createElement("input", {
         type: "text",
