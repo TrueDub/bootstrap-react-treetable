@@ -91,7 +91,7 @@ describe('testing the Paginator page calculations', () => {
         expect(paginatorData.lastValue).toBe(45);
         expect(paginatorData.totalNumberOfPages).toBe(45);
     });
-    it('performs the correct calcs for pages', () => {
+    it('performs the correct calculations for pages', () => {
         let currentPage = 45;
         let tableLength = 500;
         let rowsPerPage = 8;

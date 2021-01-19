@@ -99,7 +99,7 @@ let dataTableData = [
 let control = {};
 let columns = [
     {dataField: "name", heading: "fred1", fixedWidth: true, percentageWidth: 25},
-    {dataField: "dataType", heading: "fred2", fixedWidth: true, percentageWidth: 10},
+    {dataField: "dataType", heading: "fred2", fixedWidth: true, percentageWidth: 10, filterable: true},
     {dataField: "example", heading: "fred3", fixedWidth: true, percentageWidth: 25},
     {dataField: "description", heading: "fred4", fixedWidth: true, percentageWidth: 40}
 ];
@@ -362,158 +362,22 @@ describe('testing the DataTable enhancedTableData setup', () => {
     });
 });
 
-//Pagination tests
+//Filtering tests
 
-let fixedColumns = [
-    {
-        dataField: "name",
-        heading: "Name",
-        fixedWidth: true,
-        percentageWidth: 20
-    },
-    {
-        dataField: "dataType",
-        heading: "Data Type",
-        fixedWidth: true,
-        percentageWidth: 20
-    },
-    {
-        dataField: "example",
-        heading: "Example",
-        fixedWidth: true,
-        percentageWidth: 20
-    },
-    {
-        dataField: "description",
-        heading: "Description",
-        fixedWidth: true,
-        percentageWidth: 25
-    },
-    {
-        dataField: "order",
-        heading: "Order",
-        fixedWidth: true,
-        percentageWidth: 15,
-        sortOrder: 'desc'
-    }
-];
-let extraTableData = [
-    {
-        data: {
-            name: "name0g",
-            dataType: "string",
-            example: "ex0gb",
-            description: "desc0g7",
-            order: 17.7
-        },
-        children: [
-            {
-                data: {
-                    name: "name0-z",
-                    dataType: "string",
-                    example: "ex0-0",
-                    description: "desc0-0",
-                    order: 373
-                },
-                children: []
-            }, {
-                data: {
-                    name: "name0-q",
-                    dataType: "string",
-                    example: "ex0-1",
-                    description: "desc0-1",
-                    order: 2
-                },
-                children: []
-            }, {
-                data: {
-                    name: "name0-b",
-                    dataType: "string",
-                    example: "ex0-2",
-                    description: "desc0-2",
-                    order: 111
-                },
-                children: [
-                    {
-                        data: {
-                            name: "name0-2-1",
-                            dataType: "string",
-                            example: "ex0-2-1",
-                            description: "desc0-2-1",
-                            order: 23
-                        },
-                        children: []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        data: {
-            name: "name0x",
-            dataType: "string",
-            example: "ex1",
-            description: "desc1 &euro; &euro;",
-            order: 6.8
-        },
-        children: []
-    },
-    {
-        data: {
-            name: "name0a",
-            dataType: "string",
-            example: "ex2",
-            description: "desc2 &euro; &euro; &euro; &euro;",
-            order: 9.7
-        },
-        children: []
-    },
-    {
-        data: {
-            name: "name0m",
-            dataType: "Number",
-            example: "1",
-            description: "number blah",
-            order: 3.04
-        },
-        children: []
-    },
-    {
-        data: {
-            name: "name0m",
-            dataType: "Number",
-            example: "1",
-            description: "number blah",
-            order: 3.04
-        },
-        children: []
-    },
-    {
-        data: {
-            name: "name0m",
-            dataType: "Number",
-            example: "1",
-            description: "number blah",
-            order: 3.04
-        },
-        children: []
-    },
-    {
-        data: {
-            name: "name0m",
-            dataType: "Number",
-            example: "1",
-            description: "number blah",
-            order: 3.04
-        },
-        children: []
-    }
-];
-let controlWithButton = {
-    visibleRows: 1,
-    allowSorting: true,
-    showExpandCollapseButton: true,
-    showPagination: true,
-    initialRowsPerPage: 4
-};
+describe('testing the filtering functionality', () => {
+    it('filtering is applied correctly', () => {
+        const wrapper = shallow(<BootstrapTreeTable columns={columns} tableData={tableData}
+                                                    control={control}/>);
+        const instance = wrapper.instance();
+        let enhancedTableData = wrapper.state('enhancedTableData');
+
+        const mockedEvent = {target: {value: 1}};
+        instance.applyFilter(mockedEvent);
+        wrapper.update();
+        let filterTableData = wrapper.state('enhancedTableData');
+        const filteredTableData = instance.filterNonVisibleRows(filterTableData);
+        expect(filteredTableData.length).toBeLessThan(enhancedTableData.length);
+        expect(filteredTableData.length).toBe(1);
+    });
+});
 
