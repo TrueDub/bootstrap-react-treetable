@@ -1,7 +1,6 @@
 import React from 'react';
 import BootstrapTreeTable from '../BootstrapTreeTable';
-import Paginator from "../Paginator";
-import {configure, mount, shallow} from 'enzyme';
+import {configure, shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 configure({adapter: new Adapter()});
@@ -518,29 +517,3 @@ let controlWithButton = {
     initialRowsPerPage: 4
 };
 
-
-describe('testing the pagination', () => {
-    it('should set the first and last rows correctly', () => {
-        const wrapper = mount(<BootstrapTreeTable columns={fixedColumns} tableData={extraTableData}
-                                                  control={controlWithButton}/>);
-        let enhancedTableData = wrapper.state('enhancedTableData');
-        expect(enhancedTableData.length).toBe(7);
-        expect(enhancedTableData[0].rowID).toBe(1);
-        let paginator = wrapper.find(Paginator).instance();
-        expect(paginator.state.displayStartRow).toBe(1);
-        expect(paginator.state.displayEndRow).toBe(4);
-        expect(paginator.state.displayTotal).toBe(7);
-        //click the Next button on the paginator
-        let nodes = wrapper.find(Paginator).find('.page-link');
-        let nextButton = nodes.at(nodes.length - 2);
-        expect(nextButton.length).toBe(1); //assert it exists
-        nextButton.simulate('click');
-        wrapper.update();
-        //need to re-read from the root to ensure we pick up updated component
-        let paginator2 = wrapper.find(Paginator).instance();
-        expect(paginator2.state.displayStartRow).toBe(5);
-        expect(paginator2.state.displayEndRow).toBe(7);
-        expect(paginator2.state.displayTotal).toBe(7);
-        wrapper.unmount();
-    });
-});

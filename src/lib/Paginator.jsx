@@ -3,78 +3,16 @@ import PropTypes from 'prop-types';
 
 class Paginator extends React.Component {
 
-    constructor(props) {
-        super(props);
-        let data = this.performCalcs(this.props.currentPage, this.props.tableLength);
-        this.state = {
-            firstValue: data.firstValue,
-            previousValue: data.previousValue,
-            pos1Value: data.pos1Value,
-            pos2Value: data.pos2Value,
-            pos3Value: data.pos3Value,
-            pos4Value: data.pos4Value,
-            pos5Value: data.pos5Value,
-            nextValue: data.nextValue,
-            lastValue: data.lastValue,
-            firstClasses: data.firstClasses,
-            previousClasses: data.previousClasses,
-            pos1Classes: data.pos1Classes,
-            pos2Classes: data.pos2Classes,
-            pos3Classes: data.pos3Classes,
-            pos4Classes: data.pos4Classes,
-            pos5Classes: data.pos5Classes,
-            nextClasses: data.nextClasses,
-            lastClasses: data.lastClasses,
-            totalNumberOfPages: data.totalNumberOfPages,
-            displayStartRow: this.props.displayStartRow,
-            displayEndRow: this.props.displayEndRow,
-            displayTotal: this.props.displayTotal,
-            displayFiltered: this.props.displayFiltered,
-            displayOverallTotal: this.props.displayOverallTotal
-        }
-    }
-
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        let data = this.performCalcs(nextProps.currentPage, nextProps.tableLength);
-        this.setState({
-            firstValue: data.firstValue,
-            previousValue: data.previousValue,
-            pos1Value: data.pos1Value,
-            pos2Value: data.pos2Value,
-            pos3Value: data.pos3Value,
-            pos4Value: data.pos4Value,
-            pos5Value: data.pos5Value,
-            nextValue: data.nextValue,
-            lastValue: data.lastValue,
-            totalNumberOfPages: data.totalNumberOfPages,
-            //currentPage: data.currentPage,
-            firstClasses: data.firstClasses,
-            previousClasses: data.previousClasses,
-            pos1Classes: data.pos1Classes,
-            pos2Classes: data.pos2Classes,
-            pos3Classes: data.pos3Classes,
-            pos4Classes: data.pos4Classes,
-            pos5Classes: data.pos5Classes,
-            nextClasses: data.nextClasses,
-            lastClasses: data.lastClasses,
-            displayStartRow: nextProps.displayStartRow,
-            displayEndRow: nextProps.displayEndRow,
-            displayTotal: nextProps.displayTotal,
-            displayFiltered: nextProps.displayFiltered,
-            displayOverallTotal: nextProps.displayOverallTotal
-        });
-    }
-
-    performCalcs(currentPage, tableLength) {
+    performCalculations(currentPage, tableLength) {
         let totalNumberOfPages = Math.ceil(tableLength / this.props.rowsPerPage);
         let firstValue = 1;
-        let previousValue = 1;
+        let previousValue = currentPage - 1 < 1 ? 1 : currentPage - 1;
         let pos1Value = 1;
         let pos2Value = 2;
         let pos3Value = 3;
         let pos4Value = 4;
         let pos5Value = 5;
-        let nextValue = 2;
+        let nextValue = currentPage + 1;
         let lastValue = totalNumberOfPages;
         if (currentPage > 3) {
             previousValue = currentPage - 1;
@@ -152,48 +90,49 @@ class Paginator extends React.Component {
 
 
     render() {
+        const paginatorData = this.performCalculations(this.props.currentPage, this.props.tableLength);
         return (
             <nav>
                 <ul className='pagination'>
-                    <li className={this.state.firstClasses}>
+                    <li className={paginatorData.firstClasses}>
                         <a href="#!" className='page-link'
-                           onClick={this.props.rowMover.bind(null, this.state.firstValue)}> First </a>
+                           onClick={this.props.rowMover.bind(null, paginatorData.firstValue)}> First </a>
                     </li>
-                    <li className={this.state.previousClasses}>
+                    <li className={paginatorData.previousClasses}>
                         <a href="#!" className='page-link'
-                           onClick={this.props.rowMover.bind(null, this.state.previousValue)}>Previous </a>
+                           onClick={this.props.rowMover.bind(null, paginatorData.previousValue)}>Previous </a>
                     </li>
-                    <li className={this.state.pos1Classes}>
+                    <li className={paginatorData.pos1Classes}>
                         <a href="#!" className='page-link'
-                           onClick={this.props.rowMover.bind(null, this.state.pos1Value)}>{this.state.pos1Value}</a>
+                           onClick={this.props.rowMover.bind(null, paginatorData.pos1Value)}>{paginatorData.pos1Value}</a>
                     </li>
-                    <li className={this.state.pos2Classes}>
+                    <li className={paginatorData.pos2Classes}>
                         <a href="#!" className='page-link'
-                           onClick={this.props.rowMover.bind(null, this.state.pos2Value)}>{this.state.pos2Value}</a>
+                           onClick={this.props.rowMover.bind(null, paginatorData.pos2Value)}>{paginatorData.pos2Value}</a>
                     </li>
-                    <li className={this.state.pos3Classes}>
+                    <li className={paginatorData.pos3Classes}>
                         <a href="#!" className='page-link'
-                           onClick={this.props.rowMover.bind(null, this.state.pos3Value)}>{this.state.pos3Value}</a>
+                           onClick={this.props.rowMover.bind(null, paginatorData.pos3Value)}>{paginatorData.pos3Value}</a>
                     </li>
-                    <li className={this.state.pos4Classes}>
+                    <li className={paginatorData.pos4Classes}>
                         <a href="#!" className='page-link'
-                           onClick={this.props.rowMover.bind(null, this.state.pos4Value)}>{this.state.pos4Value}</a>
+                           onClick={this.props.rowMover.bind(null, paginatorData.pos4Value)}>{paginatorData.pos4Value}</a>
                     </li>
-                    <li className={this.state.pos5Classes}>
+                    <li className={paginatorData.pos5Classes}>
                         <a href="#!" className='page-link'
-                           onClick={this.props.rowMover.bind(null, this.state.pos5Value)}>{this.state.pos5Value}</a>
+                           onClick={this.props.rowMover.bind(null, paginatorData.pos5Value)}>{paginatorData.pos5Value}</a>
                     </li>
-                    <li className={this.state.nextClasses}>
+                    <li className={paginatorData.nextClasses}>
                         <a href="#!" className='page-link'
-                           onClick={this.props.rowMover.bind(null, this.state.nextValue)}>Next </a>
+                           onClick={this.props.rowMover.bind(null, paginatorData.nextValue)}>Next </a>
                     </li>
-                    <li className={this.state.lastClasses}>
+                    <li className={paginatorData.lastClasses}>
                         <a href="#!" className='page-link'
-                           onClick={this.props.rowMover.bind(null, this.state.lastValue)}>Last </a>
+                           onClick={this.props.rowMover.bind(null, paginatorData.lastValue)}>Last </a>
                     </li>
                     <li className={'page-item disabled'}><span
-                        className='page-link'>Showing {this.state.displayStartRow} to {this.state.displayEndRow} of {this.state.displayTotal} records <span
-                        className={this.state.displayFiltered ? 'shown' : 'hidden'}>(filtered from {this.state.displayOverallTotal})</span></span>
+                        className='page-link'>Showing {this.props.displayStartRow} to {this.props.displayEndRow} of {this.props.displayTotal} records <span
+                        className={this.props.displayFiltered ? 'shown' : 'hidden'}>(filtered from {this.props.displayOverallTotal})</span></span>
                     </li>
                 </ul>
             </nav>
