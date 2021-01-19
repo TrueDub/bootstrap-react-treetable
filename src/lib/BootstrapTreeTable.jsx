@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import {isAfter, isBefore, parse} from 'date-fns'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleRight} from "@fortawesome/free-solid-svg-icons/faAngleRight";
 import {faSortDown} from "@fortawesome/free-solid-svg-icons/faSortDown";
@@ -221,9 +221,9 @@ class BootstrapTreeTable extends React.Component {
     }
 
     compareDates(aValue, bValue, sortDateFormat) {
-        aValue = moment(aValue, sortDateFormat);
-        bValue = moment(bValue, sortDateFormat);
-        return aValue.isBefore(bValue) ? -1 : aValue.isAfter(bValue) ? 1 : 0;
+        aValue = parse(aValue, sortDateFormat, new Date());
+        bValue = parse(bValue, sortDateFormat, new Date());
+        return isBefore(aValue, bValue) ? -1 : isAfter(aValue, bValue) ? 1 : 0;
     }
 
     resetSorting() {
