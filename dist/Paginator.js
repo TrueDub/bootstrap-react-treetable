@@ -52,88 +52,24 @@ var Paginator =
 function (_React$Component) {
   _inherits(Paginator, _React$Component);
 
-  function Paginator(props) {
-    var _this;
-
+  function Paginator() {
     _classCallCheck(this, Paginator);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Paginator).call(this, props));
-
-    var data = _this.performCalcs(_this.props.currentPage, _this.props.tableLength);
-
-    _this.state = {
-      firstValue: data.firstValue,
-      previousValue: data.previousValue,
-      pos1Value: data.pos1Value,
-      pos2Value: data.pos2Value,
-      pos3Value: data.pos3Value,
-      pos4Value: data.pos4Value,
-      pos5Value: data.pos5Value,
-      nextValue: data.nextValue,
-      lastValue: data.lastValue,
-      firstClasses: data.firstClasses,
-      previousClasses: data.previousClasses,
-      pos1Classes: data.pos1Classes,
-      pos2Classes: data.pos2Classes,
-      pos3Classes: data.pos3Classes,
-      pos4Classes: data.pos4Classes,
-      pos5Classes: data.pos5Classes,
-      nextClasses: data.nextClasses,
-      lastClasses: data.lastClasses,
-      totalNumberOfPages: data.totalNumberOfPages,
-      displayStartRow: _this.props.displayStartRow,
-      displayEndRow: _this.props.displayEndRow,
-      displayTotal: _this.props.displayTotal,
-      displayFiltered: _this.props.displayFiltered,
-      displayOverallTotal: _this.props.displayOverallTotal
-    };
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Paginator).apply(this, arguments));
   }
 
   _createClass(Paginator, [{
-    key: "UNSAFE_componentWillReceiveProps",
-    value: function UNSAFE_componentWillReceiveProps(nextProps) {
-      var data = this.performCalcs(nextProps.currentPage, nextProps.tableLength);
-      this.setState({
-        firstValue: data.firstValue,
-        previousValue: data.previousValue,
-        pos1Value: data.pos1Value,
-        pos2Value: data.pos2Value,
-        pos3Value: data.pos3Value,
-        pos4Value: data.pos4Value,
-        pos5Value: data.pos5Value,
-        nextValue: data.nextValue,
-        lastValue: data.lastValue,
-        totalNumberOfPages: data.totalNumberOfPages,
-        //currentPage: data.currentPage,
-        firstClasses: data.firstClasses,
-        previousClasses: data.previousClasses,
-        pos1Classes: data.pos1Classes,
-        pos2Classes: data.pos2Classes,
-        pos3Classes: data.pos3Classes,
-        pos4Classes: data.pos4Classes,
-        pos5Classes: data.pos5Classes,
-        nextClasses: data.nextClasses,
-        lastClasses: data.lastClasses,
-        displayStartRow: nextProps.displayStartRow,
-        displayEndRow: nextProps.displayEndRow,
-        displayTotal: nextProps.displayTotal,
-        displayFiltered: nextProps.displayFiltered,
-        displayOverallTotal: nextProps.displayOverallTotal
-      });
-    }
-  }, {
-    key: "performCalcs",
-    value: function performCalcs(currentPage, tableLength) {
+    key: "performCalculations",
+    value: function performCalculations(currentPage, tableLength) {
       var totalNumberOfPages = Math.ceil(tableLength / this.props.rowsPerPage);
       var firstValue = 1;
-      var previousValue = 1;
+      var previousValue = currentPage - 1 < 1 ? 1 : currentPage - 1;
       var pos1Value = 1;
       var pos2Value = 2;
       var pos3Value = 3;
       var pos4Value = 4;
       var pos5Value = 5;
-      var nextValue = 2;
+      var nextValue = currentPage + 1;
       var lastValue = totalNumberOfPages;
 
       if (currentPage > 3) {
@@ -221,69 +157,70 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var paginatorData = this.performCalculations(this.props.currentPage, this.props.tableLength);
       return _react.default.createElement("nav", null, _react.default.createElement("ul", {
         className: "pagination"
       }, _react.default.createElement("li", {
-        className: this.state.firstClasses
+        className: paginatorData.firstClasses
       }, _react.default.createElement("a", {
         href: "#!",
         className: "page-link",
-        onClick: this.props.rowMover.bind(null, this.state.firstValue)
+        onClick: this.props.rowMover.bind(null, paginatorData.firstValue)
       }, " First ")), _react.default.createElement("li", {
-        className: this.state.previousClasses
+        className: paginatorData.previousClasses
       }, _react.default.createElement("a", {
         href: "#!",
         className: "page-link",
-        onClick: this.props.rowMover.bind(null, this.state.previousValue)
+        onClick: this.props.rowMover.bind(null, paginatorData.previousValue)
       }, "Previous ")), _react.default.createElement("li", {
-        className: this.state.pos1Classes
+        className: paginatorData.pos1Classes
       }, _react.default.createElement("a", {
         href: "#!",
         className: "page-link",
-        onClick: this.props.rowMover.bind(null, this.state.pos1Value)
-      }, this.state.pos1Value)), _react.default.createElement("li", {
-        className: this.state.pos2Classes
+        onClick: this.props.rowMover.bind(null, paginatorData.pos1Value)
+      }, paginatorData.pos1Value)), _react.default.createElement("li", {
+        className: paginatorData.pos2Classes
       }, _react.default.createElement("a", {
         href: "#!",
         className: "page-link",
-        onClick: this.props.rowMover.bind(null, this.state.pos2Value)
-      }, this.state.pos2Value)), _react.default.createElement("li", {
-        className: this.state.pos3Classes
+        onClick: this.props.rowMover.bind(null, paginatorData.pos2Value)
+      }, paginatorData.pos2Value)), _react.default.createElement("li", {
+        className: paginatorData.pos3Classes
       }, _react.default.createElement("a", {
         href: "#!",
         className: "page-link",
-        onClick: this.props.rowMover.bind(null, this.state.pos3Value)
-      }, this.state.pos3Value)), _react.default.createElement("li", {
-        className: this.state.pos4Classes
+        onClick: this.props.rowMover.bind(null, paginatorData.pos3Value)
+      }, paginatorData.pos3Value)), _react.default.createElement("li", {
+        className: paginatorData.pos4Classes
       }, _react.default.createElement("a", {
         href: "#!",
         className: "page-link",
-        onClick: this.props.rowMover.bind(null, this.state.pos4Value)
-      }, this.state.pos4Value)), _react.default.createElement("li", {
-        className: this.state.pos5Classes
+        onClick: this.props.rowMover.bind(null, paginatorData.pos4Value)
+      }, paginatorData.pos4Value)), _react.default.createElement("li", {
+        className: paginatorData.pos5Classes
       }, _react.default.createElement("a", {
         href: "#!",
         className: "page-link",
-        onClick: this.props.rowMover.bind(null, this.state.pos5Value)
-      }, this.state.pos5Value)), _react.default.createElement("li", {
-        className: this.state.nextClasses
+        onClick: this.props.rowMover.bind(null, paginatorData.pos5Value)
+      }, paginatorData.pos5Value)), _react.default.createElement("li", {
+        className: paginatorData.nextClasses
       }, _react.default.createElement("a", {
         href: "#!",
         className: "page-link",
-        onClick: this.props.rowMover.bind(null, this.state.nextValue)
+        onClick: this.props.rowMover.bind(null, paginatorData.nextValue)
       }, "Next ")), _react.default.createElement("li", {
-        className: this.state.lastClasses
+        className: paginatorData.lastClasses
       }, _react.default.createElement("a", {
         href: "#!",
         className: "page-link",
-        onClick: this.props.rowMover.bind(null, this.state.lastValue)
+        onClick: this.props.rowMover.bind(null, paginatorData.lastValue)
       }, "Last ")), _react.default.createElement("li", {
         className: 'page-item disabled'
       }, _react.default.createElement("span", {
         className: "page-link"
-      }, "Showing ", this.state.displayStartRow, " to ", this.state.displayEndRow, " of ", this.state.displayTotal, " records ", _react.default.createElement("span", {
-        className: this.state.displayFiltered ? 'shown' : 'hidden'
-      }, "(filtered from ", this.state.displayOverallTotal, ")")))));
+      }, "Showing ", this.props.displayStartRow, " to ", this.props.displayEndRow, " of ", this.props.displayTotal, " records ", _react.default.createElement("span", {
+        className: this.props.displayFiltered ? 'shown' : 'hidden'
+      }, "(filtered from ", this.props.displayOverallTotal, ")")))));
     }
   }]);
 
