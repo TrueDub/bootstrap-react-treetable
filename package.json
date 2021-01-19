@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-react-treetable",
-  "version": "1.0.3-rc.1",
+  "version": "1.0.3-rc.2",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "files": [
