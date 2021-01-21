@@ -110,7 +110,7 @@ Obviously, the tableData prop is required. There is one other required prop:
 | sortUsingRenderer | Boolean | When sorting, sort using the output of the renderer | false | No |
 | sortOrder      | String | Indicates that the table should be sorted by this field in this order - values are 'asc' or 'desc' | asc | No |
 | sortType       | String | Indicates the data type this field should be sorted as - options are string, date or number | string | No |
-| sortDateFormat | String | The format of the date to be sorted (assuming sortType is date). This uses [date-fns](https://date-fns.org/), so the formats are specified [here](https://date-fns.org/v2.16.1/docs/parse) | string | No |  
+| sortDateFormat | String | The format of the date to be sorted (assuming sortType is date). This uses [date-fns](https://date-fns.org/), so the formats are specified [here](https://date-fns.org/v2.16.1/docs/parse). Note that these are different to the formats used by Moment.js, so this is a breaking change. | string | No |  
 | filterable     | Boolean | Should this column be included when filtering the data? | true | No |  
 
 Further control of how the table is displayed can be provided using the **control** prop.
@@ -167,6 +167,7 @@ no `children` attributes.
 
 | Release | Description | Release date |
 | ------- | ----------- | ------------ |
+|  2.0.0  | React lifestyle methods removed, Moment.js removed, bugfixes applied | 21-Jan-2021 |                                                           
 |  1.0.2  | Audit fixes | 01-Oct-2019 |
 |  1.0.1  |  | 26-Jun-2019 |
 |  1.0.0  | First release | 22-Feb-2019 |
