@@ -1,7 +1,10 @@
 # bootstrap-react-treetable
-A React component that presents a simple TreeTable, allowing the user to supply styling and rendering options. A default styling (using Bootstrap 4) is also available. XXX
+
+A React component that presents a simple TreeTable, allowing the user to supply styling and rendering options. A default
+styling (using Bootstrap 4) is also available. XXX
 
 ## Installation
+
 Run the following command:
 `npm install bootstrap-react-treetable --save`
 or
@@ -107,7 +110,7 @@ Obviously, the tableData prop is required. There is one other required prop:
 | sortUsingRenderer | Boolean | When sorting, sort using the output of the renderer | false | No |
 | sortOrder      | String | Indicates that the table should be sorted by this field in this order - values are 'asc' or 'desc' | asc | No |
 | sortType       | String | Indicates the data type this field should be sorted as - options are string, date or number | string | No |
-| sortDateFormat | String | The format of the date to be sorted (assuming sortType is date). This uses Moment, so the formats are specified [here](https://momentjs.com/docs/#/parsing) | string | No |  
+| sortDateFormat | String | The format of the date to be sorted (assuming sortType is date). This uses [date-fns](https://date-fns.org/), so the formats are specified [here](https://date-fns.org/v2.16.1/docs/parse). Note that these are different to the formats used by Moment.js, so this is a breaking change. | string | No |  
 | filterable     | Boolean | Should this column be included when filtering the data? | true | No |  
 
 Further control of how the table is displayed can be provided using the **control** prop.
@@ -143,23 +146,28 @@ let descriptionRenderer = function (dataRow, dataField) {
 
 #### Styling
 
-The component is styled using Bootstrap 4 classes. Bootstrap 4 is a peer dependency, so it needs to be provided by the project using this one.
+The component is styled using Bootstrap 4 classes. Bootstrap 4 is a peer dependency, so it needs to be provided by the
+project using this one.
 
 ### Sorting
+
 The table can be sorted by default, simply set the `sortOrder` attribute of the relevant column.
 
-Clicking the header of any column will sort by that column, in ascending order. Clicking again will sort in descending order. Appropriate icons are used to indicate the sort order.
+Clicking the header of any column will sort by that column, in ascending order. Clicking again will sort in descending
+order. Appropriate icons are used to indicate the sort order.
 
 You can prevent sorting of a specific column by simply setting the `sortable` attribute of the relevant column to false.
 
 ### Use as a simple DataTable
 
-To use this component as a simple datatable (i.e. no expandable capabilities), simply provide a `tableData` prop with no `children` attributes.  
+To use this component as a simple datatable (i.e. no expandable capabilities), simply provide a `tableData` prop with
+no `children` attributes.
 
 ## Release History
 
 | Release | Description | Release date |
 | ------- | ----------- | ------------ |
+|  2.0.0  | React lifestyle methods removed, Moment.js removed, bugfixes applied | 21-Jan-2021 |                                                           
 |  1.0.2  | Audit fixes | 01-Oct-2019 |
 |  1.0.1  |  | 26-Jun-2019 |
 |  1.0.0  | First release | 22-Feb-2019 |

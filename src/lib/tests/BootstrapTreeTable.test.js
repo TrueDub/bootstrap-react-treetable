@@ -1,6 +1,6 @@
 import React from 'react';
 import BootstrapTreeTable from '../BootstrapTreeTable';
-import {shallow, configure} from 'enzyme';
+import {configure, shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 configure({adapter: new Adapter()});
@@ -99,7 +99,7 @@ let dataTableData = [
 let control = {};
 let columns = [
     {dataField: "name", heading: "fred1", fixedWidth: true, percentageWidth: 25},
-    {dataField: "dataType", heading: "fred2", fixedWidth: true, percentageWidth: 10},
+    {dataField: "dataType", heading: "fred2", fixedWidth: true, percentageWidth: 10, filterable: true},
     {dataField: "example", heading: "fred3", fixedWidth: true, percentageWidth: 25},
     {dataField: "description", heading: "fred4", fixedWidth: true, percentageWidth: 40}
 ];
@@ -361,3 +361,23 @@ describe('testing the DataTable enhancedTableData setup', () => {
         expect(enhancedTableData[2].visible).toBe(true);
     });
 });
+
+//Filtering tests
+
+describe('testing the filtering functionality', () => {
+    it('filtering is applied correctly', () => {
+        const wrapper = shallow(<BootstrapTreeTable columns={columns} tableData={tableData}
+                                                    control={control}/>);
+        const instance = wrapper.instance();
+        let enhancedTableData = wrapper.state('enhancedTableData');
+
+        const mockedEvent = {target: {value: 1}};
+        instance.applyFilter(mockedEvent);
+        wrapper.update();
+        let filterTableData = wrapper.state('enhancedTableData');
+        const filteredTableData = instance.filterNonVisibleRows(filterTableData);
+        expect(filteredTableData.length).toBeLessThan(enhancedTableData.length);
+        expect(filteredTableData.length).toBe(1);
+    });
+});
+
