@@ -53,6 +53,19 @@ describe('testing the Paginator page calculations', () => {
         expect(paginatorData.lastValue).toBe(63);
         expect(paginatorData.totalNumberOfPages).toBe(63);
     });
+    it('displays correctly for Page 3 of 4', () => {
+        let currentPage = 3;
+        let tableLength = 35;
+        let rowsPerPage = 10;
+        const paginatorData = Calculations().performCalculations(currentPage, tableLength, rowsPerPage);
+        expect(paginatorData.pos1Value).toBe(0);
+        expect(paginatorData.pos5Value).toBe(4);
+        expect(paginatorData.firstValue).toBe(1);
+        expect(paginatorData.previousValue).toBe(2);
+        expect(paginatorData.nextValue).toBe(4);
+        expect(paginatorData.lastValue).toBe(4);
+        expect(paginatorData.totalNumberOfPages).toBe(4);
+    });
     it('displays correctly for Page 1 of 4', () => {
         let currentPage = 1;
         let tableLength = 35;
@@ -63,19 +76,6 @@ describe('testing the Paginator page calculations', () => {
         expect(paginatorData.firstValue).toBe(1);
         expect(paginatorData.previousValue).toBe(1);
         expect(paginatorData.nextValue).toBe(2);
-        expect(paginatorData.lastValue).toBe(4);
-        expect(paginatorData.totalNumberOfPages).toBe(4);
-    });
-    it('displays correctly for Page 4 of 4', () => {
-        let currentPage = 4;
-        let tableLength = 35;
-        let rowsPerPage = 10;
-        const paginatorData = Calculations().performCalculations(currentPage, tableLength, rowsPerPage);
-        expect(paginatorData.pos1Value).toBe(0);
-        expect(paginatorData.pos5Value).toBe(4);
-        expect(paginatorData.firstValue).toBe(1);
-        expect(paginatorData.previousValue).toBe(3);
-        expect(paginatorData.nextValue).toBe(5);
         expect(paginatorData.lastValue).toBe(4);
         expect(paginatorData.totalNumberOfPages).toBe(4);
     });

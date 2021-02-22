@@ -17,11 +17,16 @@
     "clean": "rimraf dist",
     "start": "react-scripts start",
     "build": "npm run clean && babel src/lib --out-dir dist && copyfiles -f src/lib/*.css dist",
-    "test": "cross-env CI=true react-scripts test --env=jsdom",
+    "test": "cross-env CI=true react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject",
     "clean:demo": "rimraf build",
     "build:demo": "npm run clean:demo && webpack --config webpack.config.demo.js -p --bail",
     "lint": "eslint src"
+  },
+  "jest": {
+    "coverageReporters": [
+      "html"
+    ]
   },
   "husky": {
     "hooks": {
