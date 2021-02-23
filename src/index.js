@@ -7,6 +7,8 @@ import BootstrapTreeTable from "./lib/BootstrapTreeTable.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'highlight.js/styles/rainbow.css';
 
+import cityData from './euroCapitals.json';
+
 let descriptionRenderer = function (dataRow, dataField) {
     return <span dangerouslySetInnerHTML={{__html: dataRow.data[dataField]}}></span>;
 };
@@ -21,7 +23,8 @@ let fixedColumns = [
         dataField: "name",
         heading: "Name",
         fixedWidth: true,
-        percentageWidth: 20
+        percentageWidth: 20,
+        sortOrder: 'asc'
     },
     {
         dataField: "dataType",
@@ -49,8 +52,8 @@ let fixedColumns = [
         renderer: orderRenderer,
         fixedWidth: true,
         percentageWidth: 15,
-        sortOrder: 'desc',
-        sortUsingRenderer: true
+        //sortOrder: 'desc',
+        //sortUsingRenderer: true
     }
 ];
 let tableData = [
@@ -136,7 +139,7 @@ let tableData = [
     },
     {
         data: {
-            name: "name0m",
+            name: "name0p",
             dataType: "Number",
             example: "1",
             description: "number blah",
@@ -146,7 +149,7 @@ let tableData = [
     },
     {
         data: {
-            name: "name0m",
+            name: "name0q",
             dataType: "Number",
             example: "1",
             description: "number blah",
@@ -156,7 +159,7 @@ let tableData = [
     },
     {
         data: {
-            name: "name0m",
+            name: "name0b",
             dataType: "Number",
             example: "1",
             description: "number blah",
@@ -244,6 +247,38 @@ let dataTableControls = {
     filterInputPlaceholderText: 'Filter...'
 };
 
+
+const tempColumns = [
+    {
+        dataField: "name",
+        heading: "Name",
+        filterable: true
+    },
+    {
+        dataField: "population",
+        heading: "Random Number"
+    },
+    {
+        dataField: "bill",
+        heading: "Dummy 1"
+    },
+    {
+        dataField: "fred",
+        heading: "Dummy 2"
+    },
+    {
+        dataField: "john",
+        heading: "Dummy 3"
+    }
+];
+const tempControls = {
+    visibleRows: 1,
+    allowSorting: true,
+    showPagination: true,
+    initialRowsPerPage: 10,
+    allowFiltering: true
+};
+
 const App = () => (
     <div style={{width: "90%", margin: "15px auto"}}>
         <h1>Bootstrap React TreeTable Demo</h1>
@@ -260,7 +295,8 @@ const App = () => (
                         the Order column is sorted by the output of that renderer, not by the input value.
                     </li>
                 </ol>
-                <BootstrapTreeTable columns={fixedColumns} tableData={tableData} control={controlWithButton}/>
+                <BootstrapTreeTable columns={tempColumns} tableData={cityData} control={tempControls}/>
+                {/*<BootstrapTreeTable columns={fixedColumns} tableData={tableData} control={controlWithButton}/>*/}
                 <table className="table table-bordered">
                     <tbody>
                     <tr>

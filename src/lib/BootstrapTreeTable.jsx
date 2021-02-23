@@ -9,6 +9,7 @@ import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
 import {isAfter, isBefore, parse} from "date-fns";
 
 import Paginator from "./Paginator";
+import useConstructor from "./hooks/useConstructor";
 
 import './BootstrapTreeTable.css';
 
@@ -428,6 +429,13 @@ const BootstrapTreeTable = (props) => {
     }
 
     //execution and initial state-setting start here
+
+    useConstructor(() => {
+        console.log(
+            "This only happens ONCE and it happens BEFORE the initial render."
+        );
+    });
+
     //first check inputs & define sensible defaults
     let visibleRows = props.control.hasOwnProperty('visibleRows') ? props.control.visibleRows : 1;
     let showExpandCollapseButton = props.control.hasOwnProperty('showExpandCollapseButton') ? props.control.showExpandCollapseButton : true;
@@ -436,7 +444,9 @@ const BootstrapTreeTable = (props) => {
     let filterInputPlaceholderText = props.control.hasOwnProperty('filterInputPlaceholderText') ? props.control.filterInputPlaceholderText : 'Filter...';
     let showPagination = props.control.hasOwnProperty('showPagination') ? props.control.showPagination : false;
     let initialRowsPerPage = props.control.hasOwnProperty('initialRowsPerPage') ? props.control.initialRowsPerPage : 10;
+
     let initialState = Initialisation().generateInitialState(visibleRows, props.tableData, props.columns);
+
     //set required state variables
     const [enhancedTableData, setEnhancedTableData] = React.useState(initialState.enhancedTableData);
     const [expanded, setExpanded] = React.useState(false);
@@ -447,7 +457,8 @@ const BootstrapTreeTable = (props) => {
     const [filtered, setFiltered] = React.useState(false);
     const [currentPage, setCurrentPage] = React.useState(1);
     //construct table
-    let newTableData = filterNonVisibleRows(enhancedTableData);
+    //let newTableData = filterNonVisibleRows(enhancedTableData);
+    let newTableData = enhancedTableData;
     let newStartAndEnd = calculateNewStartAndEndRows(currentPage, initialRowsPerPage, newTableData.length);
     let headingRows = generateHeaderRow(allowSorting);
     let tableBody = generateTableBody(newTableData, newStartAndEnd.startRow, newStartAndEnd.endRow);
