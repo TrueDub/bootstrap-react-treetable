@@ -1,0 +1,332 @@
+[
+  {
+    "data": {
+      "name": "Allegiant Stadium",
+      "capacity": 65000,
+      "location": "Paradise, Nevada",
+      "field": "Bermuda grass",
+      "roof": "Fixed",
+      "team": "Las Vegas Raiders",
+      "year": 2020
+    }
+  },
+  {
+    "data": {
+      "name": "Arrowhead Stadium",
+      "capacity": 76416,
+      "location": "Kansas City, Missouri",
+      "field": "Bermuda grass",
+      "roof": "Open",
+      "team": "Kansas City Chiefs",
+      "year": 1972
+    }
+  },
+  {
+    "data": {
+      "name": "AT&T Stadium",
+      "capacity": 80000,
+      "location": "Arlington, Texas",
+      "field": "Hellas Matrix Turf",
+      "roof": "Retractable",
+      "team": "Dallas Cowboys",
+      "year": 2009
+    }
+  },
+  {
+    "data": {
+      "name": "Bank of America Stadium",
+      "capacity": 75523,
+      "location": "Charlotte, North Carolina",
+      "field": "Bermuda grass",
+      "roof": "Open",
+      "team": "Carolina Panthers",
+      "year": 1996
+    }
+  },
+  {
+    "data": {
+      "name": "Bills Stadium",
+      "capacity": 71608,
+      "location": "Orchard Park, New York",
+      "field": "A-Turf Titan 50",
+      "roof": "Open",
+      "team": "Buffalo Bills",
+      "year": 1973
+    }
+  },
+  {
+    "data": {
+      "name": "Empower Field at Mile High",
+      "capacity": 76125,
+      "location": "Denver, Colorado",
+      "field": "Kentucky bluegrass",
+      "roof": "Open",
+      "team": "Denver Broncos",
+      "year": 2001
+    }
+  },
+  {
+    "data": {
+      "name": "FedExField",
+      "capacity": 82000,
+      "location": "Landover, Maryland",
+      "field": "Bermuda grass",
+      "roof": "Open",
+      "team": "Washington Football Team",
+      "year": 1997
+    }
+  },
+  {
+    "data": {
+      "name": "FirstEnergy Stadium",
+      "capacity": 67895,
+      "location": "Cleveland, Ohio",
+      "field": "Kentucky bluegrass",
+      "roof": "Open",
+      "team": "Cleveland Browns",
+      "year": 1999
+    }
+  },
+  {
+    "data": {
+      "name": "Ford Field",
+      "capacity": 65000,
+      "location": "Detroit, Michigan",
+      "field": "FieldTurf Classic HD",
+      "roof": "Fixed",
+      "team": "Detroit Lions",
+      "year": 2002
+    }
+  },
+  {
+    "data": {
+      "name": "Gillette Stadium",
+      "capacity": 66829,
+      "location": "Foxborough, Massachusetts",
+      "field": "FieldTurf CORE",
+      "roof": "Open",
+      "team": "New England Patriots",
+      "year": 2002
+    }
+  },
+  {
+    "data": {
+      "name": "Hard Rock Stadium",
+      "capacity": 65326,
+      "location": "Miami Gardens, Florida",
+      "field": "Platinum TE Paspalum",
+      "roof": "Open",
+      "team": "Miami Dolphins",
+      "year": 1987
+    }
+  },
+  {
+    "data": {
+      "name": "Heinz Field",
+      "capacity": 68400,
+      "location": "Pittsburgh, Pennsylvania",
+      "field": "Kentucky bluegrass",
+      "roof": "Open",
+      "team": "Pittsburgh Steelers",
+      "year": 2001
+    }
+  },
+  {
+    "data": {
+      "name": "Lambeau Field",
+      "capacity": 81441,
+      "location": "Green Bay, Wisconsin",
+      "field": "Desso GrassMaster",
+      "roof": "Open",
+      "team": "Green Bay Packers",
+      "year": 1957
+    }
+  },
+  {
+    "data": {
+      "name": "Levi's Stadium",
+      "capacity": 68500,
+      "location": "Santa Clara, California",
+      "field": "Bermuda grass / Perennial Ryegrass mixture",
+      "roof": "Open",
+      "team": "San Francisco 49ers",
+      "year": 2014
+    }
+  },
+  {
+    "data": {
+      "name": "Lincoln Financial Field",
+      "capacity": 69596,
+      "location": "Philadelphia, Pennsylvania",
+      "field": "Desso GrassMaster",
+      "roof": "Open",
+      "team": "Philadelphia Eagles",
+      "year": 2003
+    }
+  },
+  {
+    "data": {
+      "name": "Lucas Oil Stadium",
+      "capacity": 67000,
+      "location": "Indianapolis, Indiana",
+      "field": "Shaw Sports Momentum Pro",
+      "roof": "Retractable",
+      "team": "Indianapolis Colts",
+      "year": 2008
+    }
+  },
+  {
+    "data": {
+      "name": "Lumen Field",
+      "capacity": 69000,
+      "location": "Seattle, Washington",
+      "field": "FieldTurf Revolution 360",
+      "roof": "Open",
+      "team": "Seattle Seahawks",
+      "year": 2002
+    }
+  },
+  {
+    "data": {
+      "name": "M&T Bank Stadium",
+      "capacity": 71008,
+      "location": "Baltimore, Maryland",
+      "field": "Bermuda grass",
+      "roof": "Open",
+      "team": "Baltimore Ravens",
+      "year": 1998
+    }
+  },
+  {
+    "data": {
+      "name": "Mercedes-Benz Stadium",
+      "capacity": 71000,
+      "location": "Atlanta, Georgia",
+      "field": "FieldTurf Revolution",
+      "roof": "Retractable",
+      "team": "Atlanta Falcons",
+      "year": 2017
+    }
+  },
+  {
+    "data": {
+      "name": "Mercedes-Benz Superdome",
+      "capacity": 73208,
+      "location": "New Orleans, Louisiana",
+      "field": "FieldTurf Revolution 360",
+      "roof": "Fixed",
+      "team": "New Orleans Saints",
+      "year": 1975
+    }
+  },
+  {
+    "data": {
+      "name": "MetLife Stadium",
+      "capacity": 82500,
+      "location": "East Rutherford, New Jersey",
+      "field": "UBU Sports Speed Series S5-M Synthetic Turf",
+      "roof": "Open",
+      "team": "New York Giants / New York Jets",
+      "year": 2010
+    }
+  },
+  {
+    "data": {
+      "name": "Nissan Stadium",
+      "capacity": 69143,
+      "location": "Nashville, Tennessee",
+      "field": "Bermuda grass",
+      "roof": "Open",
+      "team": "Tennessee Titans",
+      "year": 1999
+    }
+  },
+  {
+    "data": {
+      "name": "NRG Stadium",
+      "capacity": 72220,
+      "location": "Houston, Texas",
+      "field": "Hellas Matrix Turf",
+      "roof": "Retractable",
+      "team": "Houston Texans",
+      "year": 2002
+    }
+  },
+  {
+    "data": {
+      "name": "Paul Brown Stadium",
+      "capacity": 65515,
+      "location": "Cincinnati, Ohio",
+      "field": "UBU Speed Series S5-M Synthetic Turf",
+      "roof": "Open",
+      "team": "Cincinnati Bengals",
+      "year": 2000
+    }
+  },
+  {
+    "data": {
+      "name": "Raymond James Stadium",
+      "capacity": 65890,
+      "location": "Tampa, Florida",
+      "field": "Bermuda grass",
+      "roof": "Open",
+      "team": "Tampa Bay Buccaneers",
+      "year": 1998
+    }
+  },
+  {
+    "data": {
+      "name": "SoFi Stadium",
+      "capacity": 70240,
+      "location": "Inglewood, California",
+      "field": "Hellas Matrix Turf",
+      "roof": "Fixed",
+      "team": "Los Angeles Rams / Los Angeles Chargers",
+      "year": 2020
+    }
+  },
+  {
+    "data": {
+      "name": "Soldier Field",
+      "capacity": 61500,
+      "location": "Chicago, Illinois",
+      "field": "Kentucky bluegrass",
+      "roof": "Open",
+      "team": "Chicago Bears",
+      "year": 1924
+    }
+  },
+  {
+    "data": {
+      "name": "State Farm Stadium",
+      "capacity": 63400,
+      "location": "Glendale, Arizona",
+      "field": "Bermuda grass",
+      "roof": "Retractable",
+      "team": "Arizona Cardinals",
+      "year": 2006
+    }
+  },
+  {
+    "data": {
+      "name": "TIAA Bank Field",
+      "capacity": 69132,
+      "location": "Jacksonville, Florida",
+      "field": "Bermuda grass",
+      "roof": "Open",
+      "team": "Jacksonville Jaguars",
+      "year": 1995
+    }
+  },
+  {
+    "data": {
+      "name": "U.S. Bank Stadium",
+      "capacity": 66655,
+      "location": "Minneapolis, Minnesota",
+      "field": "UBU Speed Series S5-M Synthetic Turf",
+      "roof": "Fixed",
+      "team": "Minnesota Vikings",
+      "year": 2016
+    }
+  }
+]
