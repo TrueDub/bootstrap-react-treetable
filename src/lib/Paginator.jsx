@@ -126,7 +126,7 @@ export default function Paginator(props) {
                        onClick={props.rowMover.bind(null, paginatorData.pos5Value)}>{paginatorData.pos5Value}</a>
                 </li>
                 <li className={paginatorData.nextClasses}>
-                    <a href="#!" className='page-link'
+                    <a href="#!" className='page-link' id="nextLink"
                        onClick={props.rowMover.bind(null, paginatorData.nextValue)}>Next </a>
                 </li>
                 <li className={paginatorData.lastClasses}>

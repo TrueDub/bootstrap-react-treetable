@@ -7,175 +7,13 @@ import BootstrapTreeTable from "./lib/BootstrapTreeTable.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'highlight.js/styles/rainbow.css';
 
-import cityData from './euroCapitals.json';
+import cityData from './data/euroCapitals.json';
 
-let descriptionRenderer = function (dataRow, dataField) {
-    return <span dangerouslySetInnerHTML={{__html: dataRow.data[dataField]}}></span>;
+let numberRenderer = function (dataRow, dataField) {
+    return dataRow.data[dataField].toLocaleString();
 };
 
-let orderRenderer = function (dataRow, dataField) {
-    let newValue = dataRow.data[dataField] + 100;
-    return newValue;
-}
-
-let fixedColumns = [
-    {
-        dataField: "name",
-        heading: "Name",
-        fixedWidth: true,
-        percentageWidth: 20,
-        sortOrder: 'asc'
-    },
-    {
-        dataField: "dataType",
-        heading: "Data Type",
-        fixedWidth: true,
-        percentageWidth: 20
-    },
-    {
-        dataField: "example",
-        heading: "Example",
-        fixedWidth: true,
-        percentageWidth: 20
-    },
-    {
-        dataField: "description",
-        heading: "Description",
-        fixedWidth: true,
-        percentageWidth: 25,
-        renderer: descriptionRenderer,
-        sortUsingRenderer: false
-    },
-    {
-        dataField: "order",
-        heading: "Order",
-        renderer: orderRenderer,
-        fixedWidth: true,
-        percentageWidth: 15,
-        //sortOrder: 'desc',
-        //sortUsingRenderer: true
-    }
-];
-let tableData = [
-    {
-        data: {
-            name: "name0g",
-            dataType: "string",
-            example: "ex0gb",
-            description: "desc0g7",
-            order: 17.7
-        },
-        children: [
-            {
-                data: {
-                    name: "name0-z",
-                    dataType: "string",
-                    example: "ex0-0",
-                    description: "desc0-0",
-                    order: 373
-                },
-                children: []
-            }, {
-                data: {
-                    name: "name0-q",
-                    dataType: "string",
-                    example: "ex0-1",
-                    description: "desc0-1",
-                    order: 2
-                },
-                children: []
-            }, {
-                data: {
-                    name: "name0-b",
-                    dataType: "string",
-                    example: "ex0-2",
-                    description: "desc0-2",
-                    order: 111
-                },
-                children: [
-                    {
-                        data: {
-                            name: "name0-2-1",
-                            dataType: "string",
-                            example: "ex0-2-1",
-                            description: "desc0-2-1",
-                            order: 23
-                        },
-                        children: []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        data: {
-            name: "name0x",
-            dataType: "string",
-            example: "ex1",
-            description: "desc1 &euro; &euro;",
-            order: 6.8
-        },
-        children: []
-    },
-    {
-        data: {
-            name: "name0a",
-            dataType: "string",
-            example: "ex2",
-            description: "desc2 &euro; &euro; &euro; &euro;",
-            order: 9.7
-        },
-        children: []
-    },
-    {
-        data: {
-            name: "name0m",
-            dataType: "Number",
-            example: "1",
-            description: "number blah",
-            order: 3.04
-        },
-        children: []
-    },
-    {
-        data: {
-            name: "name0p",
-            dataType: "Number",
-            example: "1",
-            description: "number blah",
-            order: 3.04
-        },
-        children: []
-    },
-    {
-        data: {
-            name: "name0q",
-            dataType: "Number",
-            example: "1",
-            description: "number blah",
-            order: 3.04
-        },
-        children: []
-    },
-    {
-        data: {
-            name: "name0b",
-            dataType: "Number",
-            example: "1",
-            description: "number blah",
-            order: 3.04
-        },
-        children: []
-    }
-];
-let controlWithButton = {
-    visibleRows: 1,
-    allowSorting: true,
-    showExpandCollapseButton: true,
-    showPagination: true,
-    initialRowsPerPage: 4
-};
-let dataTableColumns = [
+const dataTableColumns = [
     {
         dataField: "name",
         heading: "Name"
@@ -201,7 +39,7 @@ let dataTableColumns = [
         sortOrder: 'desc'
     }
 ];
-let dataTableData = [
+const dataTableData = [
     {data: {name: 'fred869', size: 869, description: 'desc2407', type: 'black', date: '01-Jan-2018'}},
     {data: {name: 'fred743', size: 743, description: 'desc2343', type: 'black', date: '02-Jan-2018'}},
     {data: {name: 'fred8', size: 8, description: 'desc713', type: 'white', date: '03-Sep-2018'}},
@@ -239,7 +77,7 @@ let dataTableData = [
     {data: {name: 'fred568', size: 568, description: 'desc904', type: 'white', date: '05-Feb-2018'}},
     {data: {name: 'fred770', size: 770, description: 'desc1035', type: 'white', date: '06-Feb-2018'}}
 ];
-let dataTableControls = {
+const dataTableControls = {
     allowSorting: true,
     showPagination: true,
     initialRowsPerPage: 10,
@@ -247,8 +85,7 @@ let dataTableControls = {
     filterInputPlaceholderText: 'Filter...'
 };
 
-
-const tempColumns = [
+const treeColumns = [
     {
         dataField: "name",
         heading: "Name",
@@ -256,7 +93,9 @@ const tempColumns = [
     },
     {
         dataField: "population",
-        heading: "Random Number"
+        heading: "Random Number",
+        sortOrder: 'desc',
+        renderer: numberRenderer
     },
     {
         dataField: "bill",
@@ -271,7 +110,7 @@ const tempColumns = [
         heading: "Dummy 3"
     }
 ];
-const tempControls = {
+const treeControls = {
     visibleRows: 1,
     allowSorting: true,
     showPagination: true,
@@ -279,30 +118,56 @@ const tempControls = {
     allowFiltering: true
 };
 
-const App = () => (
-    <div style={{width: "90%", margin: "15px auto"}}>
-        <h1>Bootstrap React TreeTable Demo</h1>
-        <div>
-            <div>
+function App() {
+
+    const [showValue, setShowValue] = React.useState(2);
+
+    const showDataTable = () => {
+        setShowValue(1);
+    }
+
+    const showTreeTable = () => {
+        setShowValue(2);
+    }
+
+
+    return (
+        /*<div style={{width: "90%", margin: "15px auto"}}>*/
+        <div className="container">
+            <h1>Bootstrap React TreeTable Demo</h1>
+            <div className="table-responsive">
+                <table className="table">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <button className="btn btn-outline-primary" onClick={showTreeTable.bind(null)}>TreeTable</button>
+                        </td>
+                        <td>
+                            <button className="btn btn-outline-primary" onClick={showDataTable.bind(null)}>DataTable</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div className={showValue === 2 ? 'shown' : 'hidden'}>
                 <h3>TreeTable</h3>
                 Notes:
                 <ol>
                     <li>Clicking any column heading will sort that column in ascending order - a second click will
                         reverse the sort order. The "Reset Sorting" button will appear when a sort is applied.
                     </li>
-                    <li>An initial sort is applied to the Order column via the <code>columns</code> prop.</li>
-                    <li>The Order and Description columns each has a <code>renderer</code> applied to it. In addition,
-                        the Order column is sorted by the output of that renderer, not by the input value.
+                    <li>An initial descending sort is applied to the Random Number column via the <code>columns</code> prop.</li>
+                    <li>The Random Number column has a <code>renderer</code> applied to it. In addition, that column is
+                        sorted by the output of that renderer, not by the input value.
                     </li>
                 </ol>
-                <BootstrapTreeTable columns={tempColumns} tableData={cityData} control={tempControls}/>
-                {/*<BootstrapTreeTable columns={fixedColumns} tableData={tableData} control={controlWithButton}/>*/}
+                <BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}/>
                 <table className="table table-bordered">
                     <tbody>
                     <tr>
                         <td>Component declaration</td>
                         <td><Highlight language="javascript">
-                            {"<BootstrapTreeTable columns={fixedColumns} tableData={tableData} control={controlWithButton}/>"}
+                            {"<BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}/>"}
                         </Highlight></td>
                     </tr>
                     </tbody>
@@ -315,19 +180,19 @@ const App = () => (
                     </tr>
                     <tr>
                         <td>
-                            <pre><code>columns</code></pre>
+                            <pre><code>treeColumns</code></pre>
                         </td>
                         <td><Highlight language="javascript">
-                            {JSON.stringify(fixedColumns, null, 2)}
+                            {JSON.stringify(treeColumns, null, 2)}
                         </Highlight></td>
                     </tr>
                     <tr>
                         <td>
-                            <pre><code>control</code></pre>
+                            <pre><code>treeControls</code></pre>
                         </td>
                         <td>
                             <Highlight language="javascript">
-                                {JSON.stringify(controlWithButton, null, 2)}
+                                {JSON.stringify(treeControls, null, 2)}
                             </Highlight>
                         </td>
                     </tr>
@@ -335,33 +200,21 @@ const App = () => (
                         <td>
                             <pre><code>tableData</code></pre>
                         </td>
-                        <td><Highlight className='javascript'>
-                            {JSON.stringify(tableData, null, 2)}
-                        </Highlight></td>
+                        <td>See the contents of euroCapitals.json in the src/data directory.</td>
                     </tr>
                     <tr>
                         <td>
-                            <pre><code>descriptionRenderer</code></pre>
+                            <pre><code>numberRenderer</code></pre>
                             - the renderer function passed in the columns prop
                         </td>
                         <td><Highlight language="javascript">{"function (dataRow, dataField) {\n" +
-                        "    return <span dangerouslySetInnerHTML={{__html: dataRow.data[dataField]}}></span>;\n" +
+                        "    return dataRow.data[dataField].toLocaleString();\n" +
                         "};"}</Highlight></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <pre><code>orderRenderer</code></pre>
-                            - the renderer function passed in the columns prop
-                        </td>
-                        <td><Highlight language="javascript">{"function (dataRow, dataField) {\n" +
-                        "    let newValue = dataRow.data[dataField] + 100;\n" +
-                        "    return newValue;\n" +
-                        "}"}</Highlight></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <div>
+            <div className={showValue === 1 ? 'shown' : 'hidden'}>
                 <h3>DataTable</h3>
                 Notes:
                 <ol>
@@ -425,9 +278,9 @@ const App = () => (
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-);
+        </div>);
+}
+;
 
 render(
     <App/>

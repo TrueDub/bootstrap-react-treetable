@@ -9,7 +9,6 @@ import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
 import {isAfter, isBefore, parse} from "date-fns";
 
 import Paginator from "./Paginator";
-import useConstructor from "./hooks/useConstructor";
 
 import './BootstrapTreeTable.css';
 
@@ -284,16 +283,23 @@ const BootstrapTreeTable = (props) => {
         }
     }
 
-    const generateTableBodyRows = (tableData, startRow, endRow) => {
+    const generateTableBodyRows = (tableData, startRow, endRow, topRow = true) => {
         let tableBody = [];
         tableData.forEach((dataRow, index) => {
-                if (index >= startRow && index <= endRow) {
-                    let rowData = processDataRow(dataRow);
-                    let key = dataRow.parentRowID + '-' + dataRow.rowID;
-                    let rowClass = dataRow.visible ? 'shown' : 'hidden';
+                let rowData = processDataRow(dataRow);
+                let key = dataRow.parentRowID + '-' + dataRow.rowID;
+                let rowClass = dataRow.visible ? 'shown' : 'hidden';
+                if (topRow) {
+                    if (index >= startRow && index <= endRow) {
+                        tableBody.push(<tr className={rowClass} key={key}>{rowData}</tr>);
+                        if (dataRow.children) {
+                            tableBody.push(...generateTableBodyRows(dataRow.children, startRow, endRow, false));
+                        }
+                    }
+                } else {
                     tableBody.push(<tr className={rowClass} key={key}>{rowData}</tr>);
                     if (dataRow.children) {
-                        tableBody.push(...generateTableBodyRows(dataRow.children, startRow, endRow));
+                        tableBody.push(...generateTableBodyRows(dataRow.children, startRow, endRow, false));
                     }
                 }
             }
@@ -429,13 +435,6 @@ const BootstrapTreeTable = (props) => {
     }
 
     //execution and initial state-setting start here
-
-    useConstructor(() => {
-        console.log(
-            "This only happens ONCE and it happens BEFORE the initial render."
-        );
-    });
-
     //first check inputs & define sensible defaults
     let visibleRows = props.control.hasOwnProperty('visibleRows') ? props.control.visibleRows : 1;
     let showExpandCollapseButton = props.control.hasOwnProperty('showExpandCollapseButton') ? props.control.showExpandCollapseButton : true;
@@ -457,8 +456,8 @@ const BootstrapTreeTable = (props) => {
     const [filtered, setFiltered] = React.useState(false);
     const [currentPage, setCurrentPage] = React.useState(1);
     //construct table
-    //let newTableData = filterNonVisibleRows(enhancedTableData);
-    let newTableData = enhancedTableData;
+    let newTableData = filterNonVisibleRows(enhancedTableData);
+    //let newTableData = enhancedTableData;
     let newStartAndEnd = calculateNewStartAndEndRows(currentPage, initialRowsPerPage, newTableData.length);
     let headingRows = generateHeaderRow(allowSorting);
     let tableBody = generateTableBody(newTableData, newStartAndEnd.startRow, newStartAndEnd.endRow);
