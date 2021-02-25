@@ -84,7 +84,8 @@ const treeControls = {
     allowSorting: true,
     showPagination: true,
     initialRowsPerPage: 10,
-    allowFiltering: true
+    allowFiltering: true,
+    showExpandCollapseButton: true
 };
 
 function App() {

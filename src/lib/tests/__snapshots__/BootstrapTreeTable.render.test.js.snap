@@ -9,7 +9,7 @@ exports[`component renders as expected 1`] = `
   >
     <div>
       <button
-        className="btn btn-outline-secondary"
+        className="hidden"
         onClick={[Function]}
       >
         Expand All

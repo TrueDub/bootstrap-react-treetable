@@ -437,7 +437,7 @@ const BootstrapTreeTable = (props) => {
     //execution and initial state-setting start here
     //first check inputs & define sensible defaults
     let visibleRows = props.control.hasOwnProperty('visibleRows') ? props.control.visibleRows : 1;
-    let showExpandCollapseButton = props.control.hasOwnProperty('showExpandCollapseButton') ? props.control.showExpandCollapseButton : true;
+    let showExpandCollapseButton = props.control.hasOwnProperty('showExpandCollapseButton') ? props.control.showExpandCollapseButton : false;
     let allowSorting = props.control.hasOwnProperty('allowSorting') ? props.control.allowSorting : false;
     let allowFiltering = props.control.hasOwnProperty('allowFiltering') ? props.control.allowFiltering : false;
     let filterInputPlaceholderText = props.control.hasOwnProperty('filterInputPlaceholderText') ? props.control.filterInputPlaceholderText : 'Filter...';

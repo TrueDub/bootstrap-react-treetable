@@ -102,7 +102,7 @@ Obviously, the tableData prop is required. There is one other required prop:
 | -------------- | ---- | ----------- | ------- | -------- |
 | dataField      | String | the field that holds the data to be displayed | name | Yes |
 | heading        | String | the column header to be used - if not supplied, the dataField is used instead. | Name | No |
-| fixedWidth     | Boolean | Should the column be defined with a fixed width? | false | No |
+| fixedWidth     | Boolean | Should the column be defined with a fixed width? - default is false | false | No |
 | percentageWidth | Number | The percentage width this column will be allocated, should fixedWidth be true | 25 | No |
 | styleClass     | String | A CSS class to be applied to the TD element for this field | whatever | No |
 | renderer       | function | A function to be applied to the data - see further detail below | whatever | No |
@@ -111,18 +111,18 @@ Obviously, the tableData prop is required. There is one other required prop:
 | sortOrder      | String | Indicates that the table should be sorted by this field in this order - values are 'asc' or 'desc' | asc | No |
 | sortType       | String | Indicates the data type this field should be sorted as - options are string, date or number | string | No |
 | sortDateFormat | String | The format of the date to be sorted (assuming sortType is date). This uses [date-fns](https://date-fns.org/), so the formats are specified [here](https://date-fns.org/v2.16.1/docs/parse). Note that these are different to the formats used by Moment.js, so this is a breaking change. | string | No |  
-| filterable     | Boolean | Should this column be included when filtering the data? | true | No |  
+| filterable     | Boolean | Should this column be included when filtering the data? - default is false | true | No |  
 
 Further control of how the table is displayed can be provided using the **control** prop.
 
 | Attribute Name | Type | Description | Example | Required |
 | -------------- | ---- | ----------- | ------- | -------- |
 | visibleRows    | Number | Number of levels to display automatically - default is 1 | 2 | No |
-| showExpandCollapseButton     | Boolean | Should the Expand All/Collapse All button be displayed? | false | No |
+| showExpandCollapseButton     | Boolean | Should the Expand All/Collapse All button be displayed? - default is false | false | No |
 | allowSorting   | boolean | Enable or disable sorting on this table - default is false | false | No |
 | allowFiltering | boolean | Enable or disable filtering on this table - default is false | false | No |
 | filterInputPlaceholderText | string | Text to display as the placeholder in the filter input box | Filter... | No |
-| showPagination | boolean | Paginate the table, and provide a set of links at the bottom for navigation | false | No |
+| showPagination | boolean | Paginate the table, and provide a set of links at the bottom for navigation - default is false | false | No |
 | initialRowsPerPage | number | Number of rows to display when paginated | 10 | No |
 
 #### Rendering option
