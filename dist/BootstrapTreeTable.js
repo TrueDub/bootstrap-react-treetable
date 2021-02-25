@@ -414,19 +414,32 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
   };
 
   var generateTableBodyRows = function generateTableBodyRows(tableData, startRow, endRow) {
+    var topRow = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
     var tableBody = [];
     tableData.forEach(function (dataRow, index) {
-      if (index >= startRow && index <= endRow) {
-        var rowData = processDataRow(dataRow);
-        var key = dataRow.parentRowID + '-' + dataRow.rowID;
-        var rowClass = dataRow.visible ? 'shown' : 'hidden';
+      var rowData = processDataRow(dataRow);
+      var key = dataRow.parentRowID + '-' + dataRow.rowID;
+      var rowClass = dataRow.visible ? 'shown' : 'hidden';
+
+      if (topRow) {
+        if (index >= startRow && index <= endRow) {
+          tableBody.push(_react.default.createElement("tr", {
+            className: rowClass,
+            key: key
+          }, rowData));
+
+          if (dataRow.children) {
+            tableBody.push.apply(tableBody, _toConsumableArray(generateTableBodyRows(dataRow.children, startRow, endRow, false)));
+          }
+        }
+      } else {
         tableBody.push(_react.default.createElement("tr", {
           className: rowClass,
           key: key
         }, rowData));
 
         if (dataRow.children) {
-          tableBody.push.apply(tableBody, _toConsumableArray(generateTableBodyRows(dataRow.children, startRow, endRow)));
+          tableBody.push.apply(tableBody, _toConsumableArray(generateTableBodyRows(dataRow.children, startRow, endRow, false)));
         }
       }
     });
@@ -622,7 +635,7 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
 
 
   var visibleRows = props.control.hasOwnProperty('visibleRows') ? props.control.visibleRows : 1;
-  var showExpandCollapseButton = props.control.hasOwnProperty('showExpandCollapseButton') ? props.control.showExpandCollapseButton : true;
+  var showExpandCollapseButton = props.control.hasOwnProperty('showExpandCollapseButton') ? props.control.showExpandCollapseButton : false;
   var allowSorting = props.control.hasOwnProperty('allowSorting') ? props.control.allowSorting : false;
   var allowFiltering = props.control.hasOwnProperty('allowFiltering') ? props.control.allowFiltering : false;
   var filterInputPlaceholderText = props.control.hasOwnProperty('filterInputPlaceholderText') ? props.control.filterInputPlaceholderText : 'Filter...';
@@ -670,7 +683,8 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
       setCurrentPage = _React$useState16[1]; //construct table
 
 
-  var newTableData = filterNonVisibleRows(enhancedTableData);
+  var newTableData = filterNonVisibleRows(enhancedTableData); //let newTableData = enhancedTableData;
+
   var newStartAndEnd = calculateNewStartAndEndRows(currentPage, initialRowsPerPage, newTableData.length);
   var headingRows = generateHeaderRow(allowSorting);
   var tableBody = generateTableBody(newTableData, newStartAndEnd.startRow, newStartAndEnd.endRow); //return the constructed table

@@ -164,6 +164,7 @@ function Paginator(props) {
   }, _react.default.createElement("a", {
     href: "#!",
     className: "page-link",
+    id: "nextLink",
     onClick: props.rowMover.bind(null, paginatorData.nextValue)
   }, "Next ")), _react.default.createElement("li", {
     className: paginatorData.lastClasses
