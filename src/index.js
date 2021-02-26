@@ -87,6 +87,25 @@ const treeControls = {
     allowFiltering: true,
     showExpandCollapseButton: true
 };
+const treeTopRows = [
+    [
+        {
+            heading: '',
+            colspan: 1,
+            alignment: 'center'
+        },
+        {
+            heading: '',
+            colspan: 1,
+            alignment: 'center'
+        },
+        {
+            heading: 'Dummy Fields',
+            colspan: 3,
+            alignment: 'center'
+        }
+    ]
+]
 
 function App() {
 
@@ -129,7 +148,7 @@ function App() {
                     </li>
                     <li>Filtering is allowed on the specified columns, and is case-sensitive.</li>
                 </ol>
-                <BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}/>
+                <BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls} topRows={treeTopRows}/>
                 <table className="table table-bordered">
                     <tbody>
                     <tr>

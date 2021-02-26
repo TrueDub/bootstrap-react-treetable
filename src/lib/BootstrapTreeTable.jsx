@@ -8,6 +8,7 @@ import {faSort} from "@fortawesome/free-solid-svg-icons/faSort";
 import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
 import {isAfter, isBefore, parse} from "date-fns";
 
+import {Utils} from './utils';
 import Paginator from "./Paginator";
 
 import './BootstrapTreeTable.css';
@@ -415,6 +416,25 @@ const BootstrapTreeTable = (props) => {
         return headingRows;
     }
 
+    const generateTopRows = (topRows) => {
+        let headerRows = [];
+        headerRows.push(topRows.map((rowSpec, index) => {
+            let thisRow = [];
+            //first row
+            if (index === 0) {
+                thisRow.push(`<tr key="tr${index}">`);
+            }
+            thisRow.push(rowSpec.map((column) => {
+                return `<th colspan="${column.colspan}" class="text-${column.alignment}">${column.heading}</th>`;
+            }).join(''));
+            if (index === topRows.length - 1) {
+                thisRow.push('</tr>');
+            }
+            return Utils().parseStringToJsx(thisRow.join(''));
+        }));
+        return headerRows;
+    }
+
     const generatePaginatorRow = (showPagination, startRow, endRow, tableLength, initialRowsPerPage) => {
         if (showPagination && tableLength > initialRowsPerPage) {
             let displayStartRow = startRow + 1;
@@ -459,6 +479,10 @@ const BootstrapTreeTable = (props) => {
     let newTableData = filterNonVisibleRows(enhancedTableData);
     //let newTableData = enhancedTableData;
     let newStartAndEnd = calculateNewStartAndEndRows(currentPage, initialRowsPerPage, newTableData.length);
+    let topRows = []
+    if (props.hasOwnProperty('topRows')) {
+        topRows = generateTopRows(props.topRows);
+    }
     let headingRows = generateHeaderRow(allowSorting);
     let tableBody = generateTableBody(newTableData, newStartAndEnd.startRow, newStartAndEnd.endRow);
     //return the constructed table
@@ -495,7 +519,8 @@ const BootstrapTreeTable = (props) => {
             <div className='row col-12'>
                 <table className='table table-bordered'>
                     <thead>
-                    <tr>
+                    {topRows}
+                    <tr key="colHeaders">
                         {headingRows}
                     </tr>
                     </thead>
@@ -539,7 +564,12 @@ BootstrapTreeTable.propTypes = {
         sortType: PropTypes.oneOf(['string', 'date', 'number']),
         sortDateFormat: PropTypes.string,
         filterable: PropTypes.bool
-    }))
+    })),
+    topRows: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
+        heading: PropTypes.string,
+        colspan: PropTypes.number,
+        alignment: PropTypes.oneOf(['left', 'center', 'right'])
+    })))
 };
 
 export default BootstrapTreeTable;
