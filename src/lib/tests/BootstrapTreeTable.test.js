@@ -369,3 +369,55 @@ describe('testing the renderer functionality', () => {
     });
 
 });
+
+describe('testing the multiple header row functionality', () => {
+    it('table displays correctly with multiple header rows', () => {
+        const localData = [
+            {data: {name: 'John', dob: '17/02/1971'}},
+            {data: {name: 'Paul', dob: '07/03/1971'}},
+            {data: {name: 'George', dob: '09/05/1974'}},
+            {data: {name: 'Ringo', dob: '23/02/1969'}}
+        ];
+        const localColumns = [
+            {
+                dataField: 'name',
+                heading: 'Name'
+            },
+            {
+                dataField: 'dob',
+                heading: 'DOB', sortable: true,
+                sortType: 'date',
+                sortDateFormat: 'dd/MM/yyyy'
+            }
+        ];
+        const localTopRows = [
+            [
+                {
+                    heading: 'Beatles',
+                    colspan: 2,
+                    alignment: 'center'
+                }
+            ], [
+                {
+                    heading: 'Names',
+                    colspan: 1,
+                    alignment: 'left'
+                },
+                {
+                    heading: 'Dates',
+                    colspan: 1,
+                    alignment: 'right'
+                }
+            ]
+        ]
+        const wrapper = mount(<BootstrapTreeTable columns={localColumns} tableData={localData}
+                                                  control={cityControls} topRows={localTopRows}/>);
+        const table = wrapper.find('table');
+        expect(table).toHaveLength(1);
+        let headerRows = table.find('thead').find('tr');
+        expect(headerRows).toHaveLength(3);
+        expect(headerRows.first().find('th').first().text()).toContain('Beatles');
+        expect(headerRows.first().find('th').first().prop('colSpan')).toEqual('2');
+        expect(headerRows.first().find('th').first().hasClass('text-center'));
+    });
+});

@@ -418,18 +418,20 @@ const BootstrapTreeTable = (props) => {
 
     const generateTopRows = (topRows) => {
         let headerRows = [];
-        headerRows.push(topRows.map((rowSpec, index) => {
+        headerRows.push(topRows.map((rowSpec, rowIndex) => {
             let thisRow = [];
-            //first row
-            if (index === 0) {
-                thisRow.push(`<tr key="tr${index}">`);
-            }
-            thisRow.push(rowSpec.map((column) => {
-                return `<th colspan="${column.colspan}" class="text-${column.alignment}">${column.heading}</th>`;
+            thisRow.push(rowSpec.map((column, index) => {
+                //first row
+                let temp = [];
+                if (index === 0) {
+                    temp.push(`<tr key="tr${rowIndex}">`);
+                }
+                temp.push(`<th colspan="${column.colspan}" class="text-${column.alignment}">${column.heading}</th>`);
+                if (index === rowSpec.length - 1) {
+                    temp.push('</tr>');
+                }
+                return temp.join('');
             }).join(''));
-            if (index === topRows.length - 1) {
-                thisRow.push('</tr>');
-            }
             return Utils().parseStringToJsx(thisRow.join(''));
         }));
         return headerRows;
@@ -477,7 +479,6 @@ const BootstrapTreeTable = (props) => {
     const [currentPage, setCurrentPage] = React.useState(1);
     //construct table
     let newTableData = filterNonVisibleRows(enhancedTableData);
-    //let newTableData = enhancedTableData;
     let newStartAndEnd = calculateNewStartAndEndRows(currentPage, initialRowsPerPage, newTableData.length);
     let topRows = []
     if (props.hasOwnProperty('topRows')) {
