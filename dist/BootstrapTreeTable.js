@@ -6,6 +6,8 @@ require("core-js/modules/es.symbol.description");
 
 require("core-js/modules/es.symbol.iterator");
 
+require("core-js/modules/es.array.concat");
+
 require("core-js/modules/es.array.filter");
 
 require("core-js/modules/es.array.for-each");
@@ -15,6 +17,8 @@ require("core-js/modules/es.array.from");
 require("core-js/modules/es.array.index-of");
 
 require("core-js/modules/es.array.iterator");
+
+require("core-js/modules/es.array.join");
 
 require("core-js/modules/es.array.map");
 
@@ -60,6 +64,8 @@ var _faSort = require("@fortawesome/free-solid-svg-icons/faSort");
 var _faSearch = require("@fortawesome/free-solid-svg-icons/faSearch");
 
 var _dateFns = require("date-fns");
+
+var _utils = require("./utils");
 
 var _Paginator = _interopRequireDefault(require("./Paginator"));
 
@@ -612,6 +618,35 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
     return headingRows;
   };
 
+  var generateTopRows = function generateTopRows(topRows) {
+    var headerRows = [];
+    headerRows.push(topRows.map(function (rowSpec, rowIndex) {
+      var thisRow = [];
+      thisRow.push(rowSpec.map(function (column, index) {
+        //first row
+        var temp = [];
+
+        if (index === 0) {
+          temp.push("<tr key=\"tr".concat(rowIndex, "\">"));
+        }
+
+        var colspan = column.hasOwnProperty('colspan') ? column.colspan : 1;
+        var rowspan = column.hasOwnProperty('rowspan') ? column.rowspan : 1;
+        var halign = column.hasOwnProperty('alignment') ? column.alignment : 'left';
+        var valign = column.hasOwnProperty('verticalAlignment') ? column.verticalAlignment : 'bottom';
+        temp.push("<th colspan=\"".concat(colspan, "\" rowspan=").concat(rowspan, " class=\"text-").concat(halign, " align-").concat(valign, "\">").concat(column.heading, "</th>"));
+
+        if (index === rowSpec.length - 1) {
+          temp.push('</tr>');
+        }
+
+        return temp.join('');
+      }).join(''));
+      return (0, _utils.Utils)().parseStringToJsx(thisRow.join(''));
+    }));
+    return headerRows;
+  };
+
   var generatePaginatorRow = function generatePaginatorRow(showPagination, startRow, endRow, tableLength, initialRowsPerPage) {
     if (showPagination && tableLength > initialRowsPerPage) {
       var displayStartRow = startRow + 1;
@@ -683,9 +718,14 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
       setCurrentPage = _React$useState16[1]; //construct table
 
 
-  var newTableData = filterNonVisibleRows(enhancedTableData); //let newTableData = enhancedTableData;
-
+  var newTableData = filterNonVisibleRows(enhancedTableData);
   var newStartAndEnd = calculateNewStartAndEndRows(currentPage, initialRowsPerPage, newTableData.length);
+  var topRows = [];
+
+  if (props.hasOwnProperty('topRows')) {
+    topRows = generateTopRows(props.topRows);
+  }
+
   var headingRows = generateHeaderRow(allowSorting);
   var tableBody = generateTableBody(newTableData, newStartAndEnd.startRow, newStartAndEnd.endRow); //return the constructed table
 
@@ -723,7 +763,9 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
     className: "row col-12"
   }, _react.default.createElement("table", {
     className: "table table-bordered"
-  }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, headingRows)), _react.default.createElement("tbody", null, tableBody))), _react.default.createElement("div", {
+  }, _react.default.createElement("thead", null, topRows, _react.default.createElement("tr", {
+    key: "colHeaders"
+  }, headingRows)), _react.default.createElement("tbody", null, tableBody))), _react.default.createElement("div", {
     className: "row col-12 justify-content-center"
   }, generatePaginatorRow(showPagination, newStartAndEnd.startRow, newStartAndEnd.endRow, newTableData.length, initialRowsPerPage)));
 };
@@ -755,7 +797,14 @@ BootstrapTreeTable.propTypes = {
     sortType: _propTypes.default.oneOf(['string', 'date', 'number']),
     sortDateFormat: _propTypes.default.string,
     filterable: _propTypes.default.bool
-  }))
+  })),
+  topRows: _propTypes.default.arrayOf(_propTypes.default.arrayOf(_propTypes.default.shape({
+    heading: _propTypes.default.string,
+    colspan: _propTypes.default.number,
+    rowspan: _propTypes.default.number,
+    alignment: _propTypes.default.oneOf(['left', 'center', 'right']),
+    verticalAlignment: _propTypes.default.oneOf(['baseline', 'top', 'middle', 'bottom', 'text-top', 'text-bottom'])
+  })))
 };
 var _default = BootstrapTreeTable;
 exports.default = _default;

@@ -426,7 +426,11 @@ const BootstrapTreeTable = (props) => {
                 if (index === 0) {
                     temp.push(`<tr key="tr${rowIndex}">`);
                 }
-                temp.push(`<th colspan="${column.colspan}" class="text-${column.alignment}">${column.heading}</th>`);
+                let colspan = column.hasOwnProperty('colspan') ? column.colspan : 1;
+                let rowspan = column.hasOwnProperty('rowspan') ? column.rowspan : 1;
+                let halign = column.hasOwnProperty('alignment') ? column.alignment : 'left';
+                let valign = column.hasOwnProperty('verticalAlignment') ? column.verticalAlignment : 'bottom';
+                temp.push(`<th colspan="${colspan}" rowspan=${rowspan} class="text-${halign} align-${valign}">${column.heading}</th>`);
                 if (index === rowSpec.length - 1) {
                     temp.push('</tr>');
                 }
@@ -569,7 +573,9 @@ BootstrapTreeTable.propTypes = {
     topRows: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
         heading: PropTypes.string,
         colspan: PropTypes.number,
-        alignment: PropTypes.oneOf(['left', 'center', 'right'])
+        rowspan: PropTypes.number,
+        alignment: PropTypes.oneOf(['left', 'center', 'right']),
+        verticalAlignment: PropTypes.oneOf(['baseline', 'top', 'middle', 'bottom', 'text-top', 'text-bottom'])
     })))
 };
 

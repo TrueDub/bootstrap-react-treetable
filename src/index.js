@@ -90,24 +90,37 @@ const treeControls = {
 const treeTopRows = [
     [
         {
-            heading: 'Overall',
-            colspan: 5,
-            alignment: 'center'
-        }
-    ], [
-        {
             heading: 'Left',
             colspan: 1,
-            alignment: 'left'
+            rowspan: 2,
+            alignment: 'left',
+            verticalAlignment: 'middle'
+        },
+        {
+            heading: 'Overall',
+            colspan: 3,
+            alignment: 'center'
         },
         {
             heading: 'Right',
             colspan: 1,
+            rowspan: 2,
             alignment: 'right'
+        }
+    ], [
+        {
+            heading: 'Center1',
+            colspan: 1,
+            alignment: 'center'
         },
         {
-            heading: 'Dummy Fields',
-            colspan: 3,
+            heading: 'Center2',
+            colspan: 1,
+            alignment: 'center'
+        },
+        {
+            heading: 'Center3',
+            colspan: 1,
             alignment: 'center'
         }
     ]
