@@ -464,13 +464,13 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
       if (enhancedColumns[0].fixedWidth) {
         return _react.default.createElement("td", {
           key: key,
-          className: "",
+          className: "text-left",
           width: enhancedColumns[0].percentageWidth + '%'
         }, output);
       } else {
         return _react.default.createElement("td", {
           key: key,
-          className: ""
+          className: "text-left"
         }, output);
       }
     }
@@ -495,7 +495,7 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
       if (enhancedColumns[0].fixedWidth) {
         return _react.default.createElement("td", {
           key: key,
-          className: "",
+          className: "text-left",
           width: enhancedColumns[0].percentageWidth + '%'
         }, _react.default.createElement("span", {
           style: {
@@ -507,7 +507,7 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
       } else {
         return _react.default.createElement("td", {
           key: key,
-          className: ""
+          className: "text-left"
         }, _react.default.createElement("span", {
           style: {
             marginLeft: dataRow.rowLevel + 'em'

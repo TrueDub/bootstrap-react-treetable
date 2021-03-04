@@ -317,13 +317,13 @@ const BootstrapTreeTable = (props) => {
             //no expander required
             if (enhancedColumns[0].fixedWidth) {
                 return (
-                    <td key={key} className=''
+                    <td key={key} className='text-left'
                         width={enhancedColumns[0].percentageWidth + '%'}>
                         {output}
                     </td>);
             } else {
                 return (
-                    <td key={key} className=''>
+                    <td key={key} className='text-left'>
                         {output}
                     </td>);
             }
@@ -336,13 +336,13 @@ const BootstrapTreeTable = (props) => {
                                             onClick={rowExpandOrCollapse.bind(null, dataRow.rowID)}/>;
             }
             if (enhancedColumns[0].fixedWidth) {
-                return (<td key={key} className=''
+                return (<td key={key} className='text-left'
                             width={enhancedColumns[0].percentageWidth + '%'}><span
                         style={{marginLeft: dataRow.rowLevel + 'em'}}>{iconCell}<span
                         className="iconPadding">{output}</span></span></td>
                 );
             } else {
-                return (<td key={key} className=''><span
+                return (<td key={key} className='text-left'><span
                         style={{marginLeft: dataRow.rowLevel + 'em'}}>{iconCell}<span
                         className="iconPadding">{output}</span></span></td>
                 );

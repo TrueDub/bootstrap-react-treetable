@@ -96,7 +96,7 @@ exports[`component renders as expected 1`] = `
           className="shown"
         >
           <td
-            className=""
+            className="text-left"
             width="25%"
           >
             <span
@@ -235,7 +235,7 @@ exports[`component renders as expected 1`] = `
           className="hidden"
         >
           <td
-            className=""
+            className="text-left"
             width="25%"
           >
             <span
