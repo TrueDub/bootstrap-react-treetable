@@ -1,7 +1,6 @@
 # bootstrap-react-treetable
 
-A React component that presents a simple TreeTable, allowing the user to supply styling and rendering options. A default
-styling (using Bootstrap 4) is also available. XXX
+A React component that presents a simple TreeTable, allowing the user to supply styling and rendering options. A default styling (using Bootstrap 4) is also available. XXX
 
 ## Installation
 
@@ -102,7 +101,7 @@ Obviously, the tableData prop is required. There is one other required prop:
 | -------------- | ---- | ----------- | ------- | -------- |
 | dataField      | String | the field that holds the data to be displayed | name | Yes |
 | heading        | String | the column header to be used - if not supplied, the dataField is used instead. | Name | No |
-| fixedWidth     | Boolean | Should the column be defined with a fixed width? | false | No |
+| fixedWidth     | Boolean | Should the column be defined with a fixed width? - default is false | false | No |
 | percentageWidth | Number | The percentage width this column will be allocated, should fixedWidth be true | 25 | No |
 | styleClass     | String | A CSS class to be applied to the TD element for this field | whatever | No |
 | renderer       | function | A function to be applied to the data - see further detail below | whatever | No |
@@ -111,19 +110,33 @@ Obviously, the tableData prop is required. There is one other required prop:
 | sortOrder      | String | Indicates that the table should be sorted by this field in this order - values are 'asc' or 'desc' | asc | No |
 | sortType       | String | Indicates the data type this field should be sorted as - options are string, date or number | string | No |
 | sortDateFormat | String | The format of the date to be sorted (assuming sortType is date). This uses [date-fns](https://date-fns.org/), so the formats are specified [here](https://date-fns.org/v2.16.1/docs/parse). Note that these are different to the formats used by Moment.js, so this is a breaking change. | string | No |  
-| filterable     | Boolean | Should this column be included when filtering the data? | true | No |  
+| filterable     | Boolean | Should this column be included when filtering the data? - default is false | true | No |  
 
 Further control of how the table is displayed can be provided using the **control** prop.
 
 | Attribute Name | Type | Description | Example | Required |
 | -------------- | ---- | ----------- | ------- | -------- |
 | visibleRows    | Number | Number of levels to display automatically - default is 1 | 2 | No |
-| showExpandCollapseButton     | Boolean | Should the Expand All/Collapse All button be displayed? | false | No |
-| allowSorting   | boolean | Enable or disable sorting on this table - default is false | false | No |
-| allowFiltering | boolean | Enable or disable filtering on this table - default is false | false | No |
-| filterInputPlaceholderText | string | Text to display as the placeholder in the filter input box | Filter... | No |
-| showPagination | boolean | Paginate the table, and provide a set of links at the bottom for navigation | false | No |
-| initialRowsPerPage | number | Number of rows to display when paginated | 10 | No |
+| showExpandCollapseButton     | Boolean | Should the Expand All/Collapse All button be displayed? - default is false | false | No |
+| allowSorting   | Boolean | Enable or disable sorting on this table - default is false | false | No |
+| allowFiltering | Boolean | Enable or disable filtering on this table - default is false | false | No |
+| filterInputPlaceholderText | String | Text to display as the placeholder in the filter input box | Filter... | No |
+| showPagination | Boolean | Paginate the table, and provide a set of links at the bottom for navigation - default is false | false | No |
+| initialRowsPerPage | Number | Number of rows to display when paginated | 10 | No |
+
+Should you wish to have multiple header rows, you can supply a **topRows** prop. These rows are rendered above the main header row for the table. This prop is an array of arrays of objects.
+
+| Attribute Name | Type | Description | Example | Required |
+| -------------- | ---- | ----------- | ------- | -------- |
+| heading    | String | The text to display in the header cell | Whatever | No |
+| colspan    | Number | The number of columns this header should span - default is 1 | 1 | No |
+| rowspan    | Number | The number of rows this header should span - default is 1 | 1 | No |
+| alignment    | String | The text alignment of this header cell - one of left, center or right | center | No |
+| verticalAlignment    | String | The text alignment of this header cell - one of baseline, top, middle, bottom, text-top or text-bottom - see [Bootstrap docs](https://getbootstrap.com/docs/4.6/utilities/vertical-align/) for details | center | No |
+
+The colspan values should add up to the number of columns in the regular table, or odd things will happen with your display.
+
+NOTE: this plugin doesn't do any checking on the colspan and rowspan numbers you put in - it's up to you to ensure you've got the values correct. Also, you cannot span columns or rows on the main table headers (the one which is used for sorting).
 
 #### Rendering option
 
@@ -146,29 +159,31 @@ let descriptionRenderer = function (dataRow, dataField) {
 
 #### Styling
 
-The component is styled using Bootstrap 4 classes. Bootstrap 4 is a peer dependency, so it needs to be provided by the
-project using this one.
+The component is styled using Bootstrap 4 classes. Bootstrap 4 is a peer dependency, so it needs to be provided by the project using this one.
 
 ### Sorting
 
 The table can be sorted by default, simply set the `sortOrder` attribute of the relevant column.
 
-Clicking the header of any column will sort by that column, in ascending order. Clicking again will sort in descending
-order. Appropriate icons are used to indicate the sort order.
+Clicking the header of any column will sort by that column, in ascending order. Clicking again will sort in descending order. Appropriate icons are used to indicate the sort order.
 
 You can prevent sorting of a specific column by simply setting the `sortable` attribute of the relevant column to false.
 
 ### Use as a simple DataTable
 
-To use this component as a simple datatable (i.e. no expandable capabilities), simply provide a `tableData` prop with
-no `children` attributes.
+To use this component as a simple datatable (i.e. no expandable capabilities), simply provide a `tableData` prop with no `children` attributes.
 
 ## Release History
 
 | Release | Description | Release date |
 | ------- | ----------- | ------------ |
+|  2.0.1  | Added Multiple header rows | XX-Xxx-2021 |                                                           
 |  2.0.0  | React lifestyle methods removed, Moment.js removed, bugfixes applied | 21-Jan-2021 |                                                           
 |  1.0.2  | Audit fixes | 01-Oct-2019 |
 |  1.0.1  |  | 26-Jun-2019 |
 |  1.0.0  | First release | 22-Feb-2019 |
 |  1.0.0-rc.1  | First release candidate of 1.0.0 | 22-Feb-2019 |
+
+# Development
+
+Use [yalc](https://www.npmjs.com/package/yalc) instead of "npm link".

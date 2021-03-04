@@ -6,6 +6,8 @@ require("core-js/modules/es.symbol.description");
 
 require("core-js/modules/es.symbol.iterator");
 
+require("core-js/modules/es.array.concat");
+
 require("core-js/modules/es.array.filter");
 
 require("core-js/modules/es.array.for-each");
@@ -15,6 +17,8 @@ require("core-js/modules/es.array.from");
 require("core-js/modules/es.array.index-of");
 
 require("core-js/modules/es.array.iterator");
+
+require("core-js/modules/es.array.join");
 
 require("core-js/modules/es.array.map");
 
@@ -26,11 +30,7 @@ require("core-js/modules/es.object.get-own-property-descriptor");
 
 require("core-js/modules/es.object.get-own-property-descriptors");
 
-require("core-js/modules/es.object.get-prototype-of");
-
 require("core-js/modules/es.object.keys");
-
-require("core-js/modules/es.object.set-prototype-of");
 
 require("core-js/modules/es.object.to-string");
 
@@ -45,13 +45,11 @@ require("core-js/modules/web.dom-collections.iterator");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.Initialisation = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _dateFns = require("date-fns");
 
 var _reactFontawesome = require("@fortawesome/react-fontawesome");
 
@@ -63,15 +61,25 @@ var _faSortUp = require("@fortawesome/free-solid-svg-icons/faSortUp");
 
 var _faSort = require("@fortawesome/free-solid-svg-icons/faSort");
 
-var _Paginator = _interopRequireDefault(require("./Paginator"));
-
 var _faSearch = require("@fortawesome/free-solid-svg-icons/faSearch");
+
+var _dateFns = require("date-fns");
+
+var _utils = require("./utils");
+
+var _Paginator = _interopRequireDefault(require("./Paginator"));
 
 require("./BootstrapTreeTable.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -87,472 +95,473 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var Initialisation = function Initialisation() {
+  var generateInitialState = function generateInitialState(visibleRows, tableData, columns) {
+    var enhancedTableData = generateStateTableData(tableData, visibleRows);
+    var enhancedColumns = generateColumnState(columns);
+    var initialSortField = null;
+    var initialSortColumn = null;
+    var initialSortOrder = null;
+    var showResetSortingButton = false;
+    enhancedColumns.forEach(function (column, index) {
+      if (column.sortOrder !== 'none') {
+        initialSortField = column.dataField;
+        initialSortColumn = index;
+        initialSortOrder = column.sortOrder;
+      }
+    });
+    var childrenPresent = false;
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+    try {
+      for (var _iterator = enhancedTableData[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var entry = _step.value;
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var BootstrapTreeTable =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(BootstrapTreeTable, _React$Component);
-
-  function BootstrapTreeTable(props) {
-    var _this;
-
-    _classCallCheck(this, BootstrapTreeTable);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(BootstrapTreeTable).call(this, props));
-
-    var initialState = _this.generateInitialState(); //bind functions passed to TreeTable
-
-
-    _this.sortByField = _this.sortByField.bind(_assertThisInitialized(_this));
-    _this.applyFilter = _this.applyFilter.bind(_assertThisInitialized(_this));
-    _this.expandOrCollapseAll = _this.expandOrCollapseAll.bind(_assertThisInitialized(_this));
-    _this.resetSorting = _this.resetSorting.bind(_assertThisInitialized(_this));
-    _this.rowExpandOrCollapse = _this.rowExpandOrCollapse.bind(_assertThisInitialized(_this));
-    _this.moveToSpecificPage = _this.moveToSpecificPage.bind(_assertThisInitialized(_this)); // set state
-
-    _this.state = {
-      enhancedTableData: initialState.enhancedTableData,
-      expanded: false,
-      enhancedColumns: initialState.enhancedColumns,
-      showResetSortingButton: initialState.showResetSortingButton,
-      childrenPresent: initialState.childrenPresent,
-      filterValue: '',
-      filtered: false,
-      currentPage: 1
-    };
-    return _this;
-  }
-
-  _createClass(BootstrapTreeTable, [{
-    key: "generateInitialState",
-    value: function generateInitialState() {
-      var visibleRows = this.props.control.hasOwnProperty('visibleRows') ? this.props.control.visibleRows : 1;
-      var enhancedTableData = this.generateStateTableData(this.props.tableData, visibleRows);
-      var enhancedColumns = this.generateColumnState(this.props.columns);
-      var initialSortField = null;
-      var initialSortColumn = null;
-      var initialSortOrder = null;
-      var showResetSortingButton = false;
-      enhancedColumns.forEach(function (column, index) {
-        if (column.sortOrder !== 'none') {
-          initialSortField = column.dataField;
-          initialSortColumn = index;
-          initialSortOrder = column.sortOrder;
+        if (entry.children && entry.children.length > 0) {
+          childrenPresent = true;
         }
-      });
-      var childrenPresent = false;
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
       try {
-        for (var _iterator = enhancedTableData[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var entry = _step.value;
-
-          if (entry.children && entry.children.length > 0) {
-            childrenPresent = true;
-          }
+        if (!_iteratorNormalCompletion && _iterator.return != null) {
+          _iterator.return();
         }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return != null) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
+        if (_didIteratorError) {
+          throw _iteratorError;
         }
       }
-
-      if (initialSortField !== null) {
-        enhancedTableData = this.sortBy(enhancedTableData, initialSortColumn, initialSortField, initialSortOrder, enhancedColumns[initialSortColumn].sortUsingRenderer, enhancedColumns[initialSortColumn].renderer, enhancedColumns[initialSortColumn].sortType, enhancedColumns[initialSortColumn].sortDateFormat);
-        enhancedTableData = this.generateRowOrderedTree(enhancedTableData);
-      }
-
-      return {
-        enhancedTableData: enhancedTableData,
-        enhancedColumns: enhancedColumns,
-        showResetSortingButton: showResetSortingButton,
-        childrenPresent: childrenPresent
-      };
     }
-  }, {
-    key: "generateStateTableData",
-    value: function generateStateTableData(tree, visibleRows) {
-      var n = 1;
-      return function recurse(children) {
-        var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-        var rowLevel = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
 
-        if (children) {
-          return children.map(function (node) {
-            var rowID = n++;
-            return Object.assign({}, node, {
-              rowID: rowID,
-              rowOrder: rowID,
-              rowLevel: rowLevel,
-              parentRowID: parent,
-              visible: rowLevel <= visibleRows,
-              expanded: rowLevel < visibleRows,
-              filtered: false,
-              children: recurse(node.children, rowID, rowLevel + 1)
-            });
-          });
-        }
-      }(tree);
+    if (initialSortField !== null) {
+      enhancedTableData = sortBy(enhancedTableData, initialSortColumn, initialSortField, initialSortOrder, enhancedColumns[initialSortColumn].sortUsingRenderer, enhancedColumns[initialSortColumn].renderer, enhancedColumns[initialSortColumn].sortType, enhancedColumns[initialSortColumn].sortDateFormat);
+      enhancedTableData = generateRowOrderedTree(enhancedTableData);
     }
-  }, {
-    key: "generateColumnState",
-    value: function generateColumnState(initialColumns) {
-      return initialColumns.map(function (node) {
-        var sortOrder = node.hasOwnProperty('sortOrder') ? node.sortOrder : 'none';
-        return Object.assign({}, node, {
-          sortable: node.hasOwnProperty('sortable') ? node.sortable : true,
-          sortType: node.hasOwnProperty('sortType') ? node.sortType : 'string',
-          sortOrder: sortOrder
-        });
-      });
-    } // state-changing functions below here
-    //expand/collapse
 
-  }, {
-    key: "expandOrCollapseAll",
-    value: function expandOrCollapseAll() {
-      var action = !this.state.expanded;
+    return {
+      enhancedTableData: enhancedTableData,
+      enhancedColumns: enhancedColumns,
+      showResetSortingButton: showResetSortingButton,
+      childrenPresent: childrenPresent
+    };
+  };
 
-      var newTree = function recurse(children) {
+  var generateStateTableData = function generateStateTableData(tree, visibleRows) {
+    var n = 1;
+    return function recurse(children) {
+      var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var rowLevel = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+
+      if (children) {
         return children.map(function (node) {
-          var visibleAction = node.rowLevel === 1 ? true : action;
+          var rowID = n++;
           return Object.assign({}, node, {
-            visible: visibleAction,
-            expanded: action,
+            rowID: rowID,
+            rowOrder: rowID,
+            rowLevel: rowLevel,
+            parentRowID: parent,
+            visible: rowLevel <= visibleRows,
+            expanded: rowLevel < visibleRows,
+            filtered: false,
+            children: recurse(node.children, rowID, rowLevel + 1)
+          });
+        });
+      }
+    }(tree);
+  };
+
+  var generateColumnState = function generateColumnState(initialColumns) {
+    return initialColumns.map(function (node) {
+      var sortOrder = node.hasOwnProperty('sortOrder') ? node.sortOrder : 'none';
+      return Object.assign({}, node, {
+        sortable: node.hasOwnProperty('sortable') ? node.sortable : true,
+        sortType: node.hasOwnProperty('sortType') ? node.sortType : 'string',
+        sortOrder: sortOrder
+      });
+    });
+  };
+
+  var sortBy = function sortBy(data, sortColumn, fieldName, direction, sortUsingRenderer, renderer, sortType, sortDateFormat) {
+    data.forEach(function (entry) {
+      if (entry.children && entry.children.length > 0) {
+        entry.children = sortBy(entry.children, sortColumn, fieldName, direction, sortUsingRenderer, renderer, sortType, sortDateFormat);
+      }
+    });
+
+    if (direction === 'asc') {
+      return data.sort(function (a, b) {
+        return performSort(a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat);
+      });
+    } else {
+      return data.sort(function (b, a) {
+        return performSort(a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat);
+      });
+    }
+  };
+
+  var performSort = function performSort(a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat) {
+    var aValue = a.data[fieldName];
+    var bValue = b.data[fieldName];
+
+    if (sortUsingRenderer) {
+      aValue = renderer(a, fieldName);
+      bValue = renderer(b, fieldName);
+    }
+
+    if (sortType === 'date') {
+      return compareDates(aValue, bValue, sortDateFormat);
+    }
+
+    return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+  };
+
+  var compareDates = function compareDates(aValue, bValue, sortDateFormat) {
+    aValue = (0, _dateFns.parse)(aValue, sortDateFormat, new Date());
+    bValue = (0, _dateFns.parse)(bValue, sortDateFormat, new Date());
+    return (0, _dateFns.isBefore)(aValue, bValue) ? -1 : (0, _dateFns.isAfter)(aValue, bValue) ? 1 : 0;
+  };
+
+  var generateRowOrderedTree = function generateRowOrderedTree(oldTree) {
+    var n = 0;
+    return function recurse(children) {
+      if (children) {
+        return children.map(function (node) {
+          return Object.assign({}, node, {
+            rowOrder: n++,
             children: recurse(node.children)
           });
         });
-      }(this.state.enhancedTableData);
+      }
+    }(oldTree);
+  };
 
-      this.setState({
-        enhancedTableData: newTree,
-        expanded: action
+  return {
+    generateInitialState: generateInitialState,
+    sortBy: sortBy,
+    generateRowOrderedTree: generateRowOrderedTree
+  };
+};
+
+exports.Initialisation = Initialisation;
+
+var BootstrapTreeTable = function BootstrapTreeTable(props) {
+  //expand/collapse
+  var expandOrCollapseAll = function expandOrCollapseAll() {
+    var action = !expanded;
+
+    var newTree = function recurse(children) {
+      return children.map(function (node) {
+        var visibleAction = node.rowLevel === 1 ? true : action;
+        return Object.assign({}, node, {
+          visible: visibleAction,
+          expanded: action,
+          children: recurse(node.children)
+        });
       });
-    }
-  }, {
-    key: "rowExpandOrCollapse",
-    value: function rowExpandOrCollapse(selectedRowID) {
-      var newTree = this.expandOrCollapseTree(this.state.enhancedTableData, selectedRowID, false, false);
-      this.setState({
-        enhancedTableData: newTree
+    }(enhancedTableData);
+
+    setExpanded(action);
+    setEnhancedTableData(newTree);
+  };
+
+  var rowExpandOrCollapse = function rowExpandOrCollapse(selectedRowID) {
+    var newTree = expandOrCollapseTree(enhancedTableData, selectedRowID, false, false);
+    setEnhancedTableData(newTree);
+  };
+
+  var expandOrCollapseTree = function expandOrCollapseTree(data, selectedRowID, expandAll, collapseAll) {
+    return function recurse(children) {
+      var expandBranch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : expandAll;
+      var collapseBranch = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : collapseAll;
+      return children.map(function (node) {
+        var expandedValue = node.rowID === selectedRowID ? !node.expanded : node.expanded;
+        var setVisible = node.parentRowID === selectedRowID ? !node.visible : node.visible;
+
+        if (expandBranch) {
+          expandedValue = true;
+          setVisible = true;
+        }
+
+        if (collapseBranch) {
+          expandedValue = false;
+          setVisible = false;
+        } //collapse and hide all below
+
+
+        if (node.parentRowID === selectedRowID && !setVisible) {
+          collapseBranch = true;
+        }
+
+        return Object.assign({}, node, {
+          visible: setVisible,
+          expanded: expandedValue,
+          children: recurse(node.children, expandBranch, collapseBranch)
+        });
       });
+    }(data);
+  }; //sorting
+
+
+  var sortByField = function sortByField(sortColumn) {
+    var sortStatus = enhancedColumns[sortColumn].sortOrder;
+    var sortOrder = 'asc';
+
+    if (sortStatus === 'asc') {
+      sortOrder = 'desc';
     }
-  }, {
-    key: "expandOrCollapseTree",
-    value: function expandOrCollapseTree(data, selectedRowID, expandAll, collapseAll) {
-      return function recurse(children) {
-        var expandBranch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : expandAll;
-        var collapseBranch = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : collapseAll;
+
+    var newTree = Initialisation().sortBy(enhancedTableData, sortColumn, enhancedColumns[sortColumn].dataField, sortOrder, enhancedColumns[sortColumn].sortUsingRenderer, enhancedColumns[sortColumn].renderer, enhancedColumns[sortColumn].sortType, enhancedColumns[sortColumn].sortDateFormat);
+    var orderedNewTree = Initialisation().generateRowOrderedTree(newTree);
+    var newColumns = enhancedColumns.map(function (a) {
+      return _objectSpread({}, a, {
+        sortOrder: 'none'
+      });
+    });
+    newColumns[sortColumn].sortOrder = sortOrder;
+    setEnhancedTableData(orderedNewTree);
+    setEnhancedColumns(newColumns);
+    setShowResetSortingButton(true);
+  };
+
+  var resetSorting = function resetSorting() {
+    var initialState = Initialisation().generateInitialState(visibleRows, props.tableData, props.columns);
+    setEnhancedTableData(initialState.enhancedTableData);
+    setEnhancedColumns(initialState.enhancedColumns);
+    setShowResetSortingButton(initialState.showResetSortingButton);
+  }; //filtering
+
+
+  var applyFilter = function applyFilter(event) {
+    var filterValue = event.target.value;
+    var columns = props.columns;
+    var overallFiltered = false;
+
+    var filteredNewTree = function recurse(children) {
+      if (children) {
         return children.map(function (node) {
-          var setExpanded = node.rowID === selectedRowID ? !node.expanded : node.expanded;
-          var setVisible = node.parentRowID === selectedRowID ? !node.visible : node.visible;
+          var filtered = false;
 
-          if (expandBranch) {
-            setExpanded = true;
-            setVisible = true;
-          }
+          for (var i = 0; i < columns.length; i++) {
+            var column = columns[i];
+            var filter = column.hasOwnProperty("filterable") ? column.filterable : false;
 
-          if (collapseBranch) {
-            setExpanded = false;
-            setVisible = false;
-          } //collapse and hide all below
+            if (filter) {
+              var columnValue = node.data[column.dataField];
 
-
-          if (node.parentRowID === selectedRowID && !setVisible) {
-            collapseBranch = true;
-          }
-
-          return Object.assign({}, node, {
-            visible: setVisible,
-            expanded: setExpanded,
-            children: recurse(node.children, expandBranch, collapseBranch)
-          });
-        });
-      }(data);
-    } //sorting
-
-  }, {
-    key: "sortByField",
-    value: function sortByField(sortColumn) {
-      var sortStatus = this.state.enhancedColumns[sortColumn].sortOrder;
-      var sortOrder = 'asc';
-
-      if (sortStatus === 'asc') {
-        sortOrder = 'desc';
-      }
-
-      var newTree = this.sortBy(this.state.enhancedTableData, sortColumn, this.state.enhancedColumns[sortColumn].dataField, sortOrder, this.state.enhancedColumns[sortColumn].sortUsingRenderer, this.state.enhancedColumns[sortColumn].renderer, this.state.enhancedColumns[sortColumn].sortType, this.state.enhancedColumns[sortColumn].sortDateFormat);
-      var orderedNewTree = this.generateRowOrderedTree(newTree);
-      var newColumns = this.state.enhancedColumns.map(function (a) {
-        return _objectSpread({}, a, {
-          sortOrder: 'none'
-        });
-      });
-      newColumns[sortColumn].sortOrder = sortOrder;
-      this.setState({
-        enhancedTableData: orderedNewTree,
-        enhancedColumns: newColumns,
-        showResetSortingButton: true
-      });
-    }
-  }, {
-    key: "generateRowOrderedTree",
-    value: function generateRowOrderedTree(oldTree) {
-      var n = 0;
-      return function recurse(children) {
-        if (children) {
-          return children.map(function (node) {
-            return Object.assign({}, node, {
-              rowOrder: n++,
-              children: recurse(node.children)
-            });
-          });
-        }
-      }(oldTree);
-    }
-  }, {
-    key: "sortBy",
-    value: function sortBy(data, sortColumn, fieldName, direction, sortUsingRenderer, renderer, sortType, sortDateFormat) {
-      var _this2 = this;
-
-      data.forEach(function (entry) {
-        if (entry.children && entry.children.length > 0) {
-          entry.children = _this2.sortBy(entry.children, sortColumn, fieldName, direction, sortUsingRenderer, renderer, sortType, sortDateFormat);
-        }
-      });
-
-      if (direction === 'asc') {
-        return data.sort(function (a, b) {
-          return _this2.performSort(a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat);
-        });
-      } else {
-        return data.sort(function (b, a) {
-          return _this2.performSort(a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat);
-        });
-      }
-    }
-  }, {
-    key: "performSort",
-    value: function performSort(a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat) {
-      var aValue = a.data[fieldName];
-      var bValue = b.data[fieldName];
-
-      if (sortUsingRenderer) {
-        aValue = renderer(a, fieldName);
-        bValue = renderer(b, fieldName);
-      }
-
-      if (sortType === 'date') {
-        return this.compareDates(aValue, bValue, sortDateFormat);
-      }
-
-      return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
-    }
-  }, {
-    key: "compareDates",
-    value: function compareDates(aValue, bValue, sortDateFormat) {
-      aValue = (0, _dateFns.parse)(aValue, sortDateFormat, new Date());
-      bValue = (0, _dateFns.parse)(bValue, sortDateFormat, new Date());
-      return (0, _dateFns.isBefore)(aValue, bValue) ? -1 : (0, _dateFns.isAfter)(aValue, bValue) ? 1 : 0;
-    }
-  }, {
-    key: "resetSorting",
-    value: function resetSorting() {
-      var initialState = this.generateInitialState();
-      this.setState({
-        enhancedTableData: initialState.enhancedTableData,
-        enhancedColumns: initialState.enhancedColumns,
-        showResetSortingButton: initialState.showResetSortingButton
-      });
-    } //filtering
-
-  }, {
-    key: "applyFilter",
-    value: function applyFilter(event) {
-      var filterValue = event.target.value;
-      var columns = this.props.columns;
-      var overallFiltered = false;
-
-      var filteredNewTree = function recurse(children) {
-        if (children) {
-          return children.map(function (node) {
-            var filtered = false;
-
-            for (var i = 0; i < columns.length; i++) {
-              var column = columns[i];
-              var filter = column.hasOwnProperty("filterable") ? column.filterable : false;
-
-              if (filter) {
-                var columnValue = node.data[column.dataField];
-
-                if (filterValue === '') {
+              if (filterValue === '') {
+                filtered = false;
+              } else {
+                if (String(columnValue).indexOf(String(filterValue)) !== -1) {
                   filtered = false;
+                  overallFiltered = true;
+                  break;
                 } else {
-                  if (String(columnValue).indexOf(String(filterValue)) !== -1) {
-                    filtered = false;
-                    overallFiltered = true;
-                    break;
-                  } else {
-                    filtered = true;
-                  }
+                  filtered = true;
                 }
               }
             }
+          }
 
-            return Object.assign({}, node, {
-              filtered: filtered,
-              children: recurse(node.children)
-            });
+          return Object.assign({}, node, {
+            filtered: filtered,
+            children: recurse(node.children)
           });
-        }
-      }(this.state.enhancedTableData);
-
-      this.setState({
-        enhancedTableData: filteredNewTree,
-        filterValue: filterValue,
-        filtered: overallFiltered
-      });
-    }
-  }, {
-    key: "filterNonVisibleRows",
-    value: function filterNonVisibleRows(data) {
-      var self = this;
-      var r = data.filter(function (o) {
-        if (o.children) o.children = self.filterNonVisibleRows(o.children);
-        return !o.filtered;
-      });
-      return r;
-    }
-  }, {
-    key: "calculateNewStartAndEndRows",
-    value: function calculateNewStartAndEndRows(page, rowsPerPage, tableLength) {
-      var newPage = page; //check the current page isn't too high for the data provided
-
-      var max = (page - 1) * rowsPerPage;
-
-      if (max > tableLength) {
-        newPage = Math.ceil(tableLength / rowsPerPage);
-      } //calculate the start & end rows
-
-
-      var newStartRow = (newPage - 1) * rowsPerPage;
-      var newEndRow = newStartRow + rowsPerPage - 1;
-      return {
-        startRow: newStartRow,
-        endRow: newEndRow,
-        currentPage: newPage
-      };
-    }
-  }, {
-    key: "getMaxRowID",
-    value: function getMaxRowID(tree) {
-      var entry = tree[tree.length - 1];
-
-      if (entry.children && entry.children.length > 0) {
-        return this.getMaxRowID(entry.children);
+        });
       }
+    }(enhancedTableData);
 
-      return entry.rowOrder;
-    } //pagination
+    setEnhancedTableData(filteredNewTree);
+    setFilterValue(filterValue);
+    setFiltered(overallFiltered);
+  };
 
-  }, {
-    key: "moveToSpecificPage",
-    value: function moveToSpecificPage(page) {
-      this.setState({
-        currentPage: page
-      });
+  var filterNonVisibleRows = function filterNonVisibleRows(data) {
+    return data.filter(function (o) {
+      if (o.children) o.children = filterNonVisibleRows(o.children);
+      return !o.filtered;
+    });
+  };
+
+  var calculateNewStartAndEndRows = function calculateNewStartAndEndRows(page, rowsPerPage, tableLength) {
+    var newPage = page; //check the current page isn't too high for the data provided
+
+    var max = (page - 1) * rowsPerPage;
+
+    if (max > tableLength) {
+      newPage = Math.ceil(tableLength / rowsPerPage);
+    } //calculate the start & end rows
+
+
+    var newStartRow = (newPage - 1) * rowsPerPage;
+    var newEndRow = newStartRow + rowsPerPage - 1;
+    return {
+      startRow: newStartRow,
+      endRow: newEndRow,
+      currentPage: newPage
+    };
+  }; //pagination
+
+
+  var moveToSpecificPage = function moveToSpecificPage(page) {
+    setCurrentPage(page);
+  };
+
+  var generateTableBody = function generateTableBody(tableData, startRow, endRow) {
+    if (tableData.length > 0) {
+      return generateTableBodyRows(tableData, startRow, endRow);
+    } else {
+      return null;
     }
-  }, {
-    key: "getNextRowID",
-    value: function getNextRowID(tree, position) {
-      var entry = tree[position];
+  };
 
-      if (entry) {
-        if (entry.children && entry.children.length > 0) {
-          return this.getMaxRowID(entry.children);
-        }
+  var generateTableBodyRows = function generateTableBodyRows(tableData, startRow, endRow) {
+    var topRow = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+    var tableBody = [];
+    tableData.forEach(function (dataRow, index) {
+      var rowData = processDataRow(dataRow);
+      var key = dataRow.parentRowID + '-' + dataRow.rowID;
+      var rowClass = dataRow.visible ? 'shown' : 'hidden';
 
-        return entry.rowOrder;
-      } //if no entry at that position, return the last element
-
-
-      return tree[tree.length - 1].rowOrder;
-    }
-  }, {
-    key: "generateTableBody",
-    value: function generateTableBody(tableData, startRow, endRow) {
-      if (tableData.length > 0) {
-        return this.generateTableBodyRows(tableData, startRow, endRow);
-      } else {
-        return null;
-      }
-    }
-  }, {
-    key: "generateTableBodyRows",
-    value: function generateTableBodyRows(tableData, startRow, endRow) {
-      var _this3 = this;
-
-      var tableBody = [];
-      tableData.forEach(function (dataRow, index) {
+      if (topRow) {
         if (index >= startRow && index <= endRow) {
-          var rowData = _this3.processDataRow(dataRow);
-
-          var key = dataRow.parentRowID + '-' + dataRow.rowID;
-          var rowClass = dataRow.visible ? 'shown' : 'hidden';
           tableBody.push(_react.default.createElement("tr", {
             className: rowClass,
             key: key
           }, rowData));
 
           if (dataRow.children) {
-            tableBody.push.apply(tableBody, _toConsumableArray(_this3.generateTableBodyRows(dataRow.children, startRow, endRow)));
+            tableBody.push.apply(tableBody, _toConsumableArray(generateTableBodyRows(dataRow.children, startRow, endRow, false)));
           }
         }
-      });
-      return tableBody;
-    }
-  }, {
-    key: "generateExpandColumn",
-    value: function generateExpandColumn(dataRow, key, dataField) {
-      var output = dataRow.data[dataField];
+      } else {
+        tableBody.push(_react.default.createElement("tr", {
+          className: rowClass,
+          key: key
+        }, rowData));
 
-      if (this.state.enhancedColumns[0].renderer) {
-        output = this.state.enhancedColumns[0].renderer(dataRow, dataField);
+        if (dataRow.children) {
+          tableBody.push.apply(tableBody, _toConsumableArray(generateTableBodyRows(dataRow.children, startRow, endRow, false)));
+        }
+      }
+    });
+    return tableBody;
+  };
+
+  var generateExpandColumn = function generateExpandColumn(dataRow, key, dataField) {
+    var output = dataRow.data[dataField];
+
+    if (enhancedColumns[0].renderer) {
+      output = enhancedColumns[0].renderer(dataRow, dataField);
+    }
+
+    if (!childrenPresent) {
+      //no expander required
+      if (enhancedColumns[0].fixedWidth) {
+        return _react.default.createElement("td", {
+          key: key,
+          className: "",
+          width: enhancedColumns[0].percentageWidth + '%'
+        }, output);
+      } else {
+        return _react.default.createElement("td", {
+          key: key,
+          className: ""
+        }, output);
+      }
+    }
+
+    if (dataRow.children && dataRow.children.length > 0) {
+      var iconCell = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: _faAngleRight.faAngleRight,
+        fixedWidth: true,
+        id: "expandPoint",
+        onClick: rowExpandOrCollapse.bind(null, dataRow.rowID)
+      });
+
+      if (dataRow.expanded) {
+        iconCell = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+          icon: _faSortDown.faSortDown,
+          fixedWidth: true,
+          id: "collapsePoint",
+          onClick: rowExpandOrCollapse.bind(null, dataRow.rowID)
+        });
       }
 
-      if (!this.state.childrenPresent) {
-        //no expander required
-        if (this.state.enhancedColumns[0].fixedWidth) {
+      if (enhancedColumns[0].fixedWidth) {
+        return _react.default.createElement("td", {
+          key: key,
+          className: "",
+          width: enhancedColumns[0].percentageWidth + '%'
+        }, _react.default.createElement("span", {
+          style: {
+            marginLeft: dataRow.rowLevel + 'em'
+          }
+        }, iconCell, _react.default.createElement("span", {
+          className: "iconPadding"
+        }, output)));
+      } else {
+        return _react.default.createElement("td", {
+          key: key,
+          className: ""
+        }, _react.default.createElement("span", {
+          style: {
+            marginLeft: dataRow.rowLevel + 'em'
+          }
+        }, iconCell, _react.default.createElement("span", {
+          className: "iconPadding"
+        }, output)));
+      }
+    } else {
+      if (enhancedColumns[0].fixedWidth) {
+        return _react.default.createElement("td", {
+          key: key,
+          className: "",
+          width: enhancedColumns[0].percentageWidth + '%'
+        }, _react.default.createElement("span", {
+          style: {
+            marginLeft: dataRow.rowLevel + 1.25 + 'em'
+          }
+        }, _react.default.createElement("span", {
+          className: "iconPadding"
+        }, output)));
+      } else {
+        return _react.default.createElement("td", {
+          key: key,
+          className: ""
+        }, _react.default.createElement("span", {
+          style: {
+            marginLeft: dataRow.rowLevel + 1.25 + 'em'
+          }
+        }, _react.default.createElement("span", {
+          className: "iconPadding"
+        }, output)));
+      }
+    }
+  };
+
+  var processDataRow = function processDataRow(dataRow) {
+    var rowBody = [];
+    rowBody.push(enhancedColumns.map(function (column, index) {
+      var key = dataRow.parentRowID + '-' + dataRow.rowID + '-' + index;
+      var output = dataRow.data[column.dataField];
+
+      if (column.renderer) {
+        output = enhancedColumns[index].renderer(dataRow, column.dataField);
+      }
+
+      if (index === 0) {
+        return generateExpandColumn(dataRow, key, column.dataField);
+      } else {
+        if (column.fixedWidth) {
           return _react.default.createElement("td", {
             key: key,
             className: "",
-            width: this.state.enhancedColumns[0].percentageWidth + '%'
+            width: column.percentageWidth + '%'
           }, output);
         } else {
           return _react.default.createElement("td", {
@@ -561,223 +570,205 @@ function (_React$Component) {
           }, output);
         }
       }
+    }));
+    return rowBody;
+  };
 
-      if (dataRow.children && dataRow.children.length > 0) {
-        var iconCell = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-          icon: _faAngleRight.faAngleRight,
-          fixedWidth: true,
-          onClick: this.rowExpandOrCollapse.bind(null, dataRow.rowID)
-        });
+  var generateHeaderRow = function generateHeaderRow(allowSorting) {
+    var headingRows = [];
 
-        if (dataRow.expanded) {
-          iconCell = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+    if (enhancedColumns) {
+      headingRows.push(enhancedColumns.map(function (column, index) {
+        var fieldTitle = column.heading ? column.heading : column.dataField;
+        var sortIcon;
+
+        if (column.sortOrder === 'asc') {
+          sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+            icon: _faSortUp.faSortUp,
+            fixedWidth: true,
+            pull: "right"
+          });
+        } else if (column.sortOrder === 'desc') {
+          sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
             icon: _faSortDown.faSortDown,
             fixedWidth: true,
-            onClick: this.rowExpandOrCollapse.bind(null, dataRow.rowID)
+            pull: "right"
+          });
+        } else {
+          sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+            icon: _faSort.faSort,
+            fixedWidth: true,
+            pull: "right"
           });
         }
 
-        if (this.state.enhancedColumns[0].fixedWidth) {
-          return _react.default.createElement("td", {
-            key: key,
-            className: "",
-            width: this.state.enhancedColumns[0].percentageWidth + '%'
-          }, _react.default.createElement("span", {
-            style: {
-              marginLeft: dataRow.rowLevel + 'em'
-            }
-          }, iconCell, _react.default.createElement("span", {
-            className: "iconPadding"
-          }, output)));
+        if (allowSorting && column.sortable) {
+          return _react.default.createElement("th", {
+            key: fieldTitle,
+            onClick: sortByField.bind(null, index)
+          }, sortIcon, fieldTitle);
         } else {
-          return _react.default.createElement("td", {
-            key: key,
-            className: ""
-          }, _react.default.createElement("span", {
-            style: {
-              marginLeft: dataRow.rowLevel + 'em'
-            }
-          }, iconCell, _react.default.createElement("span", {
-            className: "iconPadding"
-          }, output)));
-        }
-      } else {
-        if (this.state.enhancedColumns[0].fixedWidth) {
-          return _react.default.createElement("td", {
-            key: key,
-            className: "",
-            width: this.state.enhancedColumns[0].percentageWidth + '%'
-          }, _react.default.createElement("span", {
-            style: {
-              marginLeft: dataRow.rowLevel + 1.25 + 'em'
-            }
-          }, _react.default.createElement("span", {
-            className: "iconPadding"
-          }, output)));
-        } else {
-          return _react.default.createElement("td", {
-            key: key,
-            className: ""
-          }, _react.default.createElement("span", {
-            style: {
-              marginLeft: dataRow.rowLevel + 1.25 + 'em'
-            }
-          }, _react.default.createElement("span", {
-            className: "iconPadding"
-          }, output)));
-        }
-      }
-    }
-  }, {
-    key: "processDataRow",
-    value: function processDataRow(dataRow) {
-      var _this4 = this;
-
-      var rowBody = [];
-      rowBody.push(this.state.enhancedColumns.map(function (column, index) {
-        var key = dataRow.parentRowID + '-' + dataRow.rowID + '-' + index;
-        var output = dataRow.data[column.dataField];
-
-        if (column.renderer) {
-          output = _this4.state.enhancedColumns[index].renderer(dataRow, column.dataField);
-        }
-
-        if (index === 0) {
-          return _this4.generateExpandColumn(dataRow, key, column.dataField);
-        } else {
-          if (column.fixedWidth) {
-            return _react.default.createElement("td", {
-              key: key,
-              className: "",
-              width: column.percentageWidth + '%'
-            }, output);
-          } else {
-            return _react.default.createElement("td", {
-              key: key,
-              className: ""
-            }, output);
-          }
+          return _react.default.createElement("th", {
+            key: fieldTitle
+          }, fieldTitle);
         }
       }));
-      return rowBody;
     }
-  }, {
-    key: "generateHeaderRow",
-    value: function generateHeaderRow() {
-      var _this5 = this;
 
-      var headingRows = [];
+    return headingRows;
+  };
 
-      if (this.state.enhancedColumns) {
-        headingRows.push(this.state.enhancedColumns.map(function (column, index) {
-          var fieldTitle = column.heading ? column.heading : column.dataField;
-          var sortIcon = null;
+  var generateTopRows = function generateTopRows(topRows) {
+    var headerRows = [];
+    headerRows.push(topRows.map(function (rowSpec, rowIndex) {
+      var thisRow = [];
+      thisRow.push(rowSpec.map(function (column, index) {
+        //first row
+        var temp = [];
 
-          if (column.sortOrder === 'asc') {
-            sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-              icon: _faSortUp.faSortUp,
-              fixedWidth: true,
-              pull: "right"
-            });
-          } else if (column.sortOrder === 'desc') {
-            sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-              icon: _faSortDown.faSortDown,
-              fixedWidth: true,
-              pull: "right"
-            });
-          } else {
-            sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-              icon: _faSort.faSort,
-              fixedWidth: true,
-              pull: "right"
-            });
-          }
+        if (index === 0) {
+          temp.push("<tr key=\"tr".concat(rowIndex, "\">"));
+        }
 
-          if (_this5.props.control.allowSorting && column.sortable) {
-            return _react.default.createElement("th", {
-              key: fieldTitle,
-              onClick: _this5.sortByField.bind(null, index)
-            }, sortIcon, fieldTitle);
-          } else {
-            return _react.default.createElement("th", {
-              key: fieldTitle
-            }, fieldTitle);
-          }
-        }));
-      }
+        var colspan = column.hasOwnProperty('colspan') ? column.colspan : 1;
+        var rowspan = column.hasOwnProperty('rowspan') ? column.rowspan : 1;
+        var halign = column.hasOwnProperty('alignment') ? column.alignment : 'left';
+        var valign = column.hasOwnProperty('verticalAlignment') ? column.verticalAlignment : 'bottom';
+        temp.push("<th colspan=\"".concat(colspan, "\" rowspan=").concat(rowspan, " class=\"text-").concat(halign, " align-").concat(valign, "\">").concat(column.heading, "</th>"));
 
-      return headingRows;
+        if (index === rowSpec.length - 1) {
+          temp.push('</tr>');
+        }
+
+        return temp.join('');
+      }).join(''));
+      return (0, _utils.Utils)().parseStringToJsx(thisRow.join(''));
+    }));
+    return headerRows;
+  };
+
+  var generatePaginatorRow = function generatePaginatorRow(showPagination, startRow, endRow, tableLength, initialRowsPerPage) {
+    if (showPagination && tableLength > initialRowsPerPage) {
+      var displayStartRow = startRow + 1;
+      var displayEndRow = endRow >= tableLength ? tableLength : endRow + 1;
+      return _react.default.createElement(_Paginator.default, {
+        currentPage: currentPage,
+        tableLength: tableLength,
+        rowsPerPage: initialRowsPerPage,
+        rowMover: moveToSpecificPage,
+        displayStartRow: displayStartRow,
+        displayEndRow: displayEndRow,
+        displayTotal: tableLength,
+        displayFiltered: filtered,
+        displayOverallTotal: props.tableData.length
+      });
     }
-  }, {
-    key: "generatePaginatorRow",
-    value: function generatePaginatorRow(startRow, endRow, tableLength) {
-      if (this.props.control.showPagination && tableLength > this.props.control.initialRowsPerPage) {
-        var displayStartRow = startRow + 1;
-        var displayEndRow = endRow >= tableLength ? tableLength : endRow + 1;
-        return _react.default.createElement(_Paginator.default, {
-          currentPage: this.state.currentPage,
-          tableLength: tableLength,
-          rowsPerPage: this.props.control.initialRowsPerPage,
-          rowMover: this.moveToSpecificPage,
-          displayStartRow: displayStartRow,
-          displayEndRow: displayEndRow,
-          displayTotal: tableLength,
-          displayFiltered: this.state.filtered,
-          displayOverallTotal: this.props.tableData.length
-        });
-      }
 
-      return _react.default.createElement("div", null);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var newTableData = this.filterNonVisibleRows(this.state.enhancedTableData);
-      var newStartAndEnd = this.calculateNewStartAndEndRows(this.state.currentPage, this.props.control.initialRowsPerPage, newTableData.length);
-      var headingRows = this.generateHeaderRow();
-      var tableBody = this.generateTableBody(newTableData, newStartAndEnd.startRow, newStartAndEnd.endRow);
-      return _react.default.createElement("div", {
-        className: "container-fluid"
-      }, _react.default.createElement("div", {
-        className: "row col-12 justify-content-between"
-      }, _react.default.createElement("div", null, _react.default.createElement("button", {
-        onClick: this.expandOrCollapseAll.bind(null),
-        className: this.props.control.showExpandCollapseButton ? 'btn btn-outline-secondary' : 'hidden'
-      }, this.props.expanded ? 'Collapse All' : 'Expand All')), _react.default.createElement("div", null, _react.default.createElement("div", {
-        className: this.props.showResetSortingButton ? 'shown' : 'hidden'
-      }, _react.default.createElement("button", {
-        onClick: this.resetSorting.bind(null),
-        className: "btn btn-outline-secondary"
-      }, "Reset Sorting")), _react.default.createElement("div", {
-        className: "".concat(this.props.control.allowFiltering ? 'shown' : 'hidden')
-      }, _react.default.createElement("div", {
-        className: "input-group"
-      }, _react.default.createElement("div", {
-        className: "input-group-prepend"
-      }, _react.default.createElement("div", {
-        className: "input-group-text"
-      }, _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: _faSearch.faSearch,
-        fixedWidth: true
-      }))), _react.default.createElement("input", {
-        type: "text",
-        value: this.props.filterValue,
-        id: "filterInput",
-        onChange: this.applyFilter.bind(null),
-        placeholder: this.props.control.filterInputPlaceholderText,
-        className: "form-control"
-      }))))), _react.default.createElement("div", {
-        className: "row col-12"
-      }, _react.default.createElement("table", {
-        className: "table table-bordered"
-      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, headingRows)), _react.default.createElement("tbody", null, tableBody))), _react.default.createElement("div", {
-        className: "row col-12 justify-content-center"
-      }, this.generatePaginatorRow(newStartAndEnd.startRow, newStartAndEnd.endRow, newTableData.length)));
-    }
-  }]);
+    return _react.default.createElement("div", null);
+  }; //execution and initial state-setting start here
+  //first check inputs & define sensible defaults
 
-  return BootstrapTreeTable;
-}(_react.default.Component);
+
+  var visibleRows = props.control.hasOwnProperty('visibleRows') ? props.control.visibleRows : 1;
+  var showExpandCollapseButton = props.control.hasOwnProperty('showExpandCollapseButton') ? props.control.showExpandCollapseButton : false;
+  var allowSorting = props.control.hasOwnProperty('allowSorting') ? props.control.allowSorting : false;
+  var allowFiltering = props.control.hasOwnProperty('allowFiltering') ? props.control.allowFiltering : false;
+  var filterInputPlaceholderText = props.control.hasOwnProperty('filterInputPlaceholderText') ? props.control.filterInputPlaceholderText : 'Filter...';
+  var showPagination = props.control.hasOwnProperty('showPagination') ? props.control.showPagination : false;
+  var initialRowsPerPage = props.control.hasOwnProperty('initialRowsPerPage') ? props.control.initialRowsPerPage : 10;
+  var initialState = Initialisation().generateInitialState(visibleRows, props.tableData, props.columns); //set required state variables
+
+  var _React$useState = _react.default.useState(initialState.enhancedTableData),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      enhancedTableData = _React$useState2[0],
+      setEnhancedTableData = _React$useState2[1];
+
+  var _React$useState3 = _react.default.useState(false),
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      expanded = _React$useState4[0],
+      setExpanded = _React$useState4[1];
+
+  var _React$useState5 = _react.default.useState(initialState.enhancedColumns),
+      _React$useState6 = _slicedToArray(_React$useState5, 2),
+      enhancedColumns = _React$useState6[0],
+      setEnhancedColumns = _React$useState6[1];
+
+  var _React$useState7 = _react.default.useState(initialState.showResetSortingButton),
+      _React$useState8 = _slicedToArray(_React$useState7, 2),
+      showResetSortingButton = _React$useState8[0],
+      setShowResetSortingButton = _React$useState8[1];
+
+  var _React$useState9 = _react.default.useState(initialState.childrenPresent),
+      _React$useState10 = _slicedToArray(_React$useState9, 1),
+      childrenPresent = _React$useState10[0];
+
+  var _React$useState11 = _react.default.useState(''),
+      _React$useState12 = _slicedToArray(_React$useState11, 2),
+      filterValue = _React$useState12[0],
+      setFilterValue = _React$useState12[1];
+
+  var _React$useState13 = _react.default.useState(false),
+      _React$useState14 = _slicedToArray(_React$useState13, 2),
+      filtered = _React$useState14[0],
+      setFiltered = _React$useState14[1];
+
+  var _React$useState15 = _react.default.useState(1),
+      _React$useState16 = _slicedToArray(_React$useState15, 2),
+      currentPage = _React$useState16[0],
+      setCurrentPage = _React$useState16[1]; //construct table
+
+
+  var newTableData = filterNonVisibleRows(enhancedTableData);
+  var newStartAndEnd = calculateNewStartAndEndRows(currentPage, initialRowsPerPage, newTableData.length);
+  var topRows = [];
+
+  if (props.hasOwnProperty('topRows')) {
+    topRows = generateTopRows(props.topRows);
+  }
+
+  var headingRows = generateHeaderRow(allowSorting);
+  var tableBody = generateTableBody(newTableData, newStartAndEnd.startRow, newStartAndEnd.endRow); //return the constructed table
+
+  return _react.default.createElement("div", {
+    className: "container-fluid"
+  }, _react.default.createElement("div", {
+    className: "row col-12 justify-content-between"
+  }, _react.default.createElement("div", null, _react.default.createElement("button", {
+    onClick: expandOrCollapseAll.bind(null),
+    className: showExpandCollapseButton ? 'btn btn-outline-secondary' : 'hidden'
+  }, expanded ? 'Collapse All' : 'Expand All')), _react.default.createElement("div", null, _react.default.createElement("div", {
+    className: showResetSortingButton ? 'shown' : 'hidden'
+  }, _react.default.createElement("button", {
+    onClick: resetSorting.bind(null),
+    className: "btn btn-outline-secondary"
+  }, "Reset Sorting")), _react.default.createElement("div", {
+    className: "".concat(allowFiltering ? 'shown' : 'hidden')
+  }, _react.default.createElement("div", {
+    className: "input-group"
+  }, _react.default.createElement("div", {
+    className: "input-group-prepend"
+  }, _react.default.createElement("div", {
+    className: "input-group-text"
+  }, _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+    icon: _faSearch.faSearch,
+    fixedWidth: true
+  }))), _react.default.createElement("input", {
+    type: "text",
+    value: filterValue,
+    id: "filterInput",
+    onChange: applyFilter.bind(null),
+    placeholder: filterInputPlaceholderText,
+    className: "form-control"
+  }))))), _react.default.createElement("div", {
+    className: "row col-12"
+  }, _react.default.createElement("table", {
+    className: "table table-bordered"
+  }, _react.default.createElement("thead", null, topRows, _react.default.createElement("tr", {
+    key: "colHeaders"
+  }, headingRows)), _react.default.createElement("tbody", null, tableBody))), _react.default.createElement("div", {
+    className: "row col-12 justify-content-center"
+  }, generatePaginatorRow(showPagination, newStartAndEnd.startRow, newStartAndEnd.endRow, newTableData.length, initialRowsPerPage)));
+};
 
 BootstrapTreeTable.propTypes = {
   tableData: _propTypes.default.arrayOf(_propTypes.default.shape({
@@ -806,31 +797,14 @@ BootstrapTreeTable.propTypes = {
     sortType: _propTypes.default.oneOf(['string', 'date', 'number']),
     sortDateFormat: _propTypes.default.string,
     filterable: _propTypes.default.bool
-  }))
-};
-BootstrapTreeTable.defaultProps = {
-  tableData: [],
-  control: {
-    visibleRows: 1,
-    showExpandCollapseButton: true,
-    allowSorting: false,
-    allowFiltering: false,
-    filterInputPlaceholderText: 'Filter...',
-    showPagination: false,
-    initialRowsPerPage: 10
-  },
-  columns: [{
-    dataField: '',
-    heading: '',
-    fixedWidth: false,
-    percentageWidth: 0,
-    renderer: null,
-    sortable: true,
-    sortUsingRenderer: false,
-    sortType: 'string',
-    sortDateFormat: null,
-    filterable: false
-  }]
+  })),
+  topRows: _propTypes.default.arrayOf(_propTypes.default.arrayOf(_propTypes.default.shape({
+    heading: _propTypes.default.string,
+    colspan: _propTypes.default.number,
+    rowspan: _propTypes.default.number,
+    alignment: _propTypes.default.oneOf(['left', 'center', 'right']),
+    verticalAlignment: _propTypes.default.oneOf(['baseline', 'top', 'middle', 'bottom', 'text-top', 'text-bottom'])
+  })))
 };
 var _default = BootstrapTreeTable;
 exports.default = _default;

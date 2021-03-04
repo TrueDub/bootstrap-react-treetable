@@ -1,45 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {isAfter, isBefore, parse} from 'date-fns'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleRight} from "@fortawesome/free-solid-svg-icons/faAngleRight";
 import {faSortDown} from "@fortawesome/free-solid-svg-icons/faSortDown";
 import {faSortUp} from "@fortawesome/free-solid-svg-icons/faSortUp";
 import {faSort} from "@fortawesome/free-solid-svg-icons/faSort";
-import Paginator from "./Paginator";
 import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
+import {isAfter, isBefore, parse} from "date-fns";
+
+import {Utils} from './utils';
+import Paginator from "./Paginator";
 
 import './BootstrapTreeTable.css';
 
-class BootstrapTreeTable extends React.Component {
-
-    constructor(props) {
-        super(props);
-        let initialState = this.generateInitialState();
-        //bind functions passed to TreeTable
-        this.sortByField = this.sortByField.bind(this);
-        this.applyFilter = this.applyFilter.bind(this);
-        this.expandOrCollapseAll = this.expandOrCollapseAll.bind(this);
-        this.resetSorting = this.resetSorting.bind(this);
-        this.rowExpandOrCollapse = this.rowExpandOrCollapse.bind(this);
-        this.moveToSpecificPage = this.moveToSpecificPage.bind(this);
-        // set state
-        this.state = {
-            enhancedTableData: initialState.enhancedTableData,
-            expanded: false,
-            enhancedColumns: initialState.enhancedColumns,
-            showResetSortingButton: initialState.showResetSortingButton,
-            childrenPresent: initialState.childrenPresent,
-            filterValue: '',
-            filtered: false,
-            currentPage: 1
-        };
-    }
-
-    generateInitialState() {
-        let visibleRows = this.props.control.hasOwnProperty('visibleRows') ? this.props.control.visibleRows : 1;
-        let enhancedTableData = this.generateStateTableData(this.props.tableData, visibleRows);
-        let enhancedColumns = this.generateColumnState(this.props.columns);
+export const Initialisation = () => {
+    const generateInitialState = (visibleRows, tableData, columns) => {
+        let enhancedTableData = generateStateTableData(tableData, visibleRows);
+        let enhancedColumns = generateColumnState(columns);
         let initialSortField = null;
         let initialSortColumn = null;
         let initialSortOrder = null;
@@ -58,10 +35,10 @@ class BootstrapTreeTable extends React.Component {
             }
         }
         if (initialSortField !== null) {
-            enhancedTableData = this.sortBy(enhancedTableData, initialSortColumn, initialSortField, initialSortOrder,
+            enhancedTableData = sortBy(enhancedTableData, initialSortColumn, initialSortField, initialSortOrder,
                 enhancedColumns[initialSortColumn].sortUsingRenderer, enhancedColumns[initialSortColumn].renderer,
                 enhancedColumns[initialSortColumn].sortType, enhancedColumns[initialSortColumn].sortDateFormat);
-            enhancedTableData = this.generateRowOrderedTree(enhancedTableData);
+            enhancedTableData = generateRowOrderedTree(enhancedTableData);
         }
         return {
             enhancedTableData: enhancedTableData,
@@ -71,7 +48,7 @@ class BootstrapTreeTable extends React.Component {
         };
     }
 
-    generateStateTableData(tree, visibleRows) {
+    const generateStateTableData = (tree, visibleRows) => {
         let n = 1;
         return (function recurse(children, parent = 0, rowLevel = 1) {
             if (children) {
@@ -92,7 +69,7 @@ class BootstrapTreeTable extends React.Component {
         })(tree);
     }
 
-    generateColumnState(initialColumns) {
+    const generateColumnState = (initialColumns) => {
         return initialColumns.map(node => {
             let sortOrder = node.hasOwnProperty('sortOrder') ? node.sortOrder : 'none';
             return Object.assign({}, node, {
@@ -103,80 +80,43 @@ class BootstrapTreeTable extends React.Component {
         });
     }
 
-    // state-changing functions below here
-
-    //expand/collapse
-    expandOrCollapseAll() {
-        let action = !this.state.expanded;
-        let newTree = (function recurse(children) {
-            return children.map(node => {
-                let visibleAction = node.rowLevel === 1 ? true : action;
-                return Object.assign({}, node, {
-                    visible: visibleAction,
-                    expanded: action,
-                    children: recurse(node.children)
-                })
-            });
-        })(this.state.enhancedTableData);
-        this.setState({
-            enhancedTableData: newTree,
-            expanded: action
+    const sortBy = (data, sortColumn, fieldName, direction, sortUsingRenderer, renderer, sortType, sortDateFormat) => {
+        data.forEach(entry => {
+            if (entry.children && entry.children.length > 0) {
+                entry.children = sortBy(entry.children, sortColumn, fieldName, direction, sortUsingRenderer, renderer, sortType, sortDateFormat);
+            }
         });
-    }
-
-    rowExpandOrCollapse(selectedRowID) {
-        let newTree = this.expandOrCollapseTree(this.state.enhancedTableData, selectedRowID, false, false);
-        this.setState({enhancedTableData: newTree});
-    }
-
-    expandOrCollapseTree(data, selectedRowID, expandAll, collapseAll) {
-        return (function recurse(children, expandBranch = expandAll, collapseBranch = collapseAll) {
-            return children.map(node => {
-                let setExpanded = node.rowID === selectedRowID ? !node.expanded : node.expanded;
-                let setVisible = node.parentRowID === selectedRowID ? !node.visible : node.visible;
-                if (expandBranch) {
-                    setExpanded = true;
-                    setVisible = true;
-                }
-                if (collapseBranch) {
-                    setExpanded = false;
-                    setVisible = false;
-                }
-                //collapse and hide all below
-                if (node.parentRowID === selectedRowID && !setVisible) {
-                    collapseBranch = true;
-                }
-                return Object.assign({}, node, {
-                    visible: setVisible,
-                    expanded: setExpanded,
-                    children: recurse(node.children, expandBranch, collapseBranch)
-                })
+        if (direction === 'asc') {
+            return data.sort((a, b) => {
+                return performSort(a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat);
             });
-        })(data);
-    }
-
-    //sorting
-
-    sortByField(sortColumn) {
-        let sortStatus = this.state.enhancedColumns[sortColumn].sortOrder;
-        let sortOrder = 'asc';
-        if (sortStatus === 'asc') {
-            sortOrder = 'desc';
+        } else {
+            return data.sort((b, a) => {
+                return performSort(a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat);
+            });
         }
-        let newTree = this.sortBy(this.state.enhancedTableData, sortColumn, this.state.enhancedColumns[sortColumn].dataField,
-            sortOrder, this.state.enhancedColumns[sortColumn].sortUsingRenderer, this.state.enhancedColumns[sortColumn].renderer,
-            this.state.enhancedColumns[sortColumn].sortType, this.state.enhancedColumns[sortColumn].sortDateFormat);
-        let orderedNewTree = this.generateRowOrderedTree(newTree);
-        const newColumns = this.state.enhancedColumns.map(a => ({...a, sortOrder: 'none'}));
-        newColumns[sortColumn].sortOrder = sortOrder;
-        this.setState({
-            enhancedTableData: orderedNewTree,
-            enhancedColumns: newColumns,
-            showResetSortingButton: true
-        });
     }
 
-    generateRowOrderedTree(oldTree) {
+    const performSort = (a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat) => {
+        let aValue = a.data[fieldName];
+        let bValue = b.data[fieldName];
+        if (sortUsingRenderer) {
+            aValue = renderer(a, fieldName);
+            bValue = renderer(b, fieldName);
+        }
+        if (sortType === 'date') {
+            return compareDates(aValue, bValue, sortDateFormat);
+        }
+        return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+    }
+
+    const compareDates = (aValue, bValue, sortDateFormat) => {
+        aValue = parse(aValue, sortDateFormat, new Date());
+        bValue = parse(bValue, sortDateFormat, new Date());
+        return isBefore(aValue, bValue) ? -1 : isAfter(aValue, bValue) ? 1 : 0;
+    }
+
+    const generateRowOrderedTree = (oldTree) => {
         let n = 0;
         return (function recurse(children) {
             if (children) {
@@ -190,55 +130,88 @@ class BootstrapTreeTable extends React.Component {
         })(oldTree);
     }
 
-    sortBy(data, sortColumn, fieldName, direction, sortUsingRenderer, renderer, sortType, sortDateFormat) {
-        data.forEach(entry => {
-            if (entry.children && entry.children.length > 0) {
-                entry.children = this.sortBy(entry.children, sortColumn, fieldName, direction, sortUsingRenderer, renderer, sortType, sortDateFormat);
-            }
-        });
-        if (direction === 'asc') {
-            return data.sort((a, b) => {
-                return this.performSort(a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat);
+    return {generateInitialState, sortBy, generateRowOrderedTree};
+}
+
+const BootstrapTreeTable = (props) => {
+    //expand/collapse
+    const expandOrCollapseAll = () => {
+        let action = !expanded;
+        let newTree = (function recurse(children) {
+            return children.map(node => {
+                let visibleAction = node.rowLevel === 1 ? true : action;
+                return Object.assign({}, node, {
+                    visible: visibleAction,
+                    expanded: action,
+                    children: recurse(node.children)
+                })
             });
-        } else {
-            return data.sort((b, a) => {
-                return this.performSort(a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat);
+        })(enhancedTableData);
+        setExpanded(action);
+        setEnhancedTableData(newTree);
+    }
+
+    const rowExpandOrCollapse = (selectedRowID) => {
+        let newTree = expandOrCollapseTree(enhancedTableData, selectedRowID, false, false);
+        setEnhancedTableData(newTree);
+    }
+
+    const expandOrCollapseTree = (data, selectedRowID, expandAll, collapseAll) => {
+        return (function recurse(children, expandBranch = expandAll, collapseBranch = collapseAll) {
+            return children.map(node => {
+                let expandedValue = node.rowID === selectedRowID ? !node.expanded : node.expanded;
+                let setVisible = node.parentRowID === selectedRowID ? !node.visible : node.visible;
+                if (expandBranch) {
+                    expandedValue = true;
+                    setVisible = true;
+                }
+                if (collapseBranch) {
+                    expandedValue = false;
+                    setVisible = false;
+                }
+                //collapse and hide all below
+                if (node.parentRowID === selectedRowID && !setVisible) {
+                    collapseBranch = true;
+                }
+                return Object.assign({}, node, {
+                    visible: setVisible,
+                    expanded: expandedValue,
+                    children: recurse(node.children, expandBranch, collapseBranch)
+                })
             });
+        })(data);
+    }
+
+    //sorting
+
+    const sortByField = (sortColumn) => {
+        let sortStatus = enhancedColumns[sortColumn].sortOrder;
+        let sortOrder = 'asc';
+        if (sortStatus === 'asc') {
+            sortOrder = 'desc';
         }
+        let newTree = Initialisation().sortBy(enhancedTableData, sortColumn, enhancedColumns[sortColumn].dataField,
+            sortOrder, enhancedColumns[sortColumn].sortUsingRenderer, enhancedColumns[sortColumn].renderer,
+            enhancedColumns[sortColumn].sortType, enhancedColumns[sortColumn].sortDateFormat);
+        let orderedNewTree = Initialisation().generateRowOrderedTree(newTree);
+        const newColumns = enhancedColumns.map(a => ({...a, sortOrder: 'none'}));
+        newColumns[sortColumn].sortOrder = sortOrder;
+        setEnhancedTableData(orderedNewTree);
+        setEnhancedColumns(newColumns);
+        setShowResetSortingButton(true);
     }
 
-    performSort(a, b, fieldName, sortUsingRenderer, renderer, sortType, sortDateFormat) {
-        let aValue = a.data[fieldName];
-        let bValue = b.data[fieldName];
-        if (sortUsingRenderer) {
-            aValue = renderer(a, fieldName);
-            bValue = renderer(b, fieldName);
-        }
-        if (sortType === 'date') {
-            return this.compareDates(aValue, bValue, sortDateFormat);
-        }
-        return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+    const resetSorting = () => {
+        let initialState = Initialisation().generateInitialState(visibleRows, props.tableData, props.columns);
+        setEnhancedTableData(initialState.enhancedTableData);
+        setEnhancedColumns(initialState.enhancedColumns);
+        setShowResetSortingButton(initialState.showResetSortingButton);
     }
 
-    compareDates(aValue, bValue, sortDateFormat) {
-        aValue = parse(aValue, sortDateFormat, new Date());
-        bValue = parse(bValue, sortDateFormat, new Date());
-        return isBefore(aValue, bValue) ? -1 : isAfter(aValue, bValue) ? 1 : 0;
-    }
-
-    resetSorting() {
-        let initialState = this.generateInitialState();
-        this.setState({
-            enhancedTableData: initialState.enhancedTableData,
-            enhancedColumns: initialState.enhancedColumns,
-            showResetSortingButton: initialState.showResetSortingButton
-        });
-    }
-
-//filtering
-    applyFilter(event) {
+    //filtering
+    const applyFilter = (event) => {
         let filterValue = event.target.value;
-        let columns = this.props.columns;
+        let columns = props.columns;
         let overallFiltered = false;
         let filteredNewTree = (function recurse(children) {
             if (children) {
@@ -268,24 +241,20 @@ class BootstrapTreeTable extends React.Component {
                     })
                 });
             }
-        })(this.state.enhancedTableData);
-        this.setState({
-            enhancedTableData: filteredNewTree,
-            filterValue: filterValue,
-            filtered: overallFiltered
-        });
+        })(enhancedTableData);
+        setEnhancedTableData(filteredNewTree);
+        setFilterValue(filterValue);
+        setFiltered(overallFiltered);
     }
 
-    filterNonVisibleRows(data) {
-        let self = this;
-        let r = data.filter(function (o) {
-            if (o.children) o.children = self.filterNonVisibleRows(o.children);
+    const filterNonVisibleRows = (data) => {
+        return data.filter(function (o) {
+            if (o.children) o.children = filterNonVisibleRows(o.children);
             return !o.filtered;
         });
-        return r;
     }
 
-    calculateNewStartAndEndRows(page, rowsPerPage, tableLength) {
+    const calculateNewStartAndEndRows = (page, rowsPerPage, tableLength) => {
         let newPage = page;
         //check the current page isn't too high for the data provided
         let max = (page - 1) * rowsPerPage;
@@ -302,49 +271,36 @@ class BootstrapTreeTable extends React.Component {
         };
     }
 
-    getMaxRowID(tree) {
-        let entry = tree[tree.length - 1];
-        if (entry.children && entry.children.length > 0) {
-            return this.getMaxRowID(entry.children);
-        }
-        return entry.rowOrder;
-    }
-
     //pagination
-    moveToSpecificPage(page) {
-        this.setState({currentPage: page});
+    const moveToSpecificPage = (page) => {
+        setCurrentPage(page);
     }
 
-    getNextRowID(tree, position) {
-        let entry = tree[position];
-        if (entry) {
-            if (entry.children && entry.children.length > 0) {
-                return this.getMaxRowID(entry.children);
-            }
-            return entry.rowOrder;
-        }
-        //if no entry at that position, return the last element
-        return tree[tree.length - 1].rowOrder;
-    }
-
-    generateTableBody(tableData, startRow, endRow) {
+    const generateTableBody = (tableData, startRow, endRow) => {
         if (tableData.length > 0) {
-            return this.generateTableBodyRows(tableData, startRow, endRow);
+            return generateTableBodyRows(tableData, startRow, endRow);
         } else {
             return null;
         }
     }
 
-    generateTableBodyRows(tableData, startRow, endRow) {
+    const generateTableBodyRows = (tableData, startRow, endRow, topRow = true) => {
         let tableBody = [];
         tableData.forEach((dataRow, index) => {
-                if (index >= startRow && index <= endRow) {
-                    let rowData = this.processDataRow(dataRow);
-                    let key = dataRow.parentRowID + '-' + dataRow.rowID;
-                    let rowClass = dataRow.visible ? 'shown' : 'hidden';
+                let rowData = processDataRow(dataRow);
+                let key = dataRow.parentRowID + '-' + dataRow.rowID;
+                let rowClass = dataRow.visible ? 'shown' : 'hidden';
+                if (topRow) {
+                    if (index >= startRow && index <= endRow) {
+                        tableBody.push(<tr className={rowClass} key={key}>{rowData}</tr>);
+                        if (dataRow.children) {
+                            tableBody.push(...generateTableBodyRows(dataRow.children, startRow, endRow, false));
+                        }
+                    }
+                } else {
                     tableBody.push(<tr className={rowClass} key={key}>{rowData}</tr>);
                     if (dataRow.children) {
-                        tableBody.push(...this.generateTableBodyRows(dataRow.children, startRow, endRow));
+                        tableBody.push(...generateTableBodyRows(dataRow.children, startRow, endRow, false));
                     }
                 }
             }
@@ -352,17 +308,17 @@ class BootstrapTreeTable extends React.Component {
         return tableBody;
     }
 
-    generateExpandColumn(dataRow, key, dataField) {
+    const generateExpandColumn = (dataRow, key, dataField) => {
         let output = dataRow.data[dataField];
-        if (this.state.enhancedColumns[0].renderer) {
-            output = this.state.enhancedColumns[0].renderer(dataRow, dataField);
+        if (enhancedColumns[0].renderer) {
+            output = enhancedColumns[0].renderer(dataRow, dataField);
         }
-        if (!this.state.childrenPresent) {
+        if (!childrenPresent) {
             //no expander required
-            if (this.state.enhancedColumns[0].fixedWidth) {
+            if (enhancedColumns[0].fixedWidth) {
                 return (
                     <td key={key} className=''
-                        width={this.state.enhancedColumns[0].percentageWidth + '%'}>
+                        width={enhancedColumns[0].percentageWidth + '%'}>
                         {output}
                     </td>);
             } else {
@@ -373,15 +329,15 @@ class BootstrapTreeTable extends React.Component {
             }
         }
         if (dataRow.children && dataRow.children.length > 0) {
-            let iconCell = <FontAwesomeIcon icon={faAngleRight} fixedWidth
-                                            onClick={this.rowExpandOrCollapse.bind(null, dataRow.rowID)}/>;
+            let iconCell = <FontAwesomeIcon icon={faAngleRight} fixedWidth id="expandPoint"
+                                            onClick={rowExpandOrCollapse.bind(null, dataRow.rowID)}/>;
             if (dataRow.expanded) {
-                iconCell = <FontAwesomeIcon icon={faSortDown} fixedWidth
-                                            onClick={this.rowExpandOrCollapse.bind(null, dataRow.rowID)}/>;
+                iconCell = <FontAwesomeIcon icon={faSortDown} fixedWidth id="collapsePoint"
+                                            onClick={rowExpandOrCollapse.bind(null, dataRow.rowID)}/>;
             }
-            if (this.state.enhancedColumns[0].fixedWidth) {
+            if (enhancedColumns[0].fixedWidth) {
                 return (<td key={key} className=''
-                            width={this.state.enhancedColumns[0].percentageWidth + '%'}><span
+                            width={enhancedColumns[0].percentageWidth + '%'}><span
                         style={{marginLeft: dataRow.rowLevel + 'em'}}>{iconCell}<span
                         className="iconPadding">{output}</span></span></td>
                 );
@@ -392,10 +348,10 @@ class BootstrapTreeTable extends React.Component {
                 );
             }
         } else {
-            if (this.state.enhancedColumns[0].fixedWidth) {
+            if (enhancedColumns[0].fixedWidth) {
                 return (
                     <td key={key} className=''
-                        width={this.state.enhancedColumns[0].percentageWidth + '%'}><span
+                        width={enhancedColumns[0].percentageWidth + '%'}><span
                         style={{marginLeft: (dataRow.rowLevel + 1.25) + 'em'}}>
                     <span className="iconPadding">{output}</span>
                 </span>
@@ -411,16 +367,16 @@ class BootstrapTreeTable extends React.Component {
         }
     }
 
-    processDataRow(dataRow) {
+    const processDataRow = (dataRow) => {
         let rowBody = [];
-        rowBody.push(this.state.enhancedColumns.map((column, index) => {
+        rowBody.push(enhancedColumns.map((column, index) => {
                 let key = dataRow.parentRowID + '-' + dataRow.rowID + '-' + index;
                 let output = dataRow.data[column.dataField];
                 if (column.renderer) {
-                    output = this.state.enhancedColumns[index].renderer(dataRow, column.dataField);
+                    output = enhancedColumns[index].renderer(dataRow, column.dataField);
                 }
                 if (index === 0) {
-                    return this.generateExpandColumn(dataRow, key, column.dataField);
+                    return generateExpandColumn(dataRow, key, column.dataField);
                 } else {
                     if (column.fixedWidth) {
                         return (<td key={key} className=''
@@ -435,12 +391,12 @@ class BootstrapTreeTable extends React.Component {
         return rowBody;
     }
 
-    generateHeaderRow() {
+    const generateHeaderRow = (allowSorting) => {
         let headingRows = [];
-        if (this.state.enhancedColumns) {
-            headingRows.push(this.state.enhancedColumns.map((column, index) => {
+        if (enhancedColumns) {
+            headingRows.push(enhancedColumns.map((column, index) => {
                     let fieldTitle = column.heading ? column.heading : column.dataField;
-                    let sortIcon = null;
+                    let sortIcon;
                     if (column.sortOrder === 'asc') {
                         sortIcon = <FontAwesomeIcon icon={faSortUp} fixedWidth pull="right"/>;
                     } else if (column.sortOrder === 'desc') {
@@ -448,9 +404,9 @@ class BootstrapTreeTable extends React.Component {
                     } else {
                         sortIcon = <FontAwesomeIcon icon={faSort} fixedWidth pull="right"/>;
                     }
-                    if (this.props.control.allowSorting && column.sortable) {
+                    if (allowSorting && column.sortable) {
                         return <th key={fieldTitle}
-                                   onClick={this.sortByField.bind(null, index)}>{sortIcon}{fieldTitle}</th>;
+                                   onClick={sortByField.bind(null, index)}>{sortIcon}{fieldTitle}</th>;
                     } else {
                         return <th key={fieldTitle}>{fieldTitle}</th>;
                     }
@@ -460,82 +416,132 @@ class BootstrapTreeTable extends React.Component {
         return headingRows;
     }
 
-    generatePaginatorRow(startRow, endRow, tableLength) {
-        if (this.props.control.showPagination && tableLength > this.props.control.initialRowsPerPage) {
+    const generateTopRows = (topRows) => {
+        let headerRows = [];
+        headerRows.push(topRows.map((rowSpec, rowIndex) => {
+            let thisRow = [];
+            thisRow.push(rowSpec.map((column, index) => {
+                //first row
+                let temp = [];
+                if (index === 0) {
+                    temp.push(`<tr key="tr${rowIndex}">`);
+                }
+                let colspan = column.hasOwnProperty('colspan') ? column.colspan : 1;
+                let rowspan = column.hasOwnProperty('rowspan') ? column.rowspan : 1;
+                let halign = column.hasOwnProperty('alignment') ? column.alignment : 'left';
+                let valign = column.hasOwnProperty('verticalAlignment') ? column.verticalAlignment : 'bottom';
+                temp.push(`<th colspan="${colspan}" rowspan=${rowspan} class="text-${halign} align-${valign}">${column.heading}</th>`);
+                if (index === rowSpec.length - 1) {
+                    temp.push('</tr>');
+                }
+                return temp.join('');
+            }).join(''));
+            return Utils().parseStringToJsx(thisRow.join(''));
+        }));
+        return headerRows;
+    }
+
+    const generatePaginatorRow = (showPagination, startRow, endRow, tableLength, initialRowsPerPage) => {
+        if (showPagination && tableLength > initialRowsPerPage) {
             let displayStartRow = startRow + 1;
             let displayEndRow = endRow >= tableLength ? tableLength : endRow + 1;
             return (
-                <Paginator currentPage={this.state.currentPage}
+                <Paginator currentPage={currentPage}
                            tableLength={tableLength}
-                           rowsPerPage={this.props.control.initialRowsPerPage}
-                           rowMover={this.moveToSpecificPage}
+                           rowsPerPage={initialRowsPerPage}
+                           rowMover={moveToSpecificPage}
                            displayStartRow={displayStartRow}
                            displayEndRow={displayEndRow}
                            displayTotal={tableLength}
-                           displayFiltered={this.state.filtered}
-                           displayOverallTotal={this.props.tableData.length}/>
+                           displayFiltered={filtered}
+                           displayOverallTotal={props.tableData.length}/>
             );
         }
         return <div></div>;
     }
 
-    render() {
-        let newTableData = this.filterNonVisibleRows(this.state.enhancedTableData);
-        let newStartAndEnd = this.calculateNewStartAndEndRows(this.state.currentPage, this.props.control.initialRowsPerPage, newTableData.length);
-        let headingRows = this.generateHeaderRow();
-        let tableBody = this.generateTableBody(newTableData, newStartAndEnd.startRow, newStartAndEnd.endRow);
-        return (
-            <div className="container-fluid">
-                <div className="row col-12 justify-content-between">
-                    <div>
-                        <button onClick={this.expandOrCollapseAll.bind(null)}
-                                className={this.props.control.showExpandCollapseButton ? 'btn btn-outline-secondary' : 'hidden'}>
-                            {this.props.expanded ? 'Collapse All' : 'Expand All'}
+    //execution and initial state-setting start here
+    //first check inputs & define sensible defaults
+    let visibleRows = props.control.hasOwnProperty('visibleRows') ? props.control.visibleRows : 1;
+    let showExpandCollapseButton = props.control.hasOwnProperty('showExpandCollapseButton') ? props.control.showExpandCollapseButton : false;
+    let allowSorting = props.control.hasOwnProperty('allowSorting') ? props.control.allowSorting : false;
+    let allowFiltering = props.control.hasOwnProperty('allowFiltering') ? props.control.allowFiltering : false;
+    let filterInputPlaceholderText = props.control.hasOwnProperty('filterInputPlaceholderText') ? props.control.filterInputPlaceholderText : 'Filter...';
+    let showPagination = props.control.hasOwnProperty('showPagination') ? props.control.showPagination : false;
+    let initialRowsPerPage = props.control.hasOwnProperty('initialRowsPerPage') ? props.control.initialRowsPerPage : 10;
+
+    let initialState = Initialisation().generateInitialState(visibleRows, props.tableData, props.columns);
+
+    //set required state variables
+    const [enhancedTableData, setEnhancedTableData] = React.useState(initialState.enhancedTableData);
+    const [expanded, setExpanded] = React.useState(false);
+    const [enhancedColumns, setEnhancedColumns] = React.useState(initialState.enhancedColumns);
+    const [showResetSortingButton, setShowResetSortingButton] = React.useState(initialState.showResetSortingButton);
+    const [childrenPresent] = React.useState(initialState.childrenPresent);
+    const [filterValue, setFilterValue] = React.useState('');
+    const [filtered, setFiltered] = React.useState(false);
+    const [currentPage, setCurrentPage] = React.useState(1);
+    //construct table
+    let newTableData = filterNonVisibleRows(enhancedTableData);
+    let newStartAndEnd = calculateNewStartAndEndRows(currentPage, initialRowsPerPage, newTableData.length);
+    let topRows = []
+    if (props.hasOwnProperty('topRows')) {
+        topRows = generateTopRows(props.topRows);
+    }
+    let headingRows = generateHeaderRow(allowSorting);
+    let tableBody = generateTableBody(newTableData, newStartAndEnd.startRow, newStartAndEnd.endRow);
+    //return the constructed table
+    return (
+        <div className="container-fluid">
+            <div className="row col-12 justify-content-between">
+                <div>
+                    <button onClick={expandOrCollapseAll.bind(null)}
+                            className={showExpandCollapseButton ? 'btn btn-outline-secondary' : 'hidden'}>
+                        {expanded ? 'Collapse All' : 'Expand All'}
+                    </button>
+                </div>
+                <div>
+                    <div className={showResetSortingButton ? 'shown' : 'hidden'}>
+                        <button onClick={resetSorting.bind(null)}
+                                className='btn btn-outline-secondary'>
+                            Reset Sorting
                         </button>
                     </div>
-                    <div>
-                        <div className={this.props.showResetSortingButton ? 'shown' : 'hidden'}>
-                            <button onClick={this.resetSorting.bind(null)}
-                                    className='btn btn-outline-secondary'>
-                                Reset Sorting
-                            </button>
-                        </div>
-                        <div className={`${this.props.control.allowFiltering ? 'shown' : 'hidden'}`}>
-                            <div className="input-group">
-                                <div className="input-group-prepend">
-                                    <div className="input-group-text"><FontAwesomeIcon icon={faSearch} fixedWidth/>
-                                    </div>
+                    <div className={`${allowFiltering ? 'shown' : 'hidden'}`}>
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text"><FontAwesomeIcon icon={faSearch} fixedWidth/>
                                 </div>
-                                <input type="text" value={this.props.filterValue} id="filterInput"
-                                       onChange={this.applyFilter.bind(null)}
-                                       placeholder={this.props.control.filterInputPlaceholderText}
-                                       className='form-control'/>
                             </div>
+                            <input type="text" value={filterValue} id="filterInput"
+                                   onChange={applyFilter.bind(null)}
+                                   placeholder={filterInputPlaceholderText}
+                                   className='form-control'/>
                         </div>
                     </div>
                 </div>
-                <div className='row col-12'>
-                    <table className='table table-bordered'>
-                        <thead>
-                        <tr>
-                            {headingRows}
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {tableBody}
-                        </tbody>
-                    </table>
-                </div>
-                <div className='row col-12 justify-content-center'>
-                    {this.generatePaginatorRow(newStartAndEnd.startRow, newStartAndEnd.endRow, newTableData.length)}
-                </div>
             </div>
-        )
-    }
+            <div className='row col-12'>
+                <table className='table table-bordered'>
+                    <thead>
+                    {topRows}
+                    <tr key="colHeaders">
+                        {headingRows}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {tableBody}
+                    </tbody>
+                </table>
+            </div>
+            <div className='row col-12 justify-content-center'>
+                {generatePaginatorRow(showPagination, newStartAndEnd.startRow, newStartAndEnd.endRow, newTableData.length, initialRowsPerPage)}
+            </div>
+        </div>
+    )
 }
 
-BootstrapTreeTable
-    .propTypes = {
+BootstrapTreeTable.propTypes = {
     tableData: PropTypes.arrayOf(
         PropTypes.shape({
             data: PropTypes.object,
@@ -563,33 +569,14 @@ BootstrapTreeTable
         sortType: PropTypes.oneOf(['string', 'date', 'number']),
         sortDateFormat: PropTypes.string,
         filterable: PropTypes.bool
-    }))
-};
-
-BootstrapTreeTable
-    .defaultProps = {
-    tableData: [],
-    control: {
-        visibleRows: 1,
-        showExpandCollapseButton: true,
-        allowSorting: false,
-        allowFiltering: false,
-        filterInputPlaceholderText: 'Filter...',
-        showPagination: false,
-        initialRowsPerPage: 10
-    },
-    columns: [{
-        dataField: '',
-        heading: '',
-        fixedWidth: false,
-        percentageWidth: 0,
-        renderer: null,
-        sortable: true,
-        sortUsingRenderer: false,
-        sortType: 'string',
-        sortDateFormat: null,
-        filterable: false
-    }]
+    })),
+    topRows: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
+        heading: PropTypes.string,
+        colspan: PropTypes.number,
+        rowspan: PropTypes.number,
+        alignment: PropTypes.oneOf(['left', 'center', 'right']),
+        verticalAlignment: PropTypes.oneOf(['baseline', 'top', 'middle', 'bottom', 'text-top', 'text-bottom'])
+    })))
 };
 
 export default BootstrapTreeTable;

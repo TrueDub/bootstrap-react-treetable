@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-react-treetable",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "files": [
@@ -16,12 +16,17 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "react-scripts start",
-    "build": "npm run clean && babel src/lib --out-dir dist && copyfiles -f src/lib/*.css dist",
-    "test": "cross-env CI=true react-scripts test --env=jsdom",
+    "build": "npm run clean && npm run lint && babel src/lib --out-dir dist && copyfiles -f src/lib/*.css dist",
+    "test": "cross-env CI=true react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject",
     "clean:demo": "rimraf build",
     "build:demo": "npm run clean:demo && webpack --config webpack.config.demo.js -p --bail",
     "lint": "eslint src"
+  },
+  "jest": {
+    "coverageReporters": [
+      "html"
+    ]
   },
   "husky": {
     "hooks": {
@@ -30,19 +35,23 @@
     }
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "plugin:react-hooks/recommended"
+    ]
   },
   "dependencies": {
     "@babel/polyfill": "7.8.3",
     "@fortawesome/fontawesome-svg-core": "1.2.27",
     "@fortawesome/free-solid-svg-icons": "5.12.1",
     "@fortawesome/react-fontawesome": "0.1.8",
-    "core-js": "^3.8.3",
-    "date-fns": "^2.16.1",
+    "core-js": "^3.9.1",
+    "date-fns": "^2.18.0",
+    "html-react-parser": "^1.2.4",
     "prop-types": "15.7.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.10",
+    "@babel/cli": "^7.13.0",
     "@babel/core": "7.8.4",
     "@babel/preset-env": "7.8.4",
     "@babel/preset-react": "7.8.3",
@@ -52,6 +61,7 @@
     "del": "5.1.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "highlight.js": "10.5.0",
     "husky": "4.2.3",
     "react": "16.12.0",
