@@ -124,7 +124,7 @@ Further control of how the table is displayed can be provided using the **contro
 | showPagination | Boolean | Paginate the table, and provide a set of links at the bottom for navigation - default is false | false | No |
 | initialRowsPerPage | Number | Number of rows to display when paginated | 10 | No |
 
-Should you wish to have multiple header rows, you can supply a **topRows** prop. These rows are rendered above the main header row for the table.
+Should you wish to have multiple header rows, you can supply a **topRows** prop. These rows are rendered above the main header row for the table. This prop is an array of arrays of objects.
 
 | Attribute Name | Type | Description | Example | Required |
 | -------------- | ---- | ----------- | ------- | -------- |
@@ -135,6 +135,8 @@ Should you wish to have multiple header rows, you can supply a **topRows** prop.
 | verticalAlignment    | String | The text alignment of this header cell - one of baseline, top, middle, bottom, text-top or text-bottom - see [Bootstrap docs](https://getbootstrap.com/docs/4.6/utilities/vertical-align/) for details | center | No |
 
 The colspan values should add up to the number of columns in the regular table, or odd things will happen with your display.
+
+NOTE: this plugin doesn't do any checking on the colspan and rowspan numbers you put in - it's up to you to ensure you've got the values correct. Also, you cannot span columns or rows on the main table headers (the one which is used for sorting).
 
 #### Rendering option
 
@@ -181,3 +183,7 @@ To use this component as a simple datatable (i.e. no expandable capabilities), s
 |  1.0.1  |  | 26-Jun-2019 |
 |  1.0.0  | First release | 22-Feb-2019 |
 |  1.0.0-rc.1  | First release candidate of 1.0.0 | 22-Feb-2019 |
+
+# Development
+
+Use [yalc](https://www.npmjs.com/package/yalc) instead of "npm link".

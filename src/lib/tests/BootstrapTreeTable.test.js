@@ -130,7 +130,7 @@ describe('testing the expand and collapse functionality', () => {
         rows.forEach((tr, rowIndex) => {
             const cells = tr.find('td');
             expect(cells).toHaveLength(columns.length);
-            if (rowIndex == 0) {
+            if (rowIndex === 0) {
                 expect(tr.hasClass('shown'));
                 expect(cells.at(0).text()).toContain(tableData[rowIndex].data.name);
                 expect(cells.at(1).text()).toContain(tableData[rowIndex].data.dataType);
@@ -143,7 +143,7 @@ describe('testing the expand and collapse functionality', () => {
                 expect(cells.at(1).text()).toContain(tableData[0].children[rowIndex - 1].data.dataType);
                 expect(cells.at(2).text()).toContain(tableData[0].children[rowIndex - 1].data.example);
                 expect(cells.at(3).text()).toContain(tableData[0].children[rowIndex - 1].data.description);
-            } else if (rowIndex == 4) {
+            } else if (rowIndex === 4) {
                 //this is the sub-child row - shouldn't be visible initially
                 expect(tr.hasClass('hidden'));
                 expect(cells.at(0).text()).toContain(tableData[0].children[rowIndex - 2].children[0].data.name);
