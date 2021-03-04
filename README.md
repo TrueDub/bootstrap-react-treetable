@@ -177,7 +177,7 @@ To use this component as a simple datatable (i.e. no expandable capabilities), s
 
 | Release | Description | Release date |
 | ------- | ----------- | ------------ |
-|  2.0.1  | Added Multiple header rows | XX-Xxx-2021 |                                                           
+|  2.0.2  | Added Multiple header rows | 04-Mar-2021 |                                                           
 |  2.0.0  | React lifestyle methods removed, Moment.js removed, bugfixes applied | 21-Jan-2021 |                                                           
 |  1.0.2  | Audit fixes | 01-Oct-2019 |
 |  1.0.1  |  | 26-Jun-2019 |
