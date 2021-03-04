@@ -16,7 +16,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "react-scripts start",
-    "build": "npm run clean && babel src/lib --out-dir dist && copyfiles -f src/lib/*.css dist",
+    "build": "npm run clean && npm run lint && babel src/lib --out-dir dist && copyfiles -f src/lib/*.css dist",
     "test": "cross-env CI=true react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject",
     "clean:demo": "rimraf build",
@@ -45,13 +45,13 @@
     "@fortawesome/fontawesome-svg-core": "1.2.27",
     "@fortawesome/free-solid-svg-icons": "5.12.1",
     "@fortawesome/react-fontawesome": "0.1.8",
-    "core-js": "^3.8.3",
-    "date-fns": "^2.16.1",
+    "core-js": "^3.9.1",
+    "date-fns": "^2.18.0",
     "html-react-parser": "^1.2.4",
     "prop-types": "15.7.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.10",
+    "@babel/cli": "^7.13.0",
     "@babel/core": "7.8.4",
     "@babel/preset-env": "7.8.4",
     "@babel/preset-react": "7.8.3",
