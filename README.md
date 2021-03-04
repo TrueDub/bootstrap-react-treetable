@@ -1,6 +1,6 @@
 # bootstrap-react-treetable
 
-A React component that presents a simple TreeTable, allowing the user to supply styling and rendering options. A default styling (using Bootstrap 4) is also available. XXX
+A React component that presents a simple TreeTable, allowing the user to supply styling and rendering options. A default styling (using Bootstrap 4) is also available.
 
 ## Installation
 
