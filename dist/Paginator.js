@@ -1,10 +1,12 @@
 "use strict";
 
+require("core-js/modules/es.object.define-property.js");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = Paginator;
 exports.Calculations = void 0;
+exports.default = Paginator;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -115,68 +117,68 @@ exports.Calculations = Calculations;
 
 function Paginator(props) {
   var paginatorData = Calculations().performCalculations(props.currentPage, props.tableLength, props.rowsPerPage);
-  return _react.default.createElement("nav", null, _react.default.createElement("ul", {
+  return /*#__PURE__*/_react.default.createElement("nav", null, /*#__PURE__*/_react.default.createElement("ul", {
     className: "pagination"
-  }, _react.default.createElement("li", {
+  }, /*#__PURE__*/_react.default.createElement("li", {
     className: paginatorData.firstClasses
-  }, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("a", {
     href: "#!",
     className: "page-link",
     onClick: props.rowMover.bind(null, paginatorData.firstValue)
-  }, " First ")), _react.default.createElement("li", {
+  }, " First ")), /*#__PURE__*/_react.default.createElement("li", {
     className: paginatorData.previousClasses
-  }, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("a", {
     href: "#!",
     className: "page-link",
     onClick: props.rowMover.bind(null, paginatorData.previousValue)
-  }, "Previous ")), _react.default.createElement("li", {
+  }, "Previous ")), /*#__PURE__*/_react.default.createElement("li", {
     className: paginatorData.pos1Classes
-  }, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("a", {
     href: "#!",
     className: "page-link",
     onClick: props.rowMover.bind(null, paginatorData.pos1Value)
-  }, paginatorData.pos1Value)), _react.default.createElement("li", {
+  }, paginatorData.pos1Value)), /*#__PURE__*/_react.default.createElement("li", {
     className: paginatorData.pos2Classes
-  }, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("a", {
     href: "#!",
     className: "page-link",
     onClick: props.rowMover.bind(null, paginatorData.pos2Value)
-  }, paginatorData.pos2Value)), _react.default.createElement("li", {
+  }, paginatorData.pos2Value)), /*#__PURE__*/_react.default.createElement("li", {
     className: paginatorData.pos3Classes
-  }, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("a", {
     href: "#!",
     className: "page-link",
     onClick: props.rowMover.bind(null, paginatorData.pos3Value)
-  }, paginatorData.pos3Value)), _react.default.createElement("li", {
+  }, paginatorData.pos3Value)), /*#__PURE__*/_react.default.createElement("li", {
     className: paginatorData.pos4Classes
-  }, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("a", {
     href: "#!",
     className: "page-link",
     onClick: props.rowMover.bind(null, paginatorData.pos4Value)
-  }, paginatorData.pos4Value)), _react.default.createElement("li", {
+  }, paginatorData.pos4Value)), /*#__PURE__*/_react.default.createElement("li", {
     className: paginatorData.pos5Classes
-  }, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("a", {
     href: "#!",
     className: "page-link",
     onClick: props.rowMover.bind(null, paginatorData.pos5Value)
-  }, paginatorData.pos5Value)), _react.default.createElement("li", {
+  }, paginatorData.pos5Value)), /*#__PURE__*/_react.default.createElement("li", {
     className: paginatorData.nextClasses
-  }, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("a", {
     href: "#!",
     className: "page-link",
     id: "nextLink",
     onClick: props.rowMover.bind(null, paginatorData.nextValue)
-  }, "Next ")), _react.default.createElement("li", {
+  }, "Next ")), /*#__PURE__*/_react.default.createElement("li", {
     className: paginatorData.lastClasses
-  }, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("a", {
     href: "#!",
     className: "page-link",
     onClick: props.rowMover.bind(null, paginatorData.lastValue)
-  }, "Last ")), _react.default.createElement("li", {
+  }, "Last ")), /*#__PURE__*/_react.default.createElement("li", {
     className: 'page-item disabled'
-  }, _react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
     className: "page-link"
-  }, "Showing ", props.displayStartRow, " to ", props.displayEndRow, " of ", props.displayTotal, " records ", _react.default.createElement("span", {
+  }, "Showing ", props.displayStartRow, " to ", props.displayEndRow, " of ", props.displayTotal, " records ", /*#__PURE__*/_react.default.createElement("span", {
     className: props.displayFiltered ? 'shown' : 'hidden'
   }, "(filtered from ", props.displayOverallTotal, ")")))));
 }

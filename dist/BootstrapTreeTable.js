@@ -1,51 +1,59 @@
 "use strict";
 
-require("core-js/modules/es.symbol");
+require("core-js/modules/es.array.slice.js");
 
-require("core-js/modules/es.symbol.description");
+require("core-js/modules/es.function.name.js");
 
-require("core-js/modules/es.symbol.iterator");
+require("core-js/modules/es.array.from.js");
 
-require("core-js/modules/es.array.concat");
+require("core-js/modules/es.string.iterator.js");
 
-require("core-js/modules/es.array.filter");
+require("core-js/modules/es.regexp.exec.js");
 
-require("core-js/modules/es.array.for-each");
+require("core-js/modules/es.regexp.test.js");
 
-require("core-js/modules/es.array.from");
+require("core-js/modules/es.symbol.js");
 
-require("core-js/modules/es.array.index-of");
+require("core-js/modules/es.symbol.description.js");
 
-require("core-js/modules/es.array.iterator");
+require("core-js/modules/es.symbol.iterator.js");
 
-require("core-js/modules/es.array.join");
+require("core-js/modules/es.array.iterator.js");
 
-require("core-js/modules/es.array.map");
+require("core-js/modules/web.dom-collections.iterator.js");
 
-require("core-js/modules/es.array.sort");
+require("core-js/modules/es.object.define-property.js");
 
-require("core-js/modules/es.object.assign");
+require("core-js/modules/es.object.keys.js");
 
-require("core-js/modules/es.object.get-own-property-descriptor");
+require("core-js/modules/es.object.get-own-property-descriptor.js");
 
-require("core-js/modules/es.object.get-own-property-descriptors");
+require("core-js/modules/es.object.get-own-property-descriptors.js");
 
-require("core-js/modules/es.object.keys");
-
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.regexp.to-string");
-
-require("core-js/modules/es.string.iterator");
-
-require("core-js/modules/web.dom-collections.for-each");
-
-require("core-js/modules/web.dom-collections.iterator");
+require("core-js/modules/es.object.define-properties.js");
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = exports.Initialisation = void 0;
+
+require("core-js/modules/es.object.to-string.js");
+
+require("core-js/modules/web.dom-collections.for-each.js");
+
+require("core-js/modules/es.array.map.js");
+
+require("core-js/modules/es.object.assign.js");
+
+require("core-js/modules/es.array.sort.js");
+
+require("core-js/modules/es.array.index-of.js");
+
+require("core-js/modules/es.array.filter.js");
+
+require("core-js/modules/es.array.join.js");
+
+require("core-js/modules/es.array.concat.js");
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -73,27 +81,33 @@ require("./BootstrapTreeTable.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 var Initialisation = function Initialisation() {
   var generateInitialState = function generateInitialState(visibleRows, tableData, columns) {
@@ -111,12 +125,12 @@ var Initialisation = function Initialisation() {
       }
     });
     var childrenPresent = false;
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+
+    var _iterator = _createForOfIteratorHelper(enhancedTableData),
+        _step;
 
     try {
-      for (var _iterator = enhancedTableData[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var entry = _step.value;
 
         if (entry.children && entry.children.length > 0) {
@@ -124,18 +138,9 @@ var Initialisation = function Initialisation() {
         }
       }
     } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
+      _iterator.e(err);
     } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator.return != null) {
-          _iterator.return();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
+      _iterator.f();
     }
 
     if (initialSortField !== null) {
@@ -318,7 +323,7 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
     var newTree = Initialisation().sortBy(enhancedTableData, sortColumn, enhancedColumns[sortColumn].dataField, sortOrder, enhancedColumns[sortColumn].sortUsingRenderer, enhancedColumns[sortColumn].renderer, enhancedColumns[sortColumn].sortType, enhancedColumns[sortColumn].sortDateFormat);
     var orderedNewTree = Initialisation().generateRowOrderedTree(newTree);
     var newColumns = enhancedColumns.map(function (a) {
-      return _objectSpread({}, a, {
+      return _objectSpread(_objectSpread({}, a), {}, {
         sortOrder: 'none'
       });
     });
@@ -429,7 +434,7 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
 
       if (topRow) {
         if (index >= startRow && index <= endRow) {
-          tableBody.push(_react.default.createElement("tr", {
+          tableBody.push( /*#__PURE__*/_react.default.createElement("tr", {
             className: rowClass,
             key: key
           }, rowData));
@@ -439,7 +444,7 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
           }
         }
       } else {
-        tableBody.push(_react.default.createElement("tr", {
+        tableBody.push( /*#__PURE__*/_react.default.createElement("tr", {
           className: rowClass,
           key: key
         }, rowData));
@@ -462,13 +467,13 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
     if (!childrenPresent) {
       //no expander required
       if (enhancedColumns[0].fixedWidth) {
-        return _react.default.createElement("td", {
+        return /*#__PURE__*/_react.default.createElement("td", {
           key: key,
           className: "text-left",
           width: enhancedColumns[0].percentageWidth + '%'
         }, output);
       } else {
-        return _react.default.createElement("td", {
+        return /*#__PURE__*/_react.default.createElement("td", {
           key: key,
           className: "text-left"
         }, output);
@@ -476,7 +481,7 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
     }
 
     if (dataRow.children && dataRow.children.length > 0) {
-      var iconCell = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+      var iconCell = /*#__PURE__*/_react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: _faAngleRight.faAngleRight,
         fixedWidth: true,
         id: "expandPoint",
@@ -484,7 +489,7 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
       });
 
       if (dataRow.expanded) {
-        iconCell = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+        iconCell = /*#__PURE__*/_react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
           icon: _faSortDown.faSortDown,
           fixedWidth: true,
           id: "collapsePoint",
@@ -493,51 +498,51 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
       }
 
       if (enhancedColumns[0].fixedWidth) {
-        return _react.default.createElement("td", {
+        return /*#__PURE__*/_react.default.createElement("td", {
           key: key,
           className: "text-left",
           width: enhancedColumns[0].percentageWidth + '%'
-        }, _react.default.createElement("span", {
+        }, /*#__PURE__*/_react.default.createElement("span", {
           style: {
             marginLeft: dataRow.rowLevel + 'em'
           }
-        }, iconCell, _react.default.createElement("span", {
+        }, iconCell, /*#__PURE__*/_react.default.createElement("span", {
           className: "iconPadding"
         }, output)));
       } else {
-        return _react.default.createElement("td", {
+        return /*#__PURE__*/_react.default.createElement("td", {
           key: key,
           className: "text-left"
-        }, _react.default.createElement("span", {
+        }, /*#__PURE__*/_react.default.createElement("span", {
           style: {
             marginLeft: dataRow.rowLevel + 'em'
           }
-        }, iconCell, _react.default.createElement("span", {
+        }, iconCell, /*#__PURE__*/_react.default.createElement("span", {
           className: "iconPadding"
         }, output)));
       }
     } else {
       if (enhancedColumns[0].fixedWidth) {
-        return _react.default.createElement("td", {
+        return /*#__PURE__*/_react.default.createElement("td", {
           key: key,
           className: "",
           width: enhancedColumns[0].percentageWidth + '%'
-        }, _react.default.createElement("span", {
+        }, /*#__PURE__*/_react.default.createElement("span", {
           style: {
             marginLeft: dataRow.rowLevel + 1.25 + 'em'
           }
-        }, _react.default.createElement("span", {
+        }, /*#__PURE__*/_react.default.createElement("span", {
           className: "iconPadding"
         }, output)));
       } else {
-        return _react.default.createElement("td", {
+        return /*#__PURE__*/_react.default.createElement("td", {
           key: key,
           className: ""
-        }, _react.default.createElement("span", {
+        }, /*#__PURE__*/_react.default.createElement("span", {
           style: {
             marginLeft: dataRow.rowLevel + 1.25 + 'em'
           }
-        }, _react.default.createElement("span", {
+        }, /*#__PURE__*/_react.default.createElement("span", {
           className: "iconPadding"
         }, output)));
       }
@@ -558,13 +563,13 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
         return generateExpandColumn(dataRow, key, column.dataField);
       } else {
         if (column.fixedWidth) {
-          return _react.default.createElement("td", {
+          return /*#__PURE__*/_react.default.createElement("td", {
             key: key,
             className: "",
             width: column.percentageWidth + '%'
           }, output);
         } else {
-          return _react.default.createElement("td", {
+          return /*#__PURE__*/_react.default.createElement("td", {
             key: key,
             className: ""
           }, output);
@@ -583,19 +588,19 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
         var sortIcon;
 
         if (column.sortOrder === 'asc') {
-          sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+          sortIcon = /*#__PURE__*/_react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
             icon: _faSortUp.faSortUp,
             fixedWidth: true,
             pull: "right"
           });
         } else if (column.sortOrder === 'desc') {
-          sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+          sortIcon = /*#__PURE__*/_react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
             icon: _faSortDown.faSortDown,
             fixedWidth: true,
             pull: "right"
           });
         } else {
-          sortIcon = _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+          sortIcon = /*#__PURE__*/_react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
             icon: _faSort.faSort,
             fixedWidth: true,
             pull: "right"
@@ -603,12 +608,12 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
         }
 
         if (allowSorting && column.sortable) {
-          return _react.default.createElement("th", {
+          return /*#__PURE__*/_react.default.createElement("th", {
             key: fieldTitle,
             onClick: sortByField.bind(null, index)
           }, sortIcon, fieldTitle);
         } else {
-          return _react.default.createElement("th", {
+          return /*#__PURE__*/_react.default.createElement("th", {
             key: fieldTitle
           }, fieldTitle);
         }
@@ -651,7 +656,7 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
     if (showPagination && tableLength > initialRowsPerPage) {
       var displayStartRow = startRow + 1;
       var displayEndRow = endRow >= tableLength ? tableLength : endRow + 1;
-      return _react.default.createElement(_Paginator.default, {
+      return /*#__PURE__*/_react.default.createElement(_Paginator.default, {
         currentPage: currentPage,
         tableLength: tableLength,
         rowsPerPage: initialRowsPerPage,
@@ -664,7 +669,7 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
       });
     }
 
-    return _react.default.createElement("div", null);
+    return /*#__PURE__*/_react.default.createElement("div", null);
   }; //execution and initial state-setting start here
   //first check inputs & define sensible defaults
 
@@ -729,43 +734,43 @@ var BootstrapTreeTable = function BootstrapTreeTable(props) {
   var headingRows = generateHeaderRow(allowSorting);
   var tableBody = generateTableBody(newTableData, newStartAndEnd.startRow, newStartAndEnd.endRow); //return the constructed table
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "container-fluid"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "row col-12 justify-content-between"
-  }, _react.default.createElement("div", null, _react.default.createElement("button", {
+  }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
     onClick: expandOrCollapseAll.bind(null),
     className: showExpandCollapseButton ? 'btn btn-outline-secondary' : 'hidden'
-  }, expanded ? 'Collapse All' : 'Expand All')), _react.default.createElement("div", null, _react.default.createElement("div", {
+  }, expanded ? 'Collapse All' : 'Expand All')), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
     className: showResetSortingButton ? 'shown' : 'hidden'
-  }, _react.default.createElement("button", {
+  }, /*#__PURE__*/_react.default.createElement("button", {
     onClick: resetSorting.bind(null),
     className: "btn btn-outline-secondary"
-  }, "Reset Sorting")), _react.default.createElement("div", {
+  }, "Reset Sorting")), /*#__PURE__*/_react.default.createElement("div", {
     className: "".concat(allowFiltering ? 'shown' : 'hidden')
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "input-group"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "input-group-prepend"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "input-group-text"
-  }, _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+  }, /*#__PURE__*/_react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
     icon: _faSearch.faSearch,
     fixedWidth: true
-  }))), _react.default.createElement("input", {
+  }))), /*#__PURE__*/_react.default.createElement("input", {
     type: "text",
     value: filterValue,
     id: "filterInput",
     onChange: applyFilter.bind(null),
     placeholder: filterInputPlaceholderText,
     className: "form-control"
-  }))))), _react.default.createElement("div", {
+  }))))), /*#__PURE__*/_react.default.createElement("div", {
     className: "row col-12"
-  }, _react.default.createElement("table", {
+  }, /*#__PURE__*/_react.default.createElement("table", {
     className: "table table-bordered"
-  }, _react.default.createElement("thead", null, topRows, _react.default.createElement("tr", {
+  }, /*#__PURE__*/_react.default.createElement("thead", null, topRows, /*#__PURE__*/_react.default.createElement("tr", {
     key: "colHeaders"
-  }, headingRows)), _react.default.createElement("tbody", null, tableBody))), _react.default.createElement("div", {
+  }, headingRows)), /*#__PURE__*/_react.default.createElement("tbody", null, tableBody))), /*#__PURE__*/_react.default.createElement("div", {
     className: "row col-12 justify-content-center"
   }, generatePaginatorRow(showPagination, newStartAndEnd.startRow, newStartAndEnd.endRow, newTableData.length, initialRowsPerPage)));
 };
