@@ -1,4 +1,5 @@
-import {Initialisation} from '../BootstrapTreeTable';
+import {describe, expect, test} from 'vitest';
+import {Initialisation} from '../initialisation.js';
 
 const tableData = [
     {
@@ -74,7 +75,7 @@ const columns = [
 ];
 
 describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
-    it('each row has the correct row ID and setup', () => {
+    test('each row has the correct row ID and setup', () => {
         let enhancedTableData = Initialisation().generateInitialState(control.visibleRows, tableData, columns).enhancedTableData;
         expect(enhancedTableData.length).toBe(3);
         expect(enhancedTableData[0].rowID).toBe(1);
@@ -103,7 +104,7 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
         expect(enhancedTableData[2].visible).toBe(true);
     });
 
-    it('undefined data fields are dealt with', () => {
+    test('undefined data fields are dealt with', () => {
         let localTableData = [
             {
                 data: {
@@ -196,7 +197,7 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
         expect(enhancedTableData[2].visible).toBe(true);
     });
 
-    it('deal with a sort order correctly', () => {
+    test('deal with a sort order correctly', () => {
         let localTableData = [
             {
                 data: {
@@ -262,7 +263,14 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
             }
         ];
         let localColumns = [
-            {dataField: "name", heading: "fred1", fixedWidth: true, percentageWidth: 25, sortable: true, sortOrder: 'asc'},
+            {
+                dataField: "name",
+                heading: "fred1",
+                fixedWidth: true,
+                percentageWidth: 25,
+                sortable: true,
+                sortOrder: 'asc'
+            },
             {dataField: "dataType", heading: "fred2", fixedWidth: true, percentageWidth: 10, filterable: true},
             {dataField: "example", heading: "fred3", fixedWidth: true, percentageWidth: 25},
             {dataField: "description", heading: "fred4", fixedWidth: true, percentageWidth: 40}

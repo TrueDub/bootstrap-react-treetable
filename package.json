@@ -1,8 +1,9 @@
 {
   "name": "bootstrap-react-treetable",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "main": "dist/index.js",
   "module": "dist/index.js",
+  "type": "module",
   "files": [
     "dist",
     "README.md"
@@ -12,75 +13,32 @@
     "url": "https://github.com/truedub/bootstrap-react-treetable.git"
   },
   "homepage": "https://github.com/truedub/bootstrap-react-treetable",
-  "license": "MIT",
   "scripts": {
-    "clean": "rimraf dist",
-    "start": "react-scripts start",
-    "build": "npm run clean && npm run lint && babel src/lib --out-dir dist && copyfiles -f src/lib/*.css dist",
-    "test": "cross-env CI=true react-scripts test --env=jsdom --coverage",
-    "eject": "react-scripts eject",
-    "clean:demo": "rimraf build",
-    "build:demo": "npm run clean:demo && webpack --config webpack.config.demo.js -p --bail",
-    "lint": "eslint src"
+    "test": "vitest",
+    "build": "vite build"
   },
-  "jest": {
-    "coverageReporters": [
-      "html"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm test",
-      "pre-push": "npm run lint && npm test"
-    }
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "plugin:react-hooks/recommended"
-    ]
-  },
-  "dependencies": {
-    "@babel/polyfill": "7.8.3",
-    "@fortawesome/fontawesome-svg-core": "1.2.27",
-    "@fortawesome/free-solid-svg-icons": "5.12.1",
-    "@fortawesome/react-fontawesome": "0.1.8",
-    "core-js": "^3.9.1",
-    "date-fns": "^2.18.0",
-    "html-react-parser": "^1.2.4",
-    "prop-types": "15.7.2"
-  },
+  "author": "",
+  "license": "MIT",
+  "description": "",
   "devDependencies": {
-    "@babel/cli": "^7.13.0",
-    "@babel/core": "7.8.4",
-    "@babel/preset-env": "7.8.4",
-    "@babel/preset-react": "7.8.3",
-    "bootstrap": "4.4.1",
-    "copyfiles": "2.2.0",
-    "cross-env": "7.0.0",
-    "del": "5.1.0",
-    "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.2",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "highlight.js": "10.5.0",
-    "husky": "4.2.3",
-    "react": "16.12.0",
-    "react-dom": "16.12.0",
-    "react-highlight": "^0.12.0",
-    "react-scripts": "4.0.1",
-    "react-test-renderer": "16.12.0",
-    "rimraf": "3.0.2",
-    "webpack-cli": "^3.3.12"
+    "@types/prop-types": "^15.7.15",
+    "bootstrap": "5.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "vite": "^6.4.1",
+    "vitest": "^4.0.18"
   },
   "peerDependencies": {
-    "bootstrap": "^4.4.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "bootstrap": "5.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@fortawesome/react-fontawesome": "^3.2.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "date-fns": "^4.1.0",
+    "html-react-parser": "^5.2.17",
+    "prop-types": "^15.8.1"
+  }
 }
