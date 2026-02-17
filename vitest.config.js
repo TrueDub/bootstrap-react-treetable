@@ -7,6 +7,8 @@ export default mergeConfig(viteConfig, defineConfig({
     test: {
         environment: 'jsdom',
         globals: true, // Optional, for Jest compatibility
-        //setupFiles: './src/setupTests.js', // For jest-dom matchers
+        coverage: {
+            enabled: true
+        }
     },
 }));
