@@ -1,8 +1,8 @@
 import React from 'react';
-import {render} from "react-dom";
+import ReactDOM from 'react-dom/client'
 import Highlight from 'react-highlight';
 
-import BootstrapTreeTable from "./lib/BootstrapTreeTable.jsx";
+import {BootstrapTreeTable} from "./components/BootstrapTreeTable/BootstrapTreeTable.jsx";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'highlight.js/styles/rainbow.css';
@@ -146,10 +146,12 @@ function App() {
                 <tbody>
                 <tr>
                     <td>
-                        <button className="btn btn-outline-primary" onClick={showTreeTable.bind(null)}>TreeTable</button>
+                        <button className="btn btn-outline-primary" onClick={showTreeTable.bind(null)}>TreeTable
+                        </button>
                     </td>
                     <td>
-                        <button className="btn btn-outline-primary" onClick={showDataTable.bind(null)}>DataTable</button>
+                        <button className="btn btn-outline-primary" onClick={showDataTable.bind(null)}>DataTable
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -161,13 +163,16 @@ function App() {
                     <li>Clicking any column heading will sort that column in ascending order - a second click will
                         reverse the sort order. The "Reset Sorting" button will appear when a sort is applied.
                     </li>
-                    <li>An initial descending sort is applied to the Random Number column via the <code>columns</code> prop.</li>
+                    <li>An initial descending sort is applied to the Random Number column via
+                        the <code>columns</code> prop.
+                    </li>
                     <li>The Random Number column has a <code>renderer</code> applied to it. In addition, that column is
                         sorted by the output of that renderer, not by the input value.
                     </li>
                     <li>Filtering is allowed on the specified columns, and is case-sensitive.</li>
                 </ol>
-                <BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls} topRows={treeTopRows}/>
+                <BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}
+                                    topRows={treeTopRows}/>
                 <table className="table table-bordered">
                     <tbody>
                     <tr>
@@ -214,8 +219,8 @@ function App() {
                             - the renderer function passed in the columns prop
                         </td>
                         <td><Highlight language="javascript">{"function (dataRow, dataField) {\n" +
-                        "    return dataRow.data[dataField].toLocaleString();\n" +
-                        "};"}</Highlight></td>
+                            "    return dataRow.data[dataField].toLocaleString();\n" +
+                            "};"}</Highlight></td>
                     </tr>
                     </tbody>
                 </table>
@@ -278,9 +283,11 @@ function App() {
             </div>
         </div>);
 }
-;
 
-render(
-    <App/>
-    , document.getElementById("root"));
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+        <App/>
+    </React.StrictMode>,
+)
 

@@ -4,7 +4,7 @@ import {render, screen} from '@testing-library/react';
 // import Adapter from 'enzyme-adapter-react-16';
 
 import {BootstrapTreeTable} from '../BootstrapTreeTable';
-import cityData from './euroCapitals.json';
+import cityData from '../../../data/euroCapitals.json';
 
 // configure({adapter: new Adapter()});
 
