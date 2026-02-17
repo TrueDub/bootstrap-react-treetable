@@ -1,16 +1,12 @@
-import { defineConfig } from 'vitest/config'
-// import { playwright } from '@vitest/browser-playwright'
+import {defineConfig, mergeConfig} from 'vitest/config'
 import react from '@vitejs/plugin-react'
+import viteConfig from './vite.config.js'
 
-export default defineConfig({
+export default mergeConfig(viteConfig, defineConfig({
     plugins: [react()],
     test: {
-        /*browser: {
-            enabled: true,
-            provider: playwright(),
-            instances: [
-                { browser: 'chromium' },
-            ],
-        },*/
+        environment: 'jsdom',
+        globals: true, // Optional, for Jest compatibility
+        //setupFiles: './src/setupTests.js', // For jest-dom matchers
     },
-})
+}));
