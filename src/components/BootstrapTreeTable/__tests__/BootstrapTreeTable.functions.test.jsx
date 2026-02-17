@@ -113,7 +113,7 @@ const columns = [
     {dataField: "description", heading: "fred4", fixedWidth: true, percentageWidth: 40}
 ];
 
-/*describe('testing the expand and collapse functionality', () => {
+describe.skip('testing the expand and collapse functionality', () => {
 
     test('all children of line 1 become visible when expand all is clicked', () => {
         const wrapper = shallow(<BootstrapTreeTable columns={columns} tableData={tableData}
@@ -261,7 +261,7 @@ const columns = [
 
 });
 
-describe('testing the filtering functionality', () => {
+describe.skip('testing the filtering functionality', () => {
     test('filtering is applied correctly', async () => {
         const wrapper = shallow(<BootstrapTreeTable columns={columns} tableData={tableData}
                                                     control={control}/>);
@@ -277,7 +277,7 @@ describe('testing the filtering functionality', () => {
     });
 });
 
-describe('testing the sorting functionality', () => {
+describe.skip('testing the sorting functionality', () => {
 
     test('table is sorted by that field when the header is clicked', () => {
         const wrapper = mount(<BootstrapTreeTable columns={cityColumns} tableData={cityData}
@@ -345,7 +345,7 @@ describe('testing the sorting functionality', () => {
     });
 });
 
-describe('testing the renderer functionality', () => {
+describe.skip('testing the renderer functionality', () => {
 
     test('table is sorted by that field when the header is clicked', () => {
         let numberRenderer = function (dataRow, dataField) {
@@ -371,7 +371,7 @@ describe('testing the renderer functionality', () => {
 
 });
 
-describe('testing the multiple header row functionality', () => {
+describe.skip('testing the multiple header row functionality', () => {
     test('table displays correctly with multiple header rows', () => {
         const localData = [
             {data: {name: 'John', dob: '17/02/1971'}},
@@ -421,4 +421,4 @@ describe('testing the multiple header row functionality', () => {
         expect(headerRows.first().find('th').first().prop('colSpan')).toEqual('2');
         expect(headerRows.first().find('th').first().hasClass('text-center'));
     });
-});*/
+});
