@@ -14,7 +14,7 @@ import './BootstrapTreeTable.css';
 import {Initialisation} from "./initialisation.js";
 
 
-export const BootstrapTreeTable = (props) => {
+export const BootstrapTreeTable = ({tableData, columns, control, topRows}) => {
     //expand/collapse
     const expandOrCollapseAll = () => {
         let action = !expanded;
@@ -83,7 +83,7 @@ export const BootstrapTreeTable = (props) => {
     }
 
     const resetSorting = () => {
-        let initialState = Initialisation.generateInitialState(visibleRows, props.tableData, props.columns);
+        let initialState = Initialisation.generateInitialState(visibleRows, tableData, columns);
         setEnhancedTableData(initialState.enhancedTableData);
         setEnhancedColumns(initialState.enhancedColumns);
         setShowResetSortingButton(initialState.showResetSortingButton);
@@ -92,7 +92,7 @@ export const BootstrapTreeTable = (props) => {
     //filtering
     const applyFilter = (event) => {
         let filterValue = event.target.value;
-        let columns = props.columns;
+        let columns = columns;
         let overallFiltered = false;
         let filteredNewTree = (function recurse(children) {
             if (children) {
@@ -335,7 +335,7 @@ export const BootstrapTreeTable = (props) => {
                            displayEndRow={displayEndRow}
                            displayTotal={tableLength}
                            displayFiltered={filtered}
-                           displayOverallTotal={props.tableData.length}/>
+                           displayOverallTotal={tableData.length}/>
             );
         }
         return <div></div>;
@@ -343,15 +343,15 @@ export const BootstrapTreeTable = (props) => {
 
     //execution and initial state-setting start here
     //first check inputs & define sensible defaults
-    let visibleRows = props.control.hasOwnProperty('visibleRows') ? props.control.visibleRows : 1;
-    let showExpandCollapseButton = props.control.hasOwnProperty('showExpandCollapseButton') ? props.control.showExpandCollapseButton : false;
-    let allowSorting = props.control.hasOwnProperty('allowSorting') ? props.control.allowSorting : false;
-    let allowFiltering = props.control.hasOwnProperty('allowFiltering') ? props.control.allowFiltering : false;
-    let filterInputPlaceholderText = props.control.hasOwnProperty('filterInputPlaceholderText') ? props.control.filterInputPlaceholderText : 'Filter...';
-    let showPagination = props.control.hasOwnProperty('showPagination') ? props.control.showPagination : false;
-    let initialRowsPerPage = props.control.hasOwnProperty('initialRowsPerPage') ? props.control.initialRowsPerPage : 10;
+    let visibleRows = control.hasOwnProperty('visibleRows') ? control.visibleRows : 1;
+    let showExpandCollapseButton = control.hasOwnProperty('showExpandCollapseButton') ? control.showExpandCollapseButton : false;
+    let allowSorting = control.hasOwnProperty('allowSorting') ? control.allowSorting : false;
+    let allowFiltering = control.hasOwnProperty('allowFiltering') ? control.allowFiltering : false;
+    let filterInputPlaceholderText = control.hasOwnProperty('filterInputPlaceholderText') ? control.filterInputPlaceholderText : 'Filter...';
+    let showPagination = control.hasOwnProperty('showPagination') ? control.showPagination : false;
+    let initialRowsPerPage = control.hasOwnProperty('initialRowsPerPage') ? control.initialRowsPerPage : 10;
 
-    let initialState = Initialisation().generateInitialState(visibleRows, props.tableData, props.columns);
+    let initialState = Initialisation().generateInitialState(visibleRows, tableData, columns);
 
     //set required state variables
     const [enhancedTableData, setEnhancedTableData] = React.useState(initialState.enhancedTableData);
@@ -365,9 +365,9 @@ export const BootstrapTreeTable = (props) => {
     //construct table
     let newTableData = filterNonVisibleRows(enhancedTableData);
     let newStartAndEnd = calculateNewStartAndEndRows(currentPage, initialRowsPerPage, newTableData.length);
-    let topRows = []
-    if (props.hasOwnProperty('topRows')) {
-        topRows = generateTopRows(props.topRows);
+    let topRowData = []
+    if (topRows) {
+        topRowData = generateTopRows(topRows);
     }
     let headingRows = generateHeaderRow(allowSorting);
     let tableBody = generateTableBody(newTableData, newStartAndEnd.startRow, newStartAndEnd.endRow);
@@ -405,7 +405,7 @@ export const BootstrapTreeTable = (props) => {
             <div className='row col-12'>
                 <table className='table table-bordered'>
                     <thead data-testid="bstt-header">
-                    {topRows}
+                    {topRowData}
                     <tr key="colHeaders">
                         {headingRows}
                     </tr>
