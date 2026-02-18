@@ -30,13 +30,15 @@ export default function Paginator({
         <nav aria-label="Table pagination">
             <ul className="pagination">
                 <li className={first.classes}>
-                    <button className="page-link" onClick={moveTo(first.value)} disabled={isFirstDisabled}>
+                    <button type="button" className="page-link" onClick={moveTo(first.value)}
+                            disabled={isFirstDisabled}>
                         First
                     </button>
                 </li>
 
                 <li className={previous.classes}>
-                    <button className="page-link" onClick={moveTo(previous.value)} disabled={isFirstDisabled}>
+                    <button type="button" className="page-link" onClick={moveTo(previous.value)}
+                            disabled={isFirstDisabled}>
                         Previous
                     </button>
                 </li>
@@ -44,25 +46,26 @@ export default function Paginator({
                 {pages.map(({value, classes}) => {
                     const isActive = hasClass(classes, "active");
                     return (
-                    <li
-                        key={value}
-                        className={classes}
-                        aria-current={isActive ? "page" : undefined}
-                    >
-                        <button className="page-link" onClick={moveTo(value)}>
-                            {value}
-                        </button>
-                    </li>
-                )})}
+                        <li
+                            key={value}
+                            className={classes}
+                            aria-current={isActive ? "page" : undefined}
+                        >
+                            <button type="button" className="page-link" onClick={moveTo(value)}>
+                                {value}
+                            </button>
+                        </li>
+                    )
+                })}
 
                 <li className={next.classes}>
-                    <button className="page-link" onClick={moveTo(next.value)} disabled={isLastDisabled}>
+                    <button type="button" className="page-link" onClick={moveTo(next.value)} disabled={isLastDisabled}>
                         Next
                     </button>
                 </li>
 
                 <li className={last.classes}>
-                    <button className="page-link" onClick={moveTo(last.value)} disabled={isLastDisabled}>
+                    <button type="button" className="page-link" onClick={moveTo(last.value)} disabled={isLastDisabled}>
                         Last
                     </button>
                 </li>
