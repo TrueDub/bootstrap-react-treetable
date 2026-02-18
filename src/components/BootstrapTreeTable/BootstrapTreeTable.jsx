@@ -404,13 +404,13 @@ export const BootstrapTreeTable = (props) => {
             </div>
             <div className='row col-12'>
                 <table className='table table-bordered'>
-                    <thead>
+                    <thead data-testid="bstt-header">
                     {topRows}
                     <tr key="colHeaders">
                         {headingRows}
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody data-testid="bstt-body">
                     {tableBody}
                     </tbody>
                 </table>

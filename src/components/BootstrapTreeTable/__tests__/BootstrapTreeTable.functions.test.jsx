@@ -1,10 +1,10 @@
 import React from 'react';
 import {expect, test} from 'vitest';
-import {render, screen} from '@testing-library/react';
 // import Adapter from 'enzyme-adapter-react-16';
-
 import {BootstrapTreeTable} from '../BootstrapTreeTable';
 import cityData from '../../../data/euroCapitals.json';
+import {render, screen, within} from "@testing-library/react";
+import "@testing-library/jest-dom";
 
 // configure({adapter: new Adapter()});
 
@@ -113,51 +113,43 @@ const columns = [
     {dataField: "description", heading: "fred4", fixedWidth: true, percentageWidth: 40}
 ];
 
-describe.skip('testing the expand and collapse functionality', () => {
+describe('testing the expand and collapse functionality', () => {
 
     test('all children of line 1 become visible when expand all is clicked', () => {
-        const wrapper = shallow(<BootstrapTreeTable columns={columns} tableData={tableData}
-                                                    control={control}/>);
-        const table = wrapper.find('table');
-        expect(table).toHaveLength(1);
-        const thead = table.find('thead');
-        expect(thead).toHaveLength(1);
-        const headers = thead.find('th');
-        expect(headers).toHaveLength(columns.length);
-        const tbody = table.find('tbody');
-        expect(tbody).toHaveLength(1);
-        const rows = tbody.find('tr');
-        expect(rows.length).toBe(7);
-        rows.forEach((tr, rowIndex) => {
-            const cells = tr.find('td');
+        render(<BootstrapTreeTable columns={columns} tableData={tableData} control={control}/>);
+        expect(screen.getAllByRole('table').length).toBe(1);
+        expect(screen.getAllByTestId('bstt-header').length).toBe(1);
+        expect(screen.getAllByRole('columnheader').length).toBe(columns.length);
+        expect(screen.getAllByTestId('bstt-body').length).toBe(1);
+        const tableBody = screen.getByTestId('bstt-body');
+        const bodyRows = within(tableBody).getAllByRole('row');
+        expect(bodyRows.length).toBe(7);
+        /*bodyRows.forEach((tr, rowIndex) => {
+            const cells = within(tr).getAllByRole('cell');
             expect(cells).toHaveLength(columns.length);
             if (rowIndex === 0) {
-                expect(tr.hasClass('shown'));
-                expect(cells.at(0).text()).toContain(tableData[rowIndex].data.name);
-                expect(cells.at(1).text()).toContain(tableData[rowIndex].data.dataType);
-                expect(cells.at(2).text()).toContain(tableData[rowIndex].data.example);
-                expect(cells.at(3).text()).toContain(tableData[rowIndex].data.description);
+                expect(within(cells[0]).getByText(tableData[rowIndex].data.name));
+                expect(within(cells[1]).getByText(tableData[rowIndex].data.dataType));
+                expect(within(cells[2]).getByText(tableData[rowIndex].data.example));
+                expect(within(cells[3]).getByText(tableData[rowIndex].data.description));
             } else if (rowIndex >= 1 && rowIndex <= 3) {
                 //these are the child rows - shouldn't be visible initially
-                expect(tr.hasClass('hidden'));
-                expect(cells.at(0).text()).toContain(tableData[0].children[rowIndex - 1].data.name);
-                expect(cells.at(1).text()).toContain(tableData[0].children[rowIndex - 1].data.dataType);
-                expect(cells.at(2).text()).toContain(tableData[0].children[rowIndex - 1].data.example);
-                expect(cells.at(3).text()).toContain(tableData[0].children[rowIndex - 1].data.description);
+                expect(within(cells[0]).getByText(tableData[0].children[rowIndex - 1].data.name)).not.toBeVisible();
+                expect(within(cells[1]).getByText(tableData[0].children[rowIndex - 1].data.dataType)).not.toBeVisible();
+                expect(within(cells[2]).getByText(tableData[0].children[rowIndex - 1].data.example)).not.toBeVisible();
+                expect(within(cells[3]).getByText(tableData[0].children[rowIndex - 1].data.description)).not.toBeVisible();
             } else if (rowIndex === 4) {
-                //this is the sub-child row - shouldn't be visible initially
-                expect(tr.hasClass('hidden'));
-                expect(cells.at(0).text()).toContain(tableData[0].children[rowIndex - 2].children[0].data.name);
-                expect(cells.at(1).text()).toContain(tableData[0].children[rowIndex - 2].children[0].data.dataType);
-                expect(cells.at(2).text()).toContain(tableData[0].children[rowIndex - 2].children[0].data.example);
-                expect(cells.at(3).text()).toContain(tableData[0].children[rowIndex - 2].children[0].data.description);
+                //this is the sub-child row - shouldn't be visible initially;
+                expect(within(cells[0]).queryAllByText(tableData[0].children[rowIndex - 2].children[0].data.name).length).toBe(0);
+                expect(within(cells[1]).queryAllByText(tableData[0].children[rowIndex - 2].children[0].data.dataType).length).toBe(0);
+                expect(within(cells[2]).queryAllByText(tableData[0].children[rowIndex - 2].children[0].data.example).length).toBe(0);
+                expect(within(cells[3]).queryAllByText(tableData[0].children[rowIndex - 2].children[0].data.description).length).toBe(0);
             } else {
                 //all other rows
-                expect(tr.hasClass('shown'));
-                expect(cells.at(0).text()).toContain(tableData[rowIndex - 4].data.name);
-                expect(cells.at(1).text()).toContain(tableData[rowIndex - 4].data.dataType);
-                expect(cells.at(2).text()).toContain(tableData[rowIndex - 4].data.example);
-                expect(cells.at(3).text()).toContain(tableData[rowIndex - 4].data.description);
+                expect(within(cells[0]).getByText(tableData[rowIndex - 4].data.name));
+                expect(within(cells[1]).getByText(tableData[rowIndex - 4].data.dataType));
+                expect(within(cells[2]).getByText(tableData[rowIndex - 4].data.example));
+                expect(within(cells[3]).getByText(tableData[rowIndex - 4].data.description));
             }
         });
         //next find the expand all button and click it.
@@ -170,10 +162,10 @@ describe.skip('testing the expand and collapse functionality', () => {
             expect(tr.hasClass('shown'));
         });
         const button1 = wrapper.find('button').first();
-        expect(button1.text()).toEqual('Collapse All');
+        expect(button1.text()).toEqual('Collapse All');*/
     });
 
-    test('children of line 1 become visible when the chevron is clicked', () => {
+    test.skip('children of line 1 become visible when the chevron is clicked', () => {
 
         const wrapper = shallow(<BootstrapTreeTable columns={columns} tableData={tableData}
                                                     control={control}/>);
@@ -243,7 +235,7 @@ describe.skip('testing the expand and collapse functionality', () => {
         });
     });
 
-    test('children of a line on Page 2 become visible when the chevron is clicked', () => {
+    test.skip('children of a line on Page 2 become visible when the chevron is clicked', () => {
         const wrapper = mount(<BootstrapTreeTable columns={cityColumns} tableData={cityData}
                                                   control={cityControls}/>);
         const table = wrapper.find('table');
@@ -262,7 +254,7 @@ describe.skip('testing the expand and collapse functionality', () => {
 });
 
 describe.skip('testing the filtering functionality', () => {
-    test('filtering is applied correctly', async () => {
+    test.skip('filtering is applied correctly', async () => {
         const wrapper = shallow(<BootstrapTreeTable columns={columns} tableData={tableData}
                                                     control={control}/>);
         const table = wrapper.find('table');
@@ -279,7 +271,7 @@ describe.skip('testing the filtering functionality', () => {
 
 describe.skip('testing the sorting functionality', () => {
 
-    test('table is sorted by that field when the header is clicked', () => {
+    test.skip('table is sorted by that field when the header is clicked', () => {
         const wrapper = mount(<BootstrapTreeTable columns={cityColumns} tableData={cityData}
                                                   control={cityControls}/>);
         const table = wrapper.find('table');
@@ -310,7 +302,7 @@ describe.skip('testing the sorting functionality', () => {
     });
 
     //sort by date
-    test('table is sorted correctly when using dates', () => {
+    test.skip('table is sorted correctly when using dates', () => {
         const localData = [
             {data: {name: 'John', dob: '17/02/1971'}},
             {data: {name: 'Paul', dob: '07/03/1971'}},
@@ -347,7 +339,7 @@ describe.skip('testing the sorting functionality', () => {
 
 describe.skip('testing the renderer functionality', () => {
 
-    test('table is sorted by that field when the header is clicked', () => {
+    test.skip('table is sorted by that field when the header is clicked', () => {
         let numberRenderer = function (dataRow, dataField) {
             return Number.parseFloat(dataRow.data[dataField]).toExponential(2);
         };
@@ -372,7 +364,7 @@ describe.skip('testing the renderer functionality', () => {
 });
 
 describe.skip('testing the multiple header row functionality', () => {
-    test('table displays correctly with multiple header rows', () => {
+    test.skip('table displays correctly with multiple header rows', () => {
         const localData = [
             {data: {name: 'John', dob: '17/02/1971'}},
             {data: {name: 'Paul', dob: '07/03/1971'}},
