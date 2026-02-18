@@ -1,54 +1,79 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {performCalculations} from "./calculations.js";
 
+export default function Paginator({
+                                      currentPage,
+                                      tableLength,
+                                      rowsPerPage,
+                                      rowMover,
+                                      displayStartRow,
+                                      displayEndRow,
+                                      displayTotal,
+                                      displayFiltered,
+                                      displayOverallTotal,
+                                  }) {
+    const {
+        first,
+        previous,
+        pages,
+        next,
+        last,
+    } = performCalculations(currentPage, tableLength, rowsPerPage);
 
-export default function Paginator(props) {
-
-    const paginatorData = performCalculations(props.currentPage, props.tableLength, props.rowsPerPage);
+    const moveTo = (page) => () => rowMover(page);
+    const hasClass = (classNames, className) => classNames.split(" ").includes(className);
+    const isFirstDisabled = hasClass(first.classes, "disabled");
+    const isLastDisabled = hasClass(last.classes, "disabled");
 
     return (
-        <nav>
-            <ul className='pagination'>
-                <li className={paginatorData.firstClasses}>
-                    <a href="#!" className='page-link'
-                       onClick={props.rowMover.bind(null, paginatorData.firstValue)}> First </a>
+        <nav aria-label="Table pagination">
+            <ul className="pagination">
+                <li className={first.classes}>
+                    <button className="page-link" onClick={moveTo(first.value)} disabled={isFirstDisabled}>
+                        First
+                    </button>
                 </li>
-                <li className={paginatorData.previousClasses}>
-                    <a href="#!" className='page-link'
-                       onClick={props.rowMover.bind(null, paginatorData.previousValue)}>Previous </a>
+
+                <li className={previous.classes}>
+                    <button className="page-link" onClick={moveTo(previous.value)} disabled={isFirstDisabled}>
+                        Previous
+                    </button>
                 </li>
-                <li className={paginatorData.pos1Classes}>
-                    <a href="#!" className='page-link'
-                       onClick={props.rowMover.bind(null, paginatorData.pos1Value)}>{paginatorData.pos1Value}</a>
+
+                {pages.map(({value, classes}) => {
+                    const isActive = hasClass(classes, "active");
+                    return (
+                    <li
+                        key={value}
+                        className={classes}
+                        aria-current={isActive ? "page" : undefined}
+                    >
+                        <button className="page-link" onClick={moveTo(value)}>
+                            {value}
+                        </button>
+                    </li>
+                )})}
+
+                <li className={next.classes}>
+                    <button className="page-link" onClick={moveTo(next.value)} disabled={isLastDisabled}>
+                        Next
+                    </button>
                 </li>
-                <li className={paginatorData.pos2Classes}>
-                    <a href="#!" className='page-link'
-                       onClick={props.rowMover.bind(null, paginatorData.pos2Value)}>{paginatorData.pos2Value}</a>
+
+                <li className={last.classes}>
+                    <button className="page-link" onClick={moveTo(last.value)} disabled={isLastDisabled}>
+                        Last
+                    </button>
                 </li>
-                <li className={paginatorData.pos3Classes}>
-                    <a href="#!" className='page-link'
-                       onClick={props.rowMover.bind(null, paginatorData.pos3Value)}>{paginatorData.pos3Value}</a>
-                </li>
-                <li className={paginatorData.pos4Classes}>
-                    <a href="#!" className='page-link'
-                       onClick={props.rowMover.bind(null, paginatorData.pos4Value)}>{paginatorData.pos4Value}</a>
-                </li>
-                <li className={paginatorData.pos5Classes}>
-                    <a href="#!" className='page-link'
-                       onClick={props.rowMover.bind(null, paginatorData.pos5Value)}>{paginatorData.pos5Value}</a>
-                </li>
-                <li className={paginatorData.nextClasses}>
-                    <a href="#!" className='page-link' id="nextLink"
-                       onClick={props.rowMover.bind(null, paginatorData.nextValue)}>Next </a>
-                </li>
-                <li className={paginatorData.lastClasses}>
-                    <a href="#!" className='page-link'
-                       onClick={props.rowMover.bind(null, paginatorData.lastValue)}>Last </a>
-                </li>
-                <li className={'page-item disabled'}><span
-                    className='page-link'>Showing {props.displayStartRow} to {props.displayEndRow} of {props.displayTotal} records <span
-                    className={props.displayFiltered ? 'shown' : 'hidden'}>(filtered from {props.displayOverallTotal})</span></span>
+
+                <li className="page-item disabled">
+                    <span className="page-link">
+                        Showing {displayStartRow} to {displayEndRow} of {displayTotal} records{" "}
+                        {displayFiltered && (
+                            <span>(filtered from {displayOverallTotal})</span>
+                        )}
+                    </span>
                 </li>
             </ul>
         </nav>
@@ -56,14 +81,13 @@ export default function Paginator(props) {
 }
 
 Paginator.propTypes = {
-    currentPage: PropTypes.number,
-    tableLength: PropTypes.number,
-    rowsPerPage: PropTypes.number,
-    rowMover: PropTypes.func,
-    displayStartRow: PropTypes.number,
-    displayEndRow: PropTypes.number,
-    displayTotal: PropTypes.number,
+    currentPage: PropTypes.number.isRequired,
+    tableLength: PropTypes.number.isRequired,
+    rowsPerPage: PropTypes.number.isRequired,
+    rowMover: PropTypes.func.isRequired,
+    displayStartRow: PropTypes.number.isRequired,
+    displayEndRow: PropTypes.number.isRequired,
+    displayTotal: PropTypes.number.isRequired,
     displayFiltered: PropTypes.bool,
-    displayOverallTotal: PropTypes.number
+    displayOverallTotal: PropTypes.number,
 };
-
