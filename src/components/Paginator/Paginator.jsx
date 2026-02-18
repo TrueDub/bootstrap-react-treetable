@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {Calculations} from "./calculations.js";
+import {performCalculations} from "./calculations.js";
 
 
 export default function Paginator(props) {
 
-    const paginatorData = Calculations().performCalculations(props.currentPage, props.tableLength, props.rowsPerPage);
+    const paginatorData = performCalculations(props.currentPage, props.tableLength, props.rowsPerPage);
 
     return (
         <nav>

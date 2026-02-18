@@ -16,6 +16,7 @@
   "scripts": {
     "dev": "vite --open",
     "test": "vitest",
+    "test:coverage": "vitest --coverage.enabled",
     "build": "vite build"
   },
   "author": "",
