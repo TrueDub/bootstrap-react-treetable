@@ -17,12 +17,14 @@
     "dev": "vite --open",
     "test": "vitest",
     "test:coverage": "vitest --coverage.enabled",
-    "build": "vite build"
+    "build": "vite build",
+    "lint": "biome lint"
   },
   "author": "",
   "license": "MIT",
   "description": "",
   "devDependencies": {
+    "@biomejs/biome": "2.4.2",
     "@testing-library/react": "^16.3.2",
     "@types/prop-types": "^15.7.15",
     "@vitest/coverage-v8": "^4.0.18",
