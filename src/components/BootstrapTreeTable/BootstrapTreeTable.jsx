@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useReducer,} from "react";
+import {useCallback, useMemo, useReducer} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleRight, faSearch, faSort, faSortDown, faSortUp,} from "@fortawesome/free-solid-svg-icons";

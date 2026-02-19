@@ -76,7 +76,7 @@ const columns = [
 
 describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
     test('each row has the correct row ID and setup', () => {
-        let enhancedTableData = Initialisation().generateInitialState(control.visibleRows, tableData, columns).enhancedTableData;
+        const enhancedTableData = Initialisation().generateInitialState(control.visibleRows, tableData, columns).enhancedTableData;
         expect(enhancedTableData.length).toBe(3);
         expect(enhancedTableData[0].rowID).toBe(1);
         expect(enhancedTableData[0].expanded).toBe(false);
@@ -105,7 +105,7 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
     });
 
     test('undefined data fields are dealt with', () => {
-        let localTableData = [
+        const localTableData = [
             {
                 data: {
                     name: "name0",
@@ -169,7 +169,7 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
                 children: []
             }
         ];
-        let enhancedTableData = Initialisation().generateInitialState(control.visibleRows, localTableData, columns).enhancedTableData;
+        const enhancedTableData = Initialisation().generateInitialState(control.visibleRows, localTableData, columns).enhancedTableData;
         expect(enhancedTableData.length).toBe(3);
         expect(enhancedTableData[0].rowID).toBe(1);
         expect(enhancedTableData[0].expanded).toBe(false);
@@ -198,7 +198,7 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
     });
 
     test('deal with a sort order correctly', () => {
-        let localTableData = [
+        const localTableData = [
             {
                 data: {
                     name: "name7",
@@ -262,7 +262,7 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
                 children: []
             }
         ];
-        let localColumns = [
+        const localColumns = [
             {
                 dataField: "name",
                 heading: "fred1",
@@ -275,7 +275,7 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
             {dataField: "example", heading: "fred3", fixedWidth: true, percentageWidth: 25},
             {dataField: "description", heading: "fred4", fixedWidth: true, percentageWidth: 40}
         ];
-        let enhancedTableData = Initialisation().generateInitialState(control.visibleRows, localTableData, localColumns).enhancedTableData;
+        const enhancedTableData = Initialisation().generateInitialState(control.visibleRows, localTableData, localColumns).enhancedTableData;
         expect(enhancedTableData.length).toBe(3);
         expect(enhancedTableData[0].rowID).toBe(6);
         expect(enhancedTableData[0].expanded).toBe(false);

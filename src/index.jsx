@@ -10,9 +10,7 @@ import 'highlight.js/styles/rainbow.css';
 import cityData from './data/euroCapitals.json';
 import stadiaData from './data/nflStadia.json';
 
-let numberRenderer = function (dataRow, dataField) {
-    return dataRow.data[dataField].toLocaleString();
-};
+const numberRenderer = (dataRow, dataField) => dataRow.data[dataField].toLocaleString();
 
 const dataTableColumns = [
     {
@@ -146,141 +144,146 @@ function App() {
                 <tbody>
                 <tr>
                     <td>
-                        <button className="btn btn-outline-primary" onClick={showTreeTable.bind(null)}>TreeTable
+                        <button type="button" className="btn btn-outline-primary"
+                                onClick={showTreeTable.bind(null)}>TreeTable
                         </button>
                     </td>
                     <td>
-                        <button className="btn btn-outline-primary" onClick={showDataTable.bind(null)}>DataTable
+                        <button type="button" className="btn btn-outline-primary"
+                                onClick={showDataTable.bind(null)}>DataTable
                         </button>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <div className={showValue === 2 ? 'shown' : 'hidden'}>
-                <h3>TreeTable</h3>
-                Notes:
-                <ol>
-                    <li>Clicking any column heading will sort that column in ascending order - a second click will
-                        reverse the sort order. The "Reset Sorting" button will appear when a sort is applied.
-                    </li>
-                    <li>An initial descending sort is applied to the Random Number column via
-                        the <code>columns</code> prop.
-                    </li>
-                    <li>The Random Number column has a <code>renderer</code> applied to it. In addition, that column is
-                        sorted by the output of that renderer, not by the input value.
-                    </li>
-                    <li>Filtering is allowed on the specified columns, and is case-sensitive.</li>
-                </ol>
-                <BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}
-                                    topRows={treeTopRows}/>
-                <table className="table table-bordered">
-                    <tbody>
-                    <tr>
-                        <td>Component declaration</td>
-                        <td><Highlight language="javascript">
-                            {"<BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}/>"}
-                        </Highlight></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <table className="table table-bordered">
-                    <tbody>
-                    <tr>
-                        <th width="10%">Prop Name</th>
-                        <th>Value</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <pre><code>treeColumns</code></pre>
-                        </td>
-                        <td><Highlight language="javascript">
-                            {JSON.stringify(treeColumns, null, 2)}
-                        </Highlight></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <pre><code>treeControls</code></pre>
-                        </td>
-                        <td>
-                            <Highlight language="javascript">
-                                {JSON.stringify(treeControls, null, 2)}
-                            </Highlight>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <pre><code>tableData</code></pre>
-                        </td>
-                        <td>See the contents of euroCapitals.json in the src/data directory.</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <pre><code>numberRenderer</code></pre>
-                            - the renderer function passed in the columns prop
-                        </td>
-                        <td><Highlight language="javascript">{"function (dataRow, dataField) {\n" +
-                            "    return dataRow.data[dataField].toLocaleString();\n" +
-                            "};"}</Highlight></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div className={showValue === 1 ? 'shown' : 'hidden'}>
-                <h3>DataTable</h3>
-                Notes:
-                <ol>
-                    <li>Clicking any column heading will sort that column in ascending order - a second click will
-                        reverse the sort order. The "Reset Sorting" button will appear when a sort is applied.
-                    </li>
-                    <li>Filtering is allowed on the Name and Location columns only - this is specified in
-                        the <code>columns</code> prop. The paginator adjusts to provide correct
-                        navigation and information when the table is filtered. Filtering is case-sensitive.
-                    </li>
-                </ol>
-                <BootstrapTreeTable columns={dataTableColumns} tableData={stadiaData} control={dataTableControls}/>
-                <table className="table table-bordered">
-                    <tbody>
-                    <tr>
-                        <td>Component declaration</td>
-                        <td><Highlight language="javascript">
-                            {"<BootstrapTreeTable columns={dataTableColumns} tableData={stadiaData} control={dataTableControls}/>"}
-                        </Highlight></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <table className="table table-bordered">
-                    <tbody>
-                    <tr>
-                        <th width="10%">Prop Name</th>
-                        <th>Value</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <pre><code>columns</code></pre>
-                        </td>
-                        <td><Highlight language="javascript">
-                            {JSON.stringify(dataTableColumns, null, 2)}
-                        </Highlight></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <pre><code>control</code></pre>
-                        </td>
-                        <td>
-                            <Highlight language="javascript">
-                                {JSON.stringify(dataTableControls, null, 2)}
-                            </Highlight>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <pre><code>tableData</code></pre>
-                        </td>
-                        <td>See the contents of nflStadia.json in the src/data directory.</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            {showValue === 2 && (
+                <div>
+                    <h3>TreeTable</h3>
+                    Notes:
+                    <ol>
+                        <li>Clicking any column heading will sort that column in ascending order - a second click will
+                            reverse the sort order. The "Reset Sorting" button will appear when a sort is applied.
+                        </li>
+                        <li>An initial descending sort is applied to the Random Number column via
+                            the <code>columns</code> prop.
+                        </li>
+                        <li>The Random Number column has a <code>renderer</code> applied to it. In addition, that column
+                            is
+                            sorted by the output of that renderer, not by the input value.
+                        </li>
+                        <li>Filtering is allowed on the specified columns, and is case-sensitive.</li>
+                    </ol>
+                    <BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}
+                                        topRows={treeTopRows}/>
+                    <table className="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>Component declaration</td>
+                            <td><Highlight language="javascript">
+                                {"<BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}/>"}
+                            </Highlight></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table className="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th width="10%">Prop Name</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>treeColumns</code></pre>
+                            </td>
+                            <td><Highlight language="javascript">
+                                {JSON.stringify(treeColumns, null, 2)}
+                            </Highlight></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>treeControls</code></pre>
+                            </td>
+                            <td>
+                                <Highlight language="javascript">
+                                    {JSON.stringify(treeControls, null, 2)}
+                                </Highlight>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>tableData</code></pre>
+                            </td>
+                            <td>See the contents of euroCapitals.json in the src/data directory.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>numberRenderer</code></pre>
+                                - the renderer function passed in the columns prop
+                            </td>
+                            <td><Highlight language="javascript">{"function (dataRow, dataField) {\n" +
+                                "    return dataRow.data[dataField].toLocaleString();\n" +
+                                "};"}</Highlight></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>)}
+            {showValue === 1 && (
+                <div>
+                    <h3>DataTable</h3>
+                    Notes:
+                    <ol>
+                        <li>Clicking any column heading will sort that column in ascending order - a second click will
+                            reverse the sort order. The "Reset Sorting" button will appear when a sort is applied.
+                        </li>
+                        <li>Filtering is allowed on the Name and Location columns only - this is specified in
+                            the <code>columns</code> prop. The paginator adjusts to provide correct
+                            navigation and information when the table is filtered. Filtering is case-sensitive.
+                        </li>
+                    </ol>
+                    <BootstrapTreeTable columns={dataTableColumns} tableData={stadiaData} control={dataTableControls}/>
+                    <table className="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>Component declaration</td>
+                            <td><Highlight language="javascript">
+                                {"<BootstrapTreeTable columns={dataTableColumns} tableData={stadiaData} control={dataTableControls}/>"}
+                            </Highlight></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table className="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th width="10%">Prop Name</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>columns</code></pre>
+                            </td>
+                            <td><Highlight language="javascript">
+                                {JSON.stringify(dataTableColumns, null, 2)}
+                            </Highlight></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>control</code></pre>
+                            </td>
+                            <td>
+                                <Highlight language="javascript">
+                                    {JSON.stringify(dataTableControls, null, 2)}
+                                </Highlight>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>tableData</code></pre>
+                            </td>
+                            <td>See the contents of nflStadia.json in the src/data directory.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>)}
         </div>);
 }
 

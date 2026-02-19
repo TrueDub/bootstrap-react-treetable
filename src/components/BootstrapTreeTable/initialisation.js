@@ -3,11 +3,11 @@ import {isAfter, isBefore, parse} from "date-fns";
 export const Initialisation = () => {
     const generateInitialState = (visibleRows, tableData, columns) => {
         let enhancedTableData = generateStateTableData(tableData, visibleRows);
-        let enhancedColumns = generateColumnState(columns);
+        const enhancedColumns = generateColumnState(columns);
         let initialSortField = null;
         let initialSortColumn = null;
         let initialSortOrder = null;
-        let showResetSortingButton = false;
+        const showResetSortingButton = false;
         enhancedColumns.forEach((column, index) => {
             if (column.sortOrder !== 'none') {
                 initialSortField = column.dataField;
@@ -40,7 +40,7 @@ export const Initialisation = () => {
         return (function recurse(children, parent = 0, rowLevel = 1) {
             if (children) {
                 return children.map(node => {
-                    let rowID = n++;
+                    const rowID = n++;
                     return Object.assign({}, node, {
                         rowID: rowID,
                         rowOrder: rowID,
@@ -58,7 +58,7 @@ export const Initialisation = () => {
 
     const generateColumnState = (initialColumns) => {
         return initialColumns.map(node => {
-            let sortOrder = node.hasOwnProperty('sortOrder') ? node.sortOrder : 'none';
+            const sortOrder = node.hasOwnProperty('sortOrder') ? node.sortOrder : 'none';
             return Object.assign({}, node, {
                 sortable: node.hasOwnProperty('sortable') ? node.sortable : true,
                 sortType: node.hasOwnProperty('sortType') ? node.sortType : 'string',
