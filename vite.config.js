@@ -8,15 +8,17 @@ export default defineConfig({
     build: {
         lib: {
             entry: resolve(__dirname, 'src/main.js'),
-            formats: ['es'],
+            name: 'BootstrapTreeTable',
+            fileName: 'BootstrapTreeTable',
+            // formats: ['es'],
         },
         rollupOptions: {
-            external: ['react', 'react-dom', 'react/jsx-runtime'],
+            external: ['react', 'react-dom', 'bootstrap'],
             output: {
                 globals: {
                     react: 'React',
                     'react-dom': 'React-dom',
-                    'react/jsx-runtime': 'react/jsx-runtime',
+                    'bootstrap': 'Bootstrap',
                 },
             },
         },
