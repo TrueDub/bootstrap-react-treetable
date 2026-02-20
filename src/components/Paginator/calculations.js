@@ -1,6 +1,8 @@
 const BASE_CLASS = 'page-item';
 const WINDOW_SIZE = 5;
 
+const hidden = "display: none";
+
 const clamp = (value, min, max) =>
     Math.min(Math.max(value, min), max);
 
@@ -73,7 +75,7 @@ const defineListItemClasses = (value, currentPage, totalPages) => {
     const classes = [BASE_CLASS];
 
     if (value < 1 || value > totalPages) {
-        classes.push('disabled', 'hidden');
+        classes.push('disabled', hidden);
     }
 
     if (value === currentPage) {

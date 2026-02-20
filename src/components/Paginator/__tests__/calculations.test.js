@@ -59,7 +59,7 @@ describe('performCalculations (array-based paginator)', () => {
     it('hides pages that exceed total pages when dataset is small', () => {
         const result = performCalculations(1, 30, 10); // totalPages = 3
         const hiddenPages = result.pages.filter(p =>
-            p.classes.includes('hidden')
+            p.classes.includes('display: none')
         );
         expect(hiddenPages.length).toBeGreaterThan(0);
     });

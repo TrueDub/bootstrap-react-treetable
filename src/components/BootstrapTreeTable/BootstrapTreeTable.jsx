@@ -6,8 +6,6 @@ import {faAngleRight, faSearch, faSort, faSortDown, faSortUp,} from "@fortawesom
 import {Initialisation} from "./initialisation";
 import Paginator from "../Paginator/Paginator";
 
-import "./BootstrapTreeTable.css";
-
 /*
 ========================================
 Reducer
