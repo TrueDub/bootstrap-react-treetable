@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client'
-import Highlight from 'react-highlight';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
+import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import {BootstrapTreeTable} from "./components/BootstrapTreeTable/BootstrapTreeTable.jsx";
 
@@ -179,9 +180,11 @@ function App() {
                         <tbody>
                         <tr>
                             <td>Component declaration</td>
-                            <td><Highlight language="javascript">
-                                {"<BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}/>"}
-                            </Highlight></td>
+                            <td>
+                                <SyntaxHighlighter language="javascript" style={dark}>
+                                    {"<BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}/>"}
+                                </SyntaxHighlighter>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -195,18 +198,20 @@ function App() {
                             <td>
                                 <pre><code>treeColumns</code></pre>
                             </td>
-                            <td><Highlight language="javascript">
-                                {JSON.stringify(treeColumns, null, 2)}
-                            </Highlight></td>
+                            <td>
+                                <SyntaxHighlighter language="javascript" style={dark}>
+                                    {JSON.stringify(treeColumns, null, 2)}
+                                </SyntaxHighlighter>
+                            </td>
                         </tr>
                         <tr>
                             <td>
                                 <pre><code>treeControls</code></pre>
                             </td>
                             <td>
-                                <Highlight language="javascript">
+                                <SyntaxHighlighter language="javascript" style={dark}>
                                     {JSON.stringify(treeControls, null, 2)}
-                                </Highlight>
+                                </SyntaxHighlighter>
                             </td>
                         </tr>
                         <tr>
@@ -220,9 +225,13 @@ function App() {
                                 <pre><code>numberRenderer</code></pre>
                                 - the renderer function passed in the columns prop
                             </td>
-                            <td><Highlight language="javascript">{"function (dataRow, dataField) {\n" +
-                                "    return dataRow.data[dataField].toLocaleString();\n" +
-                                "};"}</Highlight></td>
+                            <td>
+                                <SyntaxHighlighter language="javascript"
+                                                   style={dark}>{"function (dataRow, dataField) {\n" +
+                                    "    return dataRow.data[dataField].toLocaleString();\n" +
+                                    "};"}
+                                </SyntaxHighlighter>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -245,9 +254,11 @@ function App() {
                         <tbody>
                         <tr>
                             <td>Component declaration</td>
-                            <td><Highlight language="javascript">
-                                {"<BootstrapTreeTable columns={dataTableColumns} tableData={stadiaData} control={dataTableControls}/>"}
-                            </Highlight></td>
+                            <td>
+                                <SyntaxHighlighter language="javascript" style={dark}>
+                                    {"<BootstrapTreeTable columns={dataTableColumns} tableData={stadiaData} control={dataTableControls}/>"}
+                                </SyntaxHighlighter>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -261,18 +272,20 @@ function App() {
                             <td>
                                 <pre><code>columns</code></pre>
                             </td>
-                            <td><Highlight language="javascript">
-                                {JSON.stringify(dataTableColumns, null, 2)}
-                            </Highlight></td>
+                            <td>
+                                <SyntaxHighlighter language="javascript" style={dark}>
+                                    {JSON.stringify(dataTableColumns, null, 2)}
+                                </SyntaxHighlighter>
+                            </td>
                         </tr>
                         <tr>
                             <td>
                                 <pre><code>control</code></pre>
                             </td>
                             <td>
-                                <Highlight language="javascript">
+                                <SyntaxHighlighter language="javascript" style={dark}>
                                     {JSON.stringify(dataTableControls, null, 2)}
-                                </Highlight>
+                                </SyntaxHighlighter>
                             </td>
                         </tr>
                         <tr>

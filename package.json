@@ -31,8 +31,11 @@
   "description": "",
   "devDependencies": {
     "@biomejs/biome": "2.4.2",
+    "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.1",
     "@types/prop-types": "15.7.15",
+    "@vitejs/plugin-react": "4.7.0",
     "@vitest/coverage-v8": "4.0.18",
     "bootstrap": "5.3",
     "jsdom": "27.0.1",
@@ -49,12 +52,10 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "7.2.0",
     "@fortawesome/react-fontawesome": "3.2.0",
-    "@testing-library/jest-dom": "6.9.1",
-    "@testing-library/user-event": "14.6.1",
-    "@vitejs/plugin-react": "4.7.0",
     "date-fns": "4.1.0",
     "prop-types": "15.8.1",
-    "react-highlight": "0.15.0"
+    "react-highlight": "0.15.0",
+    "react-syntax-highlighter": "^16.1.0"
   },
   "engines": {
     "node": ">=24.13.0"

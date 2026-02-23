@@ -6909,7 +6909,7 @@ const Er = () => {
     })(s);
   };
   return { generateInitialState: t, sortBy: r, generateRowOrderedTree: o };
-}, vi = "page-item", ut = 5, sr = (t, n, e) => Math.min(Math.max(t, n), e), Wc = (t, n, e) => {
+}, vi = "page-item", ut = 5, Wc = "display: none", sr = (t, n, e) => Math.min(Math.max(t, n), e), Yc = (t, n, e) => {
   const r = Math.max(1, Math.ceil(n / e)), a = sr(t, 1, r), i = 1, o = r, s = sr(a - 1, 1, r), u = sr(a + 1, 1, r);
   let f = a - Math.floor(ut / 2), c = f + ut - 1;
   f < 1 && (f = 1, c = Math.min(ut, r)), c > r && (c = r, f = Math.max(1, c - ut + 1));
@@ -6917,7 +6917,7 @@ const Er = () => {
     const x = f + h;
     return {
       value: x,
-      classes: Yc(x, a, r)
+      classes: zc(x, a, r)
     };
   });
   return {
@@ -6943,9 +6943,9 @@ const Er = () => {
 }, Ot = (t, n, e) => {
   const r = [vi];
   return ((e === "first" || e === "previous") && t === 1 || (e === "next" || e === "last") && t === n) && r.push("disabled"), r.join(" ");
-}, Yc = (t, n, e) => {
+}, zc = (t, n, e) => {
   const r = [vi];
-  return (t < 1 || t > e) && r.push("disabled", "hidden"), t === n && r.push("active"), r.join(" ");
+  return (t < 1 || t > e) && r.push("disabled", Wc), t === n && r.push("active"), r.join(" ");
 };
 function yi({
   currentPage: t,
@@ -6964,7 +6964,7 @@ function yi({
     pages: d,
     next: p,
     last: h
-  } = Wc(t, n, e), x = (A) => () => r(A), w = (A, I) => A.split(" ").includes(I), O = w(f.classes, "disabled"), S = w(h.classes, "disabled");
+  } = Yc(t, n, e), x = (A) => () => r(A), w = (A, I) => A.split(" ").includes(I), O = w(f.classes, "disabled"), S = w(h.classes, "disabled");
   return /* @__PURE__ */ q.jsx("nav", { "aria-label": "Table pagination", children: /* @__PURE__ */ q.jsxs("ul", { className: "pagination", children: [
     /* @__PURE__ */ q.jsx("li", { className: f.classes, children: /* @__PURE__ */ q.jsx(
       "button",
@@ -7037,7 +7037,7 @@ const we = {
   SET_PAGE: "SET_PAGE",
   RESET_SORT: "RESET_SORT"
 };
-function zc(t, n) {
+function qc(t, n) {
   switch (n.type) {
     case we.INIT:
       return n.payload;
@@ -7116,7 +7116,7 @@ function wi(t, n, e, r = !0) {
   const a = [];
   for (const i of t) {
     if (!r) continue;
-    const o = qc(i, n, e);
+    const o = Hc(i, n, e);
     (!n || o) && a.push(i), i.expanded && a.push(
       ...wi(
         i.children || [],
@@ -7128,7 +7128,7 @@ function wi(t, n, e, r = !0) {
   }
   return a;
 }
-function qc(t, n, e) {
+function Hc(t, n, e) {
   if (!n) return !0;
   const r = n.toLowerCase();
   return e.some((a) => {
@@ -7138,7 +7138,7 @@ function qc(t, n, e) {
     return String(i).toLowerCase().includes(r);
   });
 }
-function Hc({ tableData: t, columns: n, control: e = {} }) {
+function Uc({ tableData: t, columns: n, control: e = {} }) {
   const {
     visibleRows: r = 10,
     allowSorting: a = !1,
@@ -7157,7 +7157,7 @@ function Hc({ tableData: t, columns: n, control: e = {} }) {
       currentPage: 1,
       showResetSortingButton: v.showResetSortingButton
     };
-  }, [t, n, r]), [d, p] = Gi(zc, c), h = Gt(() => wi(d.tree, d.filterValue, d.columns), [d.tree, d.filterValue, d.columns]), x = Gt(() => {
+  }, [t, n, r]), [d, p] = Gi(qc, c), h = Gt(() => wi(d.tree, d.filterValue, d.columns), [d.tree, d.filterValue, d.columns]), x = Gt(() => {
     if (!o) return h;
     const v = (d.currentPage - 1) * s, m = v + s;
     return h.slice(v, m);
@@ -7280,11 +7280,11 @@ function Hc({ tableData: t, columns: n, control: e = {} }) {
     )
   ] });
 }
-Hc.propTypes = {
+Uc.propTypes = {
   tableData: be.array.isRequired,
   columns: be.array.isRequired,
   control: be.object
 };
 export {
-  Hc as BootstrapTreeTable
+  Uc as BootstrapTreeTable
 };
