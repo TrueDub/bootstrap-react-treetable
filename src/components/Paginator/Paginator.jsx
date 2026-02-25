@@ -27,7 +27,7 @@ export default function Paginator({
 
     return (
         <nav aria-label="Table pagination">
-            <ul className="pagination">
+            <ul className="pagination justify-content-center">
                 <li className={first.classes}>
                     <button type="button" className="page-link" onClick={moveTo(first.value)}
                             disabled={isFirstDisabled}>

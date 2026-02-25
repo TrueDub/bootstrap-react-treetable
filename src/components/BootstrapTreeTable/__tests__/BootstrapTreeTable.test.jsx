@@ -39,6 +39,25 @@ const tableData = [
     },
 ];
 
+const updatedTableData = [
+    {
+        data: {name: "Parent C", value: 50},
+        children: [],
+    },
+];
+
+const tableDataWithMissingValues = [
+    {
+        data: {name: "Parent D"},
+        children: [
+            {
+                data: {},
+                children: [],
+            },
+        ],
+    },
+];
+
 const columns = [
     {
         dataField: "name",
@@ -230,6 +249,63 @@ describe("BootstrapTreeTable (final production version)", () => {
                 }}
             />
         );
+        expect(screen.getByRole("table")).toBeInTheDocument();
+    });
+
+    it("reinitialises state when tableData changes", () => {
+        const {rerender} = render(
+            <BootstrapTreeTable
+                tableData={tableData}
+                columns={columns}
+                control={control}
+            />
+        );
+
+        expect(screen.getByText("Parent A")).toBeInTheDocument();
+
+        rerender(
+            <BootstrapTreeTable
+                tableData={updatedTableData}
+                columns={columns}
+                control={control}
+            />
+        );
+
+        expect(screen.queryByText("Parent A")).not.toBeInTheDocument();
+        expect(screen.getByText("Parent C")).toBeInTheDocument();
+    });
+
+    it("shows correct pagination summary", () => {
+        renderTable();
+        expect(
+            screen.getByText(/Showing 1 to 5 of 5 records/i)
+        ).toBeInTheDocument();
+    });
+
+    it("shows zero summary for empty data", () => {
+        render(
+            <BootstrapTreeTable
+                tableData={[]}
+                columns={columns}
+                control={control}
+            />
+        );
+
+        expect(
+            screen.getByText(/Showing 0 to 0 of 0 records/i)
+        ).toBeInTheDocument();
+    });
+
+    it("renders when some row values are missing", () => {
+        render(
+            <BootstrapTreeTable
+                tableData={tableDataWithMissingValues}
+                columns={columns}
+                control={control}
+            />
+        );
+
+        expect(screen.getByText("Parent D")).toBeInTheDocument();
         expect(screen.getByRole("table")).toBeInTheDocument();
     });
 

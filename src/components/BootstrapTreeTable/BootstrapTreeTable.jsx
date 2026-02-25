@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useReducer} from "react";
+import {useCallback, useEffect, useMemo, useReducer} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleRight, faSearch, faSort, faSortDown, faSortUp,} from "@fortawesome/free-solid-svg-icons";
@@ -48,7 +48,7 @@ function reducer(state, action) {
                 column.sortOrder === "asc" ? "desc" : "asc";
 
             const sorted = Initialisation().sortBy(
-                state.tree,
+                cloneTree(state.tree),
                 columnIndex,
                 column.dataField,
                 newOrder,
@@ -100,6 +100,14 @@ function reducer(state, action) {
 Tree utilities (IMMUTABLE)
 ========================================
 */
+
+function cloneTree(nodes) {
+    if (!nodes) return [];
+    return nodes.map((node) => ({
+        ...node,
+        children: cloneTree(node.children),
+    }));
+}
 
 function toggleRowExpanded(nodes, rowID) {
     return nodes.map((node) => {
@@ -214,6 +222,21 @@ export function BootstrapTreeTable({tableData, columns, control = {},}) {
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
+    useEffect(() => {
+        const init = Initialisation().generateInitialState(visibleRows, tableData, columns);
+        dispatch({
+            type: ACTIONS.INIT,
+            payload: {
+                tree: init.enhancedTableData,
+                columns: init.enhancedColumns,
+                expandedAll: false,
+                filterValue: "",
+                currentPage: 1,
+                showResetSortingButton: init.showResetSortingButton,
+            },
+        });
+    }, [tableData, columns, visibleRows]);
+
     /*
     ========================================
     Derived visible rows
@@ -236,6 +259,16 @@ export function BootstrapTreeTable({tableData, columns, control = {},}) {
         const end = start + initialRowsPerPage;
         return visibleRowsFlat.slice(start, end);
     }, [visibleRowsFlat, state.currentPage, initialRowsPerPage, showPagination,]);
+
+    const displayTotal = visibleRowsFlat.length;
+    let displayStartRow = 0;
+    let displayEndRow = 0;
+
+    if (showPagination && displayTotal > 0) {
+        const startIndex = (state.currentPage - 1) * initialRowsPerPage;
+        displayStartRow = startIndex + 1;
+        displayEndRow = Math.min(startIndex + initialRowsPerPage, displayTotal);
+    }
 
     /*
     ========================================
@@ -334,7 +367,7 @@ export function BootstrapTreeTable({tableData, columns, control = {},}) {
                                     : faSort;
                         return (
                             <th
-                                key={col.dataField}
+                                key={`${col.dataField}-${i}`}
                                 onClick={
                                     allowSorting && col.sortable
                                         ? () => sort(i)
@@ -367,7 +400,9 @@ export function BootstrapTreeTable({tableData, columns, control = {},}) {
                     return (
                         <tr key={row.rowID}>
                             {state.columns.map((col, i) => {
-                                const content = col.renderer ? col.renderer(row, col.dataField) : row.data[col.dataField];
+                                const content = col.renderer
+                                    ? col.renderer(row, col.dataField)
+                                    : (row.data?.[col.dataField] ?? "");
                                 if (i === 0) {
                                     return (
                                         <td key={col.dataField}>
@@ -412,7 +447,10 @@ export function BootstrapTreeTable({tableData, columns, control = {},}) {
                         initialRowsPerPage
                     }
                     rowMover={setPage}
-                    displayEndRow={0} displayStartRow={0} displayTotal={0}/>
+                    displayStartRow={displayStartRow}
+                    displayEndRow={displayEndRow}
+                    displayTotal={displayTotal}
+                />
             )}
         </div>
     );
