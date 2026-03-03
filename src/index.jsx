@@ -1,0 +1,309 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client'
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
+import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+import {BootstrapTreeTable} from "./components/BootstrapTreeTable/BootstrapTreeTable.jsx";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'highlight.js/styles/rainbow.css';
+
+import cityData from './data/euroCapitals.json';
+import stadiaData from './data/nflStadia.json';
+
+const numberRenderer = (dataRow, dataField) => dataRow.data[dataField].toLocaleString();
+
+const dataTableColumns = [
+    {
+        dataField: "name",
+        heading: "Name",
+        filterable: true
+    },
+    {
+        dataField: "capacity",
+        heading: "Capacity"
+    },
+    {
+        dataField: "location",
+        heading: "Location",
+        filterable: true
+    },
+    {
+        dataField: "field",
+        heading: "Grass Type"
+    },
+    {
+        dataField: "roof",
+        heading: "Roof Type",
+    },
+    {
+        dataField: "team",
+        heading: "Team(s)"
+    },
+    {
+        dataField: "year",
+        heading: "Year Opened"
+    }
+];
+const dataTableControls = {
+    allowSorting: true,
+    showPagination: true,
+    initialRowsPerPage: 10,
+    allowFiltering: true,
+    filterInputPlaceholderText: 'Filter...'
+};
+
+const treeColumns = [
+    {
+        dataField: "name",
+        heading: "Name",
+        filterable: true
+    },
+    {
+        dataField: "population",
+        heading: "Random Number",
+        sortOrder: 'desc',
+        renderer: numberRenderer
+    },
+    {
+        dataField: "bill",
+        heading: "Dummy 1"
+    },
+    {
+        dataField: "fred",
+        heading: "Dummy 2"
+    },
+    {
+        dataField: "john",
+        heading: "Dummy 3"
+    }
+];
+const treeControls = {
+    visibleRows: 1,
+    allowSorting: true,
+    showPagination: true,
+    initialRowsPerPage: 10,
+    allowFiltering: true,
+    showExpandCollapseButton: true
+};
+const treeTopRows = [
+    [
+        {
+            heading: 'Left',
+            colspan: 1,
+            rowspan: 2,
+            alignment: 'left',
+            verticalAlignment: 'middle'
+        },
+        {
+            heading: 'Overall',
+            colspan: 3,
+            alignment: 'center'
+        },
+        {
+            heading: 'Right',
+            colspan: 1,
+            rowspan: 2,
+            alignment: 'right'
+        }
+    ], [
+        {
+            heading: 'Center1',
+            colspan: 1,
+            alignment: 'center'
+        },
+        {
+            heading: 'Center2',
+            colspan: 1,
+            alignment: 'center'
+        },
+        {
+            heading: 'Center3',
+            colspan: 1,
+            alignment: 'center'
+        }
+    ]
+]
+
+function App() {
+
+    const [showValue, setShowValue] = React.useState(2);
+
+    const showDataTable = () => {
+        setShowValue(1);
+    }
+
+    const showTreeTable = () => {
+        setShowValue(2);
+    }
+
+
+    return (
+        <div style={{width: "90%", margin: "15px auto"}}>
+            <h1>Bootstrap React TreeTable Demo</h1>
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <button type="button" className="btn btn-outline-primary"
+                                onClick={showTreeTable.bind(null)}>TreeTable
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" className="btn btn-outline-primary"
+                                onClick={showDataTable.bind(null)}>DataTable
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            {showValue === 2 && (
+                <div>
+                    <h3>TreeTable</h3>
+                    Notes:
+                    <ol>
+                        <li>Clicking any column heading will sort that column in ascending order - a second click will
+                            reverse the sort order. The "Reset Sorting" button will appear when a sort is applied.
+                        </li>
+                        <li>An initial descending sort is applied to the Random Number column via
+                            the <code>columns</code> prop.
+                        </li>
+                        <li>The Random Number column has a <code>renderer</code> applied to it. In addition, that column
+                            is
+                            sorted by the output of that renderer, not by the input value.
+                        </li>
+                        <li>Filtering is allowed on the specified columns, and is case-sensitive.</li>
+                    </ol>
+                    <BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}
+                                        topRows={treeTopRows}/>
+                    <table className="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>Component declaration</td>
+                            <td>
+                                <SyntaxHighlighter language="javascript" style={dark}>
+                                    {"<BootstrapTreeTable columns={treeColumns} tableData={cityData} control={treeControls}/>"}
+                                </SyntaxHighlighter>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table className="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th width="10%">Prop Name</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>treeColumns</code></pre>
+                            </td>
+                            <td>
+                                <SyntaxHighlighter language="javascript" style={dark}>
+                                    {JSON.stringify(treeColumns, null, 2)}
+                                </SyntaxHighlighter>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>treeControls</code></pre>
+                            </td>
+                            <td>
+                                <SyntaxHighlighter language="javascript" style={dark}>
+                                    {JSON.stringify(treeControls, null, 2)}
+                                </SyntaxHighlighter>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>tableData</code></pre>
+                            </td>
+                            <td>See the contents of euroCapitals.json in the src/data directory.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>numberRenderer</code></pre>
+                                - the renderer function passed in the columns prop
+                            </td>
+                            <td>
+                                <SyntaxHighlighter language="javascript"
+                                                   style={dark}>{"function (dataRow, dataField) {\n" +
+                                    "    return dataRow.data[dataField].toLocaleString();\n" +
+                                    "};"}
+                                </SyntaxHighlighter>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>)}
+            {showValue === 1 && (
+                <div>
+                    <h3>DataTable</h3>
+                    Notes:
+                    <ol>
+                        <li>Clicking any column heading will sort that column in ascending order - a second click will
+                            reverse the sort order. The "Reset Sorting" button will appear when a sort is applied.
+                        </li>
+                        <li>Filtering is allowed on the Name and Location columns only - this is specified in
+                            the <code>columns</code> prop. The paginator adjusts to provide correct
+                            navigation and information when the table is filtered. Filtering is case-sensitive.
+                        </li>
+                    </ol>
+                    <BootstrapTreeTable columns={dataTableColumns} tableData={stadiaData} control={dataTableControls}/>
+                    <table className="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>Component declaration</td>
+                            <td>
+                                <SyntaxHighlighter language="javascript" style={dark}>
+                                    {"<BootstrapTreeTable columns={dataTableColumns} tableData={stadiaData} control={dataTableControls}/>"}
+                                </SyntaxHighlighter>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table className="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th width="10%">Prop Name</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>columns</code></pre>
+                            </td>
+                            <td>
+                                <SyntaxHighlighter language="javascript" style={dark}>
+                                    {JSON.stringify(dataTableColumns, null, 2)}
+                                </SyntaxHighlighter>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>control</code></pre>
+                            </td>
+                            <td>
+                                <SyntaxHighlighter language="javascript" style={dark}>
+                                    {JSON.stringify(dataTableControls, null, 2)}
+                                </SyntaxHighlighter>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code>tableData</code></pre>
+                            </td>
+                            <td>See the contents of nflStadia.json in the src/data directory.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>)}
+        </div>);
+}
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+        <App/>
+    </React.StrictMode>,
+)
+

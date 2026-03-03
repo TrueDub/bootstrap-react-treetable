@@ -1,4 +1,6 @@
-import {Initialisation} from '../BootstrapTreeTable';
+import {describe, expect, test} from 'vitest';
+import {format} from 'date-fns';
+import {Initialisation} from '../initialisation.js';
 
 const tableData = [
     {
@@ -74,8 +76,8 @@ const columns = [
 ];
 
 describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
-    it('each row has the correct row ID and setup', () => {
-        let enhancedTableData = Initialisation().generateInitialState(control.visibleRows, tableData, columns).enhancedTableData;
+    test('each row has the correct row ID and setup', () => {
+        const enhancedTableData = Initialisation().generateInitialState(control.visibleRows, tableData, columns).enhancedTableData;
         expect(enhancedTableData.length).toBe(3);
         expect(enhancedTableData[0].rowID).toBe(1);
         expect(enhancedTableData[0].expanded).toBe(false);
@@ -103,8 +105,8 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
         expect(enhancedTableData[2].visible).toBe(true);
     });
 
-    it('undefined data fields are dealt with', () => {
-        let localTableData = [
+    test('undefined data fields are dealt with', () => {
+        const localTableData = [
             {
                 data: {
                     name: "name0",
@@ -168,7 +170,7 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
                 children: []
             }
         ];
-        let enhancedTableData = Initialisation().generateInitialState(control.visibleRows, localTableData, columns).enhancedTableData;
+        const enhancedTableData = Initialisation().generateInitialState(control.visibleRows, localTableData, columns).enhancedTableData;
         expect(enhancedTableData.length).toBe(3);
         expect(enhancedTableData[0].rowID).toBe(1);
         expect(enhancedTableData[0].expanded).toBe(false);
@@ -196,8 +198,8 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
         expect(enhancedTableData[2].visible).toBe(true);
     });
 
-    it('deal with a sort order correctly', () => {
-        let localTableData = [
+    test('deal with a sort order correctly', () => {
+        const localTableData = [
             {
                 data: {
                     name: "name7",
@@ -261,13 +263,20 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
                 children: []
             }
         ];
-        let localColumns = [
-            {dataField: "name", heading: "fred1", fixedWidth: true, percentageWidth: 25, sortable: true, sortOrder: 'asc'},
+        const localColumns = [
+            {
+                dataField: "name",
+                heading: "fred1",
+                fixedWidth: true,
+                percentageWidth: 25,
+                sortable: true,
+                sortOrder: 'asc'
+            },
             {dataField: "dataType", heading: "fred2", fixedWidth: true, percentageWidth: 10, filterable: true},
             {dataField: "example", heading: "fred3", fixedWidth: true, percentageWidth: 25},
             {dataField: "description", heading: "fred4", fixedWidth: true, percentageWidth: 40}
         ];
-        let enhancedTableData = Initialisation().generateInitialState(control.visibleRows, localTableData, localColumns).enhancedTableData;
+        const enhancedTableData = Initialisation().generateInitialState(control.visibleRows, localTableData, localColumns).enhancedTableData;
         expect(enhancedTableData.length).toBe(3);
         expect(enhancedTableData[0].rowID).toBe(6);
         expect(enhancedTableData[0].expanded).toBe(false);
@@ -293,6 +302,56 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
         expect(enhancedTableData[2].rowID).toBe(7);
         expect(enhancedTableData[2].expanded).toBe(false);
         expect(enhancedTableData[2].visible).toBe(true);
+    });
+
+    test('sorts correctly when using renderer with Date values', () => {
+        const localTableData = [
+            {
+                data: {
+                    name: "later",
+                    created: new Date(2024, 0, 2),
+                },
+                children: [],
+            },
+            {
+                data: {
+                    name: "earlier",
+                    created: new Date(2024, 0, 1),
+                },
+                children: [],
+            },
+        ];
+
+        const localColumns = [
+            {
+                dataField: "name",
+                heading: "Name",
+                sortable: true,
+            },
+            {
+                dataField: "created",
+                heading: "Created",
+                sortable: true,
+                sortOrder: 'asc',
+                sortType: 'date',
+                sortUsingRenderer: true,
+                sortDateFormat: 'yyyy-MM-dd',
+                renderer: (row, dataField) =>
+                    format(row.data[dataField], 'yyyy-MM-dd'),
+            },
+        ];
+
+        const enhancedTableData =
+            Initialisation().generateInitialState(
+                control.visibleRows,
+                localTableData,
+                localColumns
+            ).enhancedTableData;
+
+        expect(enhancedTableData.length).toBe(2);
+        // Earliest date should be first when sorted ascending
+        expect(enhancedTableData[0].data.name).toBe("earlier");
+        expect(enhancedTableData[1].data.name).toBe("later");
     });
 });
 
