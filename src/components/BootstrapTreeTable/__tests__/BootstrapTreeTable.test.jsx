@@ -2,6 +2,7 @@ import '@testing-library/jest-dom'
 import {beforeEach, describe, expect, it} from "vitest";
 import {render, screen} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import {format} from "date-fns";
 
 import {BootstrapTreeTable} from "../BootstrapTreeTable";
 
@@ -81,6 +82,36 @@ const control = {
     initialRowsPerPage: 10,
     showExpandCollapseButton: true,
 };
+
+const dateTableData = [
+    {
+        data: {
+            name: "Date Row",
+            created: new Date(2024, 0, 1),
+        },
+        children: [],
+    },
+];
+
+const dateColumns = [
+    {
+        dataField: "name",
+        heading: "Name",
+        sortable: true,
+        filterable: true,
+    },
+    {
+        dataField: "created",
+        heading: "Created",
+        sortable: true,
+        filterable: false,
+        sortType: "date",
+        sortUsingRenderer: true,
+        sortDateFormat: "yyyy-MM-dd",
+        renderer: (row, dataField) =>
+            format(row.data[dataField], "yyyy-MM-dd"),
+    },
+];
 
 /*
 ========================================
@@ -212,6 +243,20 @@ describe("BootstrapTreeTable (final production version)", () => {
         expect(screen.getByRole("table")).toBeInTheDocument();
     });
 
+    it("uses renderer when column value is a Date", () => {
+        render(
+            <BootstrapTreeTable
+                tableData={dateTableData}
+                columns={dateColumns}
+                control={control}
+            />
+        );
+
+        expect(
+            screen.getByText("2024-01-01")
+        ).toBeInTheDocument();
+    });
+
     it("works with empty data", () => {
         render(
             <BootstrapTreeTable
@@ -307,6 +352,35 @@ describe("BootstrapTreeTable (final production version)", () => {
 
         expect(screen.getByText("Parent D")).toBeInTheDocument();
         expect(screen.getByRole("table")).toBeInTheDocument();
+    });
+
+    it("changes page when paginator page button is clicked", async () => {
+        const user = userEvent.setup();
+
+        render(
+            <BootstrapTreeTable
+                tableData={tableData}
+                columns={columns}
+                control={{
+                    ...control,
+                    initialRowsPerPage: 2,
+                }}
+            />
+        );
+
+        // Page 1 should show first two rows only
+        expect(screen.getByText("Parent A")).toBeInTheDocument();
+        expect(screen.getByText("Child A1")).toBeInTheDocument();
+        expect(screen.queryByText("Grandchild A1-1")).not.toBeInTheDocument();
+
+        // Click on page 2
+        const page2Button = screen.getByRole("button", {name: "2"});
+        await user.click(page2Button);
+
+        // Now page 2 rows should be visible
+        expect(screen.getByText("Grandchild A1-1")).toBeInTheDocument();
+        expect(screen.getByText("Child A2")).toBeInTheDocument();
+        expect(screen.queryByText("Parent A")).not.toBeInTheDocument();
     });
 
 });

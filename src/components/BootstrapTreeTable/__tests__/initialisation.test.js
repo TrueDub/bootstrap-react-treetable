@@ -1,4 +1,5 @@
 import {describe, expect, test} from 'vitest';
+import {format} from 'date-fns';
 import {Initialisation} from '../initialisation.js';
 
 const tableData = [
@@ -301,6 +302,56 @@ describe('testing the BootstrapTreeTable enhancedTableData setup', () => {
         expect(enhancedTableData[2].rowID).toBe(7);
         expect(enhancedTableData[2].expanded).toBe(false);
         expect(enhancedTableData[2].visible).toBe(true);
+    });
+
+    test('sorts correctly when using renderer with Date values', () => {
+        const localTableData = [
+            {
+                data: {
+                    name: "later",
+                    created: new Date(2024, 0, 2),
+                },
+                children: [],
+            },
+            {
+                data: {
+                    name: "earlier",
+                    created: new Date(2024, 0, 1),
+                },
+                children: [],
+            },
+        ];
+
+        const localColumns = [
+            {
+                dataField: "name",
+                heading: "Name",
+                sortable: true,
+            },
+            {
+                dataField: "created",
+                heading: "Created",
+                sortable: true,
+                sortOrder: 'asc',
+                sortType: 'date',
+                sortUsingRenderer: true,
+                sortDateFormat: 'yyyy-MM-dd',
+                renderer: (row, dataField) =>
+                    format(row.data[dataField], 'yyyy-MM-dd'),
+            },
+        ];
+
+        const enhancedTableData =
+            Initialisation().generateInitialState(
+                control.visibleRows,
+                localTableData,
+                localColumns
+            ).enhancedTableData;
+
+        expect(enhancedTableData.length).toBe(2);
+        // Earliest date should be first when sorted ascending
+        expect(enhancedTableData[0].data.name).toBe("earlier");
+        expect(enhancedTableData[1].data.name).toBe("later");
     });
 });
 
