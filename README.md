@@ -163,7 +163,7 @@ let descriptionRenderer = function (dataRow, dataField) {
 
 #### Styling
 
-The component is styled using Bootstrap 4 classes. Bootstrap 4 is a peer dependency, so it needs to be provided by the project using this one.
+The component is styled using Bootstrap 5 classes. Bootstrap 5 is a peer dependency, so it needs to be provided by the project using this one.
 
 ### Sorting
 
@@ -179,15 +179,13 @@ To use this component as a simple datatable (i.e. no expandable capabilities), s
 
 ## Release History
 
-| Release | Description | Release date |
-| ------- | ----------- | ------------ |
-|  2.0.2  | Added Multiple header rows | 04-Mar-2021 |                                                           
-|  2.0.0  | React lifestyle methods removed, Moment.js removed, bugfixes applied | 21-Jan-2021 |                                                           
-|  1.0.2  | Audit fixes | 01-Oct-2019 |
-|  1.0.1  |  | 26-Jun-2019 |
-|  1.0.0  | First release | 22-Feb-2019 |
-|  1.0.0-rc.1  | First release candidate of 1.0.0 | 22-Feb-2019 |
+| Release     | Description                                                          | Release date |
+|-------------|----------------------------------------------------------------------|--------------|
+| 3.0.0-alpha | Alpha release of version 3- no breaking change but a general rewrite | 03-Mar-2026  |    
+| 2.0.2       | Added Multiple header rows                                           | 04-Mar-2021  |                                                           
+| 2.0.0       | React lifestyle methods removed, Moment.js removed, bugfixes applied | 21-Jan-2021  |                                                           
+| 1.0.2       | Audit fixes                                                          | 01-Oct-2019  |
+| 1.0.1       |                                                                      | 26-Jun-2019  |
+| 1.0.0       | First release                                                        | 22-Feb-2019  |
+| 1.0.0-rc.1  | First release candidate of 1.0.0                                     | 22-Feb-2019  |
 
-# Development
-
-Use [yalc](https://www.npmjs.com/package/yalc) instead of "npm link".
