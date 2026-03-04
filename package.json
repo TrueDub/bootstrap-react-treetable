@@ -24,6 +24,8 @@
     "test": "vitest",
     "test:coverage": "vitest --coverage.enabled",
     "build": "vite build",
+    "build:demo": "vite build --config vite.config.demo.js",
+    "preview:demo": "vite preview --outDir demo",
     "lint": "biome lint"
   },
   "author": "",
