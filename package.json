@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-react-treetable",
-  "version": "3.0.0",
+  "version": "3.0.0-alpha.1",
   "main": "./dist/BootstrapTreeTable.umd.cjs",
   "module": "./dist/BootstrapTreeTable.js",
   "type": "module",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/truedub/bootstrap-react-treetable.git"
+    "url": "git+https://github.com/truedub/bootstrap-react-treetable.git"
   },
   "homepage": "https://github.com/truedub/bootstrap-react-treetable",
   "scripts": {
@@ -47,9 +47,8 @@
     "vitest": "4.0.18"
   },
   "peerDependencies": {
-    "bootstrap": "5.3",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "bootstrap": ">=5.3",
+    "react": ">=18.3.1"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "7.2.0",
@@ -57,7 +56,7 @@
     "date-fns": "4.1.0",
     "prop-types": "15.8.1",
     "react-highlight": "0.15.0",
-    "react-syntax-highlighter": "^16.1.0"
+    "react-syntax-highlighter": "16.1.0"
   },
   "engines": {
     "node": ">=24.13.0"
